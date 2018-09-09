@@ -1,0 +1,530 @@
+<html lang='en' ng-app='ansub'>
+<head>
+	<meta charset="UTF-8">
+	
+	<!--CDNs-->
+	<!--Bootstrap-->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+	
+	<!--Scripts-->
+	<!--Angular-->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+	
+	<!--Setting up Angular-->
+	<script>
+		var ahNuts = angular.module('ansub', []);
+
+	</script>
+		
+	<!--Main Controller-->
+	<script>
+	angular.module('ansub').controller('mainController', mainController);
+
+	mainController.$inject = ['$scope','$log'];
+
+	/* @ngInject */
+	function mainController($scope, $log) {
+		//define local variables
+		var recipiantProfile = {
+			name: {
+				first: "",
+				last: ""
+			},
+			address: {
+				street1: "",
+				street2: "",
+				street3: "",
+				city: "",
+				state: "",
+				zip: ""
+			},
+			contact: {},
+			relationship: ""
+		};
+
+		var shippingSchedules = {
+			"yearly": [
+				{ id: 1, name: "Treat", shipDay: "", billDay: "" }
+			],
+			"quarterly": [
+				{ id: 1, name: "Winter", shipDay: "", billDay: "" },
+				{ id: 2, name: "Spring", shipDay: "", billDay: "" },
+				{ id: 3, name: "Summer", shipDay: "", billDay: "" },
+				{ id: 4, name: "Fall", shipDay: "", billDay: "" }
+			],
+			"monthly": [
+				{ id: 1, name: "January", shipDay: "3rd", billDay: "1st" },
+				{ id: 2, name: "February", shipDay: "3rd", billDay: "1st" },
+				{ id: 3, name: "March", shipDay: "3rd", billDay: "1st" },
+				{ id: 4, name: "April", shipDay: "3rd", billDay: "1st" },
+				{ id: 5, name: "May", shipDay: "3rd", billDay: "1st" },
+				{ id: 6, name: "June", shipDay: "3rd", billDay: "1st" },
+				{ id: 7, name: "July", shipDay: "3rd", billDay: "1st" },
+				{ id: 8, name: "August", shipDay: "3rd", billDay: "1st" },
+				{ id: 9, name: "September", shipDay: "3rd", billDay: "1st" },
+				{ id: 10, name: "October", shipDay: "3rd", billDay: "1st" },
+				{ id: 11, name: "November", shipDay: "3rd", billDay: "1st" },
+				{ id: 12, name: "December", shipDay: "3rd", billDay: "1st" }
+			],
+			"weekly": weeklyGenerator()
+
+		}
+		
+		var shippingOccurance = {
+			id: 0,
+			name: "",
+			date: ""
+		};
+
+		function weeklyGenerator() {
+			//define local variables
+			var allWeeks = [];
+
+			for(var i = 1; i <= 52; i++) {
+				var weekName = "Week " + i;
+				allWeeks.push({ id: i, name: weekName, shipDay: "Tuesday", billDay: "Friday" });
+			};
+
+			return allWeeks;
+		};
+
+		//define flavor variables
+		$scope.flavors= [
+			'Secret Recipe Pecans',
+			'Secret Recipe Almonds',
+			'Secret Recipe Cashews',
+			'Secret Recipe Peanuts',
+			'Cinnamon Pecans',
+			'Cinnamon Almonds',
+			'Drunken Pecans',
+			'Mix-It-Up',
+		];
+
+		$scope.orderSchedule = [
+			{ id: 1 }
+		];
+
+		//define userdata model variable
+		$scope.userData = {
+			name: {
+				first: "",
+				last: ""
+			},
+			contact: {
+				email: "",
+				phone: ""
+			},
+			shippingDestinations: [],
+			shippingSchedule: shippingSchedules.monthly,
+			recipiantList: [ { relationship:"Myself"} ],
+			subType: "myself"
+		};
+
+		//define state variables
+		$scope.state = {
+			tempRecipiant: {
+				name: {
+					first: "",
+					last: ""
+				},
+				address: {
+					street1: "",
+					street2: "",
+					street3: "",
+					city: "",
+					state: "",
+					zip: ""
+				},
+				contact: {
+					email: "",
+					phone: ""
+				},
+				relationship: ""
+			},
+			order: {
+				qty: "1",
+				visibility: {
+					one: true,
+					two: false,
+					three: false,
+					four: false,
+				}
+			},
+			frequency: {
+				value: 'monthly'
+			},
+			shippingDestinations: "1",
+			recipientsBox: "1",
+			recipiantSelected: {
+				state: false,
+				id: ""
+			},
+			subType: {},
+			selectedRecipiant: 0
+		}
+
+		//local functions
+		function addToRecipiantList(relationship) {
+			
+			//define local variables
+			var newRecipiant = Object.create(recipiantProfile);
+			var existsAlready = false;
+			var entryIndex = 0;
+			var i = 0;
+
+			//1. check for the relationship
+			$scope.userData.recipiantList.forEach(function(recipiant) {
+				if(recipiant.relationship == relationship) {
+					existsAlready = true;
+					entryIndex = i;
+				};
+				i++;
+			});
+
+			//console.log('adding', relationship, 'to recipiant list', $scope.userData.recipiantList, "already Exists?", existsAlready);
+
+			//if relationship doesn't exist yet, add it
+			if(!existsAlready) {
+				newRecipiant.relationship = relationship;
+				$scope.userData.recipiantList.push(newRecipiant);
+			}
+			
+			//return result
+			return entryIndex;
+		};
+
+		function removeFromRecipiantList(relationship) {
+			
+			//console.log('removing', relationship, 'to recipiant list');
+
+			//define local variabls
+			var i = 0;
+
+			//iterate through array
+			$scope.userData.recipiantList.forEach(function(recipiant) {
+				if(recipiant.relationship == relationship) {
+					$scope.userData.recipiantList.splice(i, 1);
+				}
+				i++;
+			});
+
+			//return result
+			return 0;
+		};
+
+		function selectRecipiant(index) {
+
+			$scope.state.selectedRecipiant = index;
+		};
+
+		//view model functions
+		//UPDATE ORDER VISIBILITY
+		$scope.updateOrderVisiblity = function(value) {
+			//define local variales
+			var hash = {"one": 1, "two": 2, "three": 3, "four": 4};
+				
+			//iterate through values
+			Object.keys($scope.state.order.visibility).forEach(function(key) {
+				if(hash[key] <= value) $scope.state.order.visibility[key] = true
+					else $scope.state.order.visibility[key] = false
+			});
+
+			//console.log('checking values', value, $scope.state.order.visibility);
+			
+		};
+
+		//UPDATE FREQUENCY
+		$scope.updateFrequency = function(value) {
+			$scope.userData.shippingSchedule = shippingSchedules[value];
+		};
+
+		//UPDATE ORDER SCHEDULE
+		$scope.updateOrderSchedule = function(value) {
+			//define local variables
+		}
+
+		//UPDATE THE SUBSCRIPTION TYPE
+		$scope.updateSubType = function(value) {
+			//define local variables
+			var updateIndex = 0;
+			$scope.userData.subType = value;
+
+			if(value=="myself") {
+				//$scope.state.recipientsBox = "10";
+				addToRecipiantList("Myself");
+				removeFromRecipiantList("Someone");
+				selectRecipiant(0);
+			} else if(value=="others") {
+				//$scope.state.recipientsBox = "10";
+				updateIndex = addToRecipiantList("Someone");
+				removeFromRecipiantList("Myself");
+				selectRecipiant(0);
+			} else if(value=="both") {
+				//$scope.state.recipientsBox = "10";
+				updateIndex = addToRecipiantList("Myself");
+				addToRecipiantList("Someone");
+				selectRecipiant(0);
+			}
+		};
+
+		$scope.selectRecipiant = function(index) {
+			selectRecipiant(index);
+			$scope.state.tempRecipiant = $scope.userData.recipiantList[index];
+		};
+
+		$scope.updateRecipiantValues = function() {
+			var index = $scope.state.selectedRecipiant;
+			$scope.userData.recipiantList[index] = $scope.state.tempRecipiant;
+		};
+		
+	};
+	</script>
+
+	<!--Shipping Destination Directive-->
+	<script>
+	angular.module('ansub').directive('shipDest', shipDest);
+
+	/* @ngInject */
+	function shipDest() {
+		//define the directive
+		var directive = {
+			restrict: "AECM",
+			template: '<div>testing</div>',
+			replace: true,
+			scope: {},
+			link: linkFunc,
+			controller: shipDestController,
+			controllerAs: 'vm',
+			bindToController: true
+		};
+
+		/* @ngInject */
+		function linkFunc(scope, el, attr, ctrl) {}
+		
+		shipDestController.$inject = ['$scope', '$log'];
+
+		/* @ngInject */
+		function shipDestController($scope, $log) {
+			//define local variables
+			var self = this;
+
+			console.log('in shipDestController');
+
+		}
+
+		return directive;
+	}
+	</script>
+
+
+</head>
+<body>
+<div class="container" ng-controller="mainController">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+<!--Progress Indicator-->
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<!--Step 1: Treat or Gift-->
+		<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+			<h4>1. Treat or Gift?</h4>
+		</div>
+		<!--Step 2: Where To?-->
+		<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+			<h4>2. Where To?</h4>
+		</div>
+		<!--Step 3: What Kinds?-->
+		<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+			<h4>3. What Kinds?</h4>
+		</div>
+		<!--Step 4: Keeping In Touch-->
+		<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+			<h4>4. Who Are You?</h4>
+		</div>
+	</div>
+</div>
+
+
+<!--Step 1: Treat or Gift - Qualify the type of order-->
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<h4>1. Treat or Gift?</h4>
+		<input type="radio" name='treatGift' ng-model='userData.subType' value='myself' ng-click='updateSubType("myself")'>Myself
+		<input type="radio" name='treatGift' ng-model='userData.subType' value='others' ng-click='updateSubType("others")'>Others
+		<input type="radio" name='treatGift' ng-model='userData.subType' value='both' ng-click='updateSubType("both")'>Both
+	</div>
+</div>
+
+<!--Step 2: Where To? - Recipiant List-->
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<h4>2. Where To?</h4>	
+	<p>Where would you like your shipments to go?  you can ship to multiple people/places, just add all the addresses here and we'll assign them to shipments later.</p>
+	<!--<ship-dest></ship-dest>-->
+
+	<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+		<button class="btn btn-success">Add Recipiant</button>
+		<ol>
+			<li ng-repeat='recipiant in userData.recipiantList track by $index'
+				ng-click='selectRecipiant($index)'>
+				{{recipiant.relationship}}
+			</li>
+		</ol>
+	</div>
+	{{userData.recipiantList[state.selectedRecipiant]}}
+	<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9" ng-show='true'>
+		First Name:
+		<input 	type="text" 
+				ng-model='state.tempRecipiant.name.first'
+				ng-change='updateRecipiantValues()'> <br>
+		Last Name:
+		<input 	type="text" 
+				ng-value='' 
+				ng-model='state.tempRecipiant.name.last'
+				ng-change='updateRecipiantValues()'> <br>
+		Street 1:
+		<input type="text" ng-value=''> <br>
+		Street 2:
+		<input type="text" ng-value=''> <br>
+		Street 3:
+		<input type="text" ng-value=''> <br>
+		City:
+		<input type="text" ng-value=''>
+		State:
+		<input type="text" ng-value=''> <br>
+		Zip:
+		<input type="text" ng-value=''> <br>
+		Relationship:
+		<input 	type="text" 
+				ng-value='' 
+				ng-model='state.tempRecipiant.relationship'
+				ng-change='updateRecipiantValues()'> <br>
+		Is a gift:
+		<input type="checkbox" value='yes'>Yes <br>
+		<button class="btn btn-danger">Remove Recipiant</button>
+	</div>
+	
+	</div>
+</div>
+
+<!--Account Identifiers-->
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<h4>Lets Setup Your Account</h4>
+	First Name:
+	<input type="text" ng-value='userData.name.first'>
+	Last Name:
+	<input type="text" ng-value='userData.name.last'><br>
+	Email:
+	<input type="email" ng-value='userData.contact.email'>
+	Phone:
+	<input type="text" ng-value='userData.contact.phone'><br>
+
+	<p>We're still working on making this website fancy, but right now we don't have the ability for you to login so no need to setup a password, but we do want to know how we can get in contact with you.</p>
+
+	</div>
+</div>
+
+<!--Order Selection-->
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<h4>What Would You Like To Order</h4>
+	<p>We ship 10oz packages.  We can send 1 package by itself, or 2-4 in the same box.  Each box item can be a different flavors.</p>
+
+	<!--{{state.order}}-->
+	<input type="radio" name='frequency' ng-model='state.order.qty' value="1" ng-click='updateOrderVisiblity(1)'>1
+	<input type="radio" name='frequency' ng-model='state.order.qty' value="2" ng-click='updateOrderVisiblity(2)'>2
+	<input type="radio" name='frequency' ng-model='state.order.qty' value="3" ng-click='updateOrderVisiblity(3)'>3
+	<input type="radio" name='frequency' ng-model='state.order.qty' value="4" ng-click='updateOrderVisiblity(4)'>4
+
+	<table class='table'>
+		<tr>
+			<th>Item</th>
+			<th>Flavor Selection</th>
+		</tr>
+		<tr ng-show='state.order.visibility.one'>
+			<td>1</td>
+			<td>
+				<input list='flvrSelector'>
+			</td>
+		</tr>
+		<tr ng-show='state.order.visibility.two'>
+			<td>2</td>
+			<td>
+				<input list='flvrSelector'>
+			</td>
+		</tr>
+		<tr ng-show='state.order.visibility.three'>
+			<td>3</td>
+			<td>
+				<input list='flvrSelector'>
+			</td>
+		</tr>
+		<tr ng-show='state.order.visibility.four'>
+			<td>4</td>
+			<td>
+				<input list='flvrSelector'>			
+			</td>
+		</tr>
+
+	</table>
+	</div>
+</div>
+
+<!--Shiping Schedule-->
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<h4>When</h4>
+	Frequency:
+	<input type="radio" name='frequency' ng-model='state.frequency.value' ng-click='updateFrequency("yearly")' value='yearly'>Yearly
+	<input type="radio" name='frequency' ng-model='state.frequency.value' ng-click='updateFrequency("quarterly")' value='quarterly'>Quarterly
+	<input type="radio" name='frequency' ng-model='state.frequency.value' ng-click='updateFrequency("monthly")' value='monthly'>Monthly
+	<input type="radio" name='frequency' ng-model='state.frequency.value' ng-click='updateFrequency("weekly")' value='weekly'>Weekly
+	<br>
+	Shipment Schedule
+	<table class='table'>
+		<tr>
+			<th>#</th>
+			<th>Shipment</th>
+			<th>Billing Day</th>
+			<th>Shipping Day</th>
+			<th>Recipiant</th>
+			<th>Gift?</th>
+			<th>Message</th>
+		</tr>
+		<tr ng-repeat='i in userData.shippingSchedule track by $index'>
+			<td>{{i.id}}</td>
+			<td>{{i.name}}</td>
+			<td>{{i.billDay}}</td>
+			<td>{{i.shipDay}}</td>
+			
+		</tr>
+	</table>
+	</div>
+</div>
+
+<!--Submission-->
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<h4>Payment</h4>
+	We're not quite fancy enough to keep your credit card on file, but square is.  When you hit submit square will send you an email to enter your credit card information and keep in on file in thier system. That way your information is safe and you'll get your treats when and how you want them.
+	<br>
+	<button class="btn btn-success col-xs-6 col-sm-6 col-md-6 col-lg-6">Submit</button>
+	</div>
+</div>
+
+<!--Datalists-->
+<datalist name="flvrSelector" id="flvrSelector">
+	<option ng-repeat="flavor in flavors track by $index"
+			style='font-size: 12pt'
+			ng-click=''>
+			{{flavor}}
+	</option>
+
+</datalist>
+</div>
+
+
+
+</body>
+</html>

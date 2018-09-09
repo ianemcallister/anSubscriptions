@@ -1,0 +1,118 @@
+<html>
+<body>
+
+<script>
+function myFunction() {
+    var x = document.getElementById("myDIV");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+</script>
+
+<form action="" method="">
+
+<h4>Who</h4>
+First Name:
+<input type="text">
+Last Name:
+<input type="text">
+Email:
+<input type="email">
+Phone:
+<input type="text">
+
+<button onclick="myFunction()">show/hide</button>
+
+<h4>What</h4>
+Order:
+<input type="radio" name='frequency' value='1'>1
+<input type="radio" name='frequency' value='2'>2
+<input type="radio" name='frequency' value='3'>3
+<input type="radio" name='frequency' value='4'>4
+<input type="radio" name='frequency' value='more'>More than 4
+<table>
+	<tr id='myDIV'>
+		<td>1 Order</td>
+		<td>
+			<select name="flavorPicker" id="flavorPicker">
+				<option value='Secret Recipe Pecans'>Secret Recipe Pecans</option>
+				<option value='Secret Recipe Almonds'>Secret Recipe Almonds</option>
+				<option value='Secret Recipe Cashews'>Secret Recipe Cashews</option>
+				<option value='Secret Recipe Peanuts'>Secret Recipe Peanuts</option>
+				<option value='Cinnamon Pecans'>Cinnamon Pecans</option>
+				<option value='Cinnamon Almonds'>Cinnamon Almonds</option>
+				<option value='Drunken Pecans'>Drunken Pecans</option>
+				<option value='Mix-It-Up'>Mix-It-Up</option>
+			</select>
+		</td>
+		<!--<td><input list='flavorPicker' name='flavorPicker'></td>-->
+	</tr>
+	<tr>
+		<td>2 Orders</td>
+		<td>
+			<select name="flavorPicker" id="flavorPicker">
+				<option value='Secret Recipe Pecans'>Secret Recipe Pecans</option>
+				<option value='Secret Recipe Almonds'>Secret Recipe Almonds</option>
+				<option value='Secret Recipe Cashews'>Secret Recipe Cashews</option>
+				<option value='Secret Recipe Peanuts'>Secret Recipe Peanuts</option>
+				<option value='Cinnamon Pecans'>Cinnamon Pecans</option>
+				<option value='Cinnamon Almonds'>Cinnamon Almonds</option>
+				<option value='Drunken Pecans'>Drunken Pecans</option>
+				<option value='Mix-It-Up'>Mix-It-Up</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>3 Orders</td>
+		<td>
+			<select name="flavorPicker" id="flavorPicker">
+				<option value='Secret Recipe Pecans'>Secret Recipe Pecans</option>
+				<option value='Secret Recipe Almonds'>Secret Recipe Almonds</option>
+				<option value='Secret Recipe Cashews'>Secret Recipe Cashews</option>
+				<option value='Secret Recipe Peanuts'>Secret Recipe Peanuts</option>
+				<option value='Cinnamon Pecans'>Cinnamon Pecans</option>
+				<option value='Cinnamon Almonds'>Cinnamon Almonds</option>
+				<option value='Drunken Pecans'>Drunken Pecans</option>
+				<option value='Mix-It-Up'>Mix-It-Up</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>4 Orders</td>
+		<td>
+			<select name="flavorPicker" id="flavorPicker">
+				<option value='Secret Recipe Pecans'>Secret Recipe Pecans</option>
+				<option value='Secret Recipe Almonds'>Secret Recipe Almonds</option>
+				<option value='Secret Recipe Cashews'>Secret Recipe Cashews</option>
+				<option value='Secret Recipe Peanuts'>Secret Recipe Peanuts</option>
+				<option value='Cinnamon Pecans'>Cinnamon Pecans</option>
+				<option value='Cinnamon Almonds'>Cinnamon Almonds</option>
+				<option value='Drunken Pecans'>Drunken Pecans</option>
+				<option value='Mix-It-Up'>Mix-It-Up</option>
+			</select>			
+		</td>
+	</tr>
+	<tr>
+		<td>More than 4 Orders</td>
+		<td>list goes here</td>
+	</tr>
+</table>
+
+<h4>When</h4>
+Frequency:
+<input type="radio" name='frequency' value='yearly'>Yearly
+<input type="radio" name='frequency' value='quarterly'>Quarterly
+<input type="radio" name='frequency' value='monthly'>Monthly
+<input type="radio" name='frequency' value='weekly'>Weekly
+
+<h4>Where/Why/How</h4>	
+Order Shipping
+
+</form>	
+
+
+</body>
+</html>
