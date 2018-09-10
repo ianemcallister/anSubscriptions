@@ -316,192 +316,246 @@
 	}
 	</script>
 
+	<!--Product Selection Directive-->
+	<script>
+	angular.module('ansub').directive('productSelection', productSelection);
+
+	/* @ngInject */
+	function productSelection() {
+		//define the directive
+		var directive = {
+			restrict: "AECM",
+			templateUrl: 'views/productSelection.htm',
+			replace: true,
+			scope: {},
+			link: linkFunc,
+			controller: productSelectionController,
+			controllerAs: 'vm',
+			bindToController: true
+		};
+
+		/* @ngInject */
+		function linkFunc(scope, el, attr, ctrl) {}
+		
+		productSelectionController.$inject = ['$scope', '$log'];
+
+		/* @ngInject */
+		function productSelectionController($scope, $log) {
+			//define local variables
+			var self = this;
+			var productObject = { id: 1, flavor: '', rmvBtnVisible: false };
+
+			//define view model variables
+			self.state = {
+				addAProductBtn: {
+					classes: {
+						'btn': true,
+						'btn-success': true,
+						'btn-warning': false
+					},
+					visible: true
+				},
+				removeLastProductBtn: {
+					classes: {
+						'btn': true,
+						'btn-success': false,
+						'btn-warning': false,
+						'btn-danger': true
+					},
+					visible: false
+				}
+			};
+
+			self.flavors = [
+				'Secret Recipe Pecans',
+				'Secret Recipe Almonds',
+				'Secret Recipe Cashews',
+				'Secret Recipe Peanuts',
+				'Cinnamon Pecans',
+				'Cinnamon Almonds',
+				'Drunken Pecans',
+				'Mix-It-Up',
+			];
+
+			self.orderList = [];
+
+			self.productPrice = 17;
+
+			self.order = {
+				discounts: 0,
+				shipping: 0,
+				total: 0
+			}
+
+			//console.log('in productSelectionController');
+
+			//define local functions
+			function sumOrder() {
+				self.order.total = (self.orderList.length * self.productPrice) - self.order.discounts;
+			};
+
+			//define view model functions
+			//ADD A PRODUCT BUTTON
+			self.addAProduct = function() {
+				//define local variabels
+				var noOfProducts = self.orderList.length;
+
+				//if there is room add another product
+				if(noOfProducts < 4) self.orderList.push(Object.create(productObject));
+
+				//if this is the last available slot hide the add button
+				if(noOfProducts == 3) self.state.addAProductBtn.visible = false;
+
+				//if there is more than one product add the remove button
+				if(noOfProducts > 0) self.state.removeLastProductBtn.visible = true;
+
+				//make sure the id's are correct
+				for(var i = 0; i <= noOfProducts; i++) {
+					self.orderList[i].id = i + 1
+				}
+
+				//calculate money
+				if(noOfProducts == 3) self.order.discounts = self.productPrice;
+
+				sumOrder();
+				//console.log('adding a product');
+			};
+
+			//REMOVE LAST PRODUCT BUTTON
+			self.removeLastProduct = function() {
+				//define local variables
+				var noOfProducts = self.orderList.length;
+				var removeIndex = noOfProducts - 1;
+
+				//if there are at least two products, remove one
+				if(noOfProducts > 1) self.orderList.splice(removeIndex, 1);
+
+				//if down to one item, hide the remove button
+				if(noOfProducts == 2) self.state.removeLastProductBtn.visible = false;
+
+				//bring the add button back
+				self.state.addAProductBtn.visible = true;
+
+				//calculate money
+				if(noOfProducts == 4) self.order.discounts = 0;
+
+				sumOrder();
+
+				//console.log('removing product', noOfProducts);
+			};
+
+			//start this by adding a product to the order list
+			self.orderList.push(Object.create(productObject));
+
+			sumOrder();
+		};
+
+		return directive;		
+	};
+	</script>
+	
+	<!--Frequency Selection Directive-->
+	<script>
+	angular.module('ansub').directive('frequencySelection', frequencySelection);
+
+	/* @ngInject */
+	function frequencySelection() {
+		//define the directive
+		var directive = {
+			restrict: "AECM",
+			template: '<div>testing</div>',
+			replace: true,
+			scope: {},
+			link: linkFunc,
+			controller: frequencySelectionController,
+			controllerAs: 'vm',
+			bindToController: true
+		};
+
+		/* @ngInject */
+		function linkFunc(scope, el, attr, ctrl) {}
+		
+		frequencySelectionController.$inject = ['$scope', '$log'];
+
+		/* @ngInject */
+		function frequencySelectionController($scope, $log) {
+			//define local variables
+			var self = this;
+
+			console.log('in frequencySelectionController');
+
+		};
+
+		return directive;		
+	};
+	</script>
+
+	<!--Address Input Directive-->
+	<script>
+	angular.module('ansub').directive('singleAddressInput', singleAddressInput);
+
+	/* @ngInject */
+	function singleAddressInput() {
+		//define the directive
+		var directive = {
+			restrict: "AECM",
+			template: '<div>testing</div>',
+			replace: true,
+			scope: {},
+			link: linkFunc,
+			controller: singleAddressInputController,
+			controllerAs: 'vm',
+			bindToController: true
+		};
+
+		/* @ngInject */
+		function linkFunc(scope, el, attr, ctrl) {}
+		
+		singleAddressInputController.$inject = ['$scope', '$log'];
+
+		/* @ngInject */
+		function singleAddressInputController($scope, $log) {
+			//define local variables
+			var self = this;
+
+			console.log('in singleAddressInputController');
+
+		};
+
+		return directive;		
+	};
+	</script>
+
 
 </head>
 <body>
 <div class="container" ng-controller="mainController">
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-<!--Progress Indicator-->
+<!--Selecting the subscription type-->
 <div class="row">
-	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<!--Step 1: Treat or Gift-->
-		<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-			<h4>1. Treat or Gift?</h4>
-		</div>
-		<!--Step 2: Where To?-->
-		<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-			<h4>2. Where To?</h4>
-		</div>
-		<!--Step 3: What Kinds?-->
-		<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-			<h4>3. What Kinds?</h4>
-		</div>
-		<!--Step 4: Keeping In Touch-->
-		<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-			<h4>4. Who Are You?</h4>
-		</div>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<!--Make My Life Easy-->
+	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+		
+	</div>	
+	<!--Make Me Look Good-->
+	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 	</div>
+</div>	
 </div>
 
+<!--Product Selection-->
+<product-selection>
+</product-selection>
 
-<!--Step 1: Treat or Gift - Qualify the type of order-->
-<div class="row">
-	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<h4>1. Treat or Gift?</h4>
-		<input type="radio" name='treatGift' ng-model='userData.subType' value='myself' ng-click='updateSubType("myself")'>Myself
-		<input type="radio" name='treatGift' ng-model='userData.subType' value='others' ng-click='updateSubType("others")'>Others
-		<input type="radio" name='treatGift' ng-model='userData.subType' value='both' ng-click='updateSubType("both")'>Both
-	</div>
-</div>
+<!--Frequency Selection-->
+<frequency-selection>
+</frequency-selection>
 
-<!--Step 2: Where To? - Recipiant List-->
-<div class="row">
-	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<h4>2. Where To?</h4>	
-	<p>Where would you like your shipments to go?  you can ship to multiple people/places, just add all the addresses here and we'll assign them to shipments later.</p>
-	<!--<ship-dest></ship-dest>-->
-
-	<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-		<button class="btn btn-success">Add Recipiant</button>
-		<ol>
-			<li ng-repeat='recipiant in userData.recipiantList track by $index'
-				ng-click='selectRecipiant($index)'>
-				{{recipiant.relationship}}
-			</li>
-		</ol>
-	</div>
-	{{userData.recipiantList[state.selectedRecipiant]}}
-	<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9" ng-show='true'>
-		First Name:
-		<input 	type="text" 
-				ng-model='state.tempRecipiant.name.first'
-				ng-change='updateRecipiantValues()'> <br>
-		Last Name:
-		<input 	type="text" 
-				ng-value='' 
-				ng-model='state.tempRecipiant.name.last'
-				ng-change='updateRecipiantValues()'> <br>
-		Street 1:
-		<input type="text" ng-value=''> <br>
-		Street 2:
-		<input type="text" ng-value=''> <br>
-		Street 3:
-		<input type="text" ng-value=''> <br>
-		City:
-		<input type="text" ng-value=''>
-		State:
-		<input type="text" ng-value=''> <br>
-		Zip:
-		<input type="text" ng-value=''> <br>
-		Relationship:
-		<input 	type="text" 
-				ng-value='' 
-				ng-model='state.tempRecipiant.relationship'
-				ng-change='updateRecipiantValues()'> <br>
-		Is a gift:
-		<input type="checkbox" value='yes'>Yes <br>
-		<button class="btn btn-danger">Remove Recipiant</button>
-	</div>
-	
-	</div>
-</div>
-
-<!--Account Identifiers-->
-<div class="row">
-	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<h4>Lets Setup Your Account</h4>
-	First Name:
-	<input type="text" ng-value='userData.name.first'>
-	Last Name:
-	<input type="text" ng-value='userData.name.last'><br>
-	Email:
-	<input type="email" ng-value='userData.contact.email'>
-	Phone:
-	<input type="text" ng-value='userData.contact.phone'><br>
-
-	<p>We're still working on making this website fancy, but right now we don't have the ability for you to login so no need to setup a password, but we do want to know how we can get in contact with you.</p>
-
-	</div>
-</div>
-
-<!--Order Selection-->
-<div class="row">
-	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<h4>What Would You Like To Order</h4>
-	<p>We ship 10oz packages.  We can send 1 package by itself, or 2-4 in the same box.  Each box item can be a different flavors.</p>
-
-	<!--{{state.order}}-->
-	<input type="radio" name='frequency' ng-model='state.order.qty' value="1" ng-click='updateOrderVisiblity(1)'>1
-	<input type="radio" name='frequency' ng-model='state.order.qty' value="2" ng-click='updateOrderVisiblity(2)'>2
-	<input type="radio" name='frequency' ng-model='state.order.qty' value="3" ng-click='updateOrderVisiblity(3)'>3
-	<input type="radio" name='frequency' ng-model='state.order.qty' value="4" ng-click='updateOrderVisiblity(4)'>4
-
-	<table class='table'>
-		<tr>
-			<th>Item</th>
-			<th>Flavor Selection</th>
-		</tr>
-		<tr ng-show='state.order.visibility.one'>
-			<td>1</td>
-			<td>
-				<input list='flvrSelector'>
-			</td>
-		</tr>
-		<tr ng-show='state.order.visibility.two'>
-			<td>2</td>
-			<td>
-				<input list='flvrSelector'>
-			</td>
-		</tr>
-		<tr ng-show='state.order.visibility.three'>
-			<td>3</td>
-			<td>
-				<input list='flvrSelector'>
-			</td>
-		</tr>
-		<tr ng-show='state.order.visibility.four'>
-			<td>4</td>
-			<td>
-				<input list='flvrSelector'>			
-			</td>
-		</tr>
-
-	</table>
-	</div>
-</div>
-
-<!--Shiping Schedule-->
-<div class="row">
-	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<h4>When</h4>
-	Frequency:
-	<input type="radio" name='frequency' ng-model='state.frequency.value' ng-click='updateFrequency("yearly")' value='yearly'>Yearly
-	<input type="radio" name='frequency' ng-model='state.frequency.value' ng-click='updateFrequency("quarterly")' value='quarterly'>Quarterly
-	<input type="radio" name='frequency' ng-model='state.frequency.value' ng-click='updateFrequency("monthly")' value='monthly'>Monthly
-	<input type="radio" name='frequency' ng-model='state.frequency.value' ng-click='updateFrequency("weekly")' value='weekly'>Weekly
-	<br>
-	Shipment Schedule
-	<table class='table'>
-		<tr>
-			<th>#</th>
-			<th>Shipment</th>
-			<th>Billing Day</th>
-			<th>Shipping Day</th>
-			<th>Recipiant</th>
-			<th>Gift?</th>
-			<th>Message</th>
-		</tr>
-		<tr ng-repeat='i in userData.shippingSchedule track by $index'>
-			<td>{{i.id}}</td>
-			<td>{{i.name}}</td>
-			<td>{{i.billDay}}</td>
-			<td>{{i.shipDay}}</td>
-			
-		</tr>
-	</table>
-	</div>
-</div>
+<!--Address Input-->
+<single-address-input>
+</single-address-input>
 
 <!--Submission-->
 <div class="row">
@@ -513,17 +567,9 @@
 	</div>
 </div>
 
-<!--Datalists-->
-<datalist name="flvrSelector" id="flvrSelector">
-	<option ng-repeat="flavor in flavors track by $index"
-			style='font-size: 12pt'
-			ng-click=''>
-			{{flavor}}
-	</option>
 
-</datalist>
 </div>
-
+</div>
 
 
 </body>

@@ -1,0 +1,89 @@
+<div>
+<div class="row">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+	<!--Header-->
+	<h4>Pick your products</h4>
+	
+	<!--Product List-->
+	<!--Adding a Product Button-->
+	<button ng-class="vm.state.addAProductBtn.classes"
+			ng-click='vm.addAProduct()'
+			ng-show='vm.state.addAProductBtn.visible'
+	>
+		Add A Product
+	</button>
+
+	<!--Removing a product Button-->
+	<button ng-class="vm.state.removeLastProductBtn.classes"
+			ng-click='vm.removeLastProduct()'
+			ng-show='vm.state.removeLastProductBtn.visible'>
+		Remove Last Product
+	</button>
+
+	<table class="table">
+
+		<!--Header Row-->
+		<tr>
+			<th class="col-xs-1 col-sm-1 col-md-1 col-lg-1">#</th>
+			<th class="col-xs-9 col-sm-9 col-md-9 col-lg-9">Product</th>
+			<th class="col-xs-3 col-sm-3 col-md-3 col-lg-3">Price</th>
+		</tr>
+
+		<!--Products Rows-->
+		<tr ng-repeat='product in vm.orderList track by $index'>
+			<td>{{product.id}}</td>
+			<!--<td ng-mouseover='product.rmvBtnVisible = true'
+				ng-mouseleave='product.rmvBtnVisible = false'>
+				<span ng-hide='product.rmvBtnVisible'>{{product.id}}</span>
+				<button class="btn btn-danger"
+						ng-show='product.rmvBtnVisible'
+				>	-
+				</button>
+			</td>-->
+			<td>
+				<input 	list='flvrSelector'
+						ng-model='product.flavor'
+						placeholder='Select A Flavor'
+						class='col-xs-12 col-sm-12 col-md-12 col-lg-12'
+				>
+			</td>
+			<td>
+				{{vm.productPrice | currency: "$": 2}}
+			</td>
+		</tr>
+
+		<!--Sum Row-->
+		<tr>
+			<td></td>
+			<td>
+				<span>Discounts:</span> <br>
+				<span>Shipping:</span> <br>
+				<strong>TOTAL:</strong>
+			</td>
+			<td>
+				<span>{{vm.order.discounts | currency: "$": 2}}</span> <br>
+				<span>{{0 | currency: "$": 2}}</span> <br>
+				<strong>
+					{{vm.order.total | currency: "$": 2}}
+				</strong>
+				
+			</td>
+		</tr>
+	</table>
+
+	
+</div>
+</div>
+
+<!--Datalists-->
+<datalist name="flvrSelector" id="flvrSelector">
+	<option ng-repeat="flavor in vm.flavors track by $index"
+			style='font-size: 12pt'
+			ng-click=''>
+			{{flavor}}
+	</option>
+
+</datalist>
+
+</div>

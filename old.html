@@ -1,0 +1,179 @@
+<!--Progress Indicator-->
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<!--Step 1: Treat or Gift-->
+		<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+			<h4>1. Treat or Gift?</h4>
+		</div>
+		<!--Step 2: Where To?-->
+		<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+			<h4>2. Where To?</h4>
+		</div>
+		<!--Step 3: What Kinds?-->
+		<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+			<h4>3. What Kinds?</h4>
+		</div>
+		<!--Step 4: Keeping In Touch-->
+		<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+			<h4>4. Who Are You?</h4>
+		</div>
+	</div>
+</div>
+
+<!--Step 1: Treat or Gift - Qualify the type of order-->
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<h4>1. Treat or Gift?</h4>
+		<input type="radio" name='treatGift' ng-model='userData.subType' value='myself' ng-click='updateSubType("myself")'>Myself
+		<input type="radio" name='treatGift' ng-model='userData.subType' value='others' ng-click='updateSubType("others")'>Others
+		<input type="radio" name='treatGift' ng-model='userData.subType' value='both' ng-click='updateSubType("both")'>Both
+	</div>
+</div>
+
+<!--Step 2: Where To? - Recipiant List-->
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<h4>2. Where To?</h4>	
+	<p>Where would you like your shipments to go?  you can ship to multiple people/places, just add all the addresses here and we'll assign them to shipments later.</p>
+	<!--<ship-dest></ship-dest>-->
+
+	<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+		<button class="btn btn-success">Add Recipiant</button>
+		<ol>
+			<li ng-repeat='recipiant in userData.recipiantList track by $index'
+				ng-click='selectRecipiant($index)'>
+				{{recipiant.relationship}}
+			</li>
+		</ol>
+	</div>
+	{{userData.recipiantList[state.selectedRecipiant]}}
+	<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9" ng-show='true'>
+		First Name:
+		<input 	type="text" 
+				ng-model='state.tempRecipiant.name.first'
+				ng-change='updateRecipiantValues()'> <br>
+		Last Name:
+		<input 	type="text" 
+				ng-value='' 
+				ng-model='state.tempRecipiant.name.last'
+				ng-change='updateRecipiantValues()'> <br>
+		Street 1:
+		<input type="text" ng-value=''> <br>
+		Street 2:
+		<input type="text" ng-value=''> <br>
+		Street 3:
+		<input type="text" ng-value=''> <br>
+		City:
+		<input type="text" ng-value=''>
+		State:
+		<input type="text" ng-value=''> <br>
+		Zip:
+		<input type="text" ng-value=''> <br>
+		Relationship:
+		<input 	type="text" 
+				ng-value='' 
+				ng-model='state.tempRecipiant.relationship'
+				ng-change='updateRecipiantValues()'> <br>
+		Is a gift:
+		<input type="checkbox" value='yes'>Yes <br>
+		<button class="btn btn-danger">Remove Recipiant</button>
+	</div>
+	
+	</div>
+</div>
+
+<!--Account Identifiers-->
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<h4>Lets Setup Your Account</h4>
+	First Name:
+	<input type="text" ng-value='userData.name.first'>
+	Last Name:
+	<input type="text" ng-value='userData.name.last'><br>
+	Email:
+	<input type="email" ng-value='userData.contact.email'>
+	Phone:
+	<input type="text" ng-value='userData.contact.phone'><br>
+
+	<p>We're still working on making this website fancy, but right now we don't have the ability for you to login so no need to setup a password, but we do want to know how we can get in contact with you.</p>
+
+	</div>
+</div>
+
+<!--Order Selection-->
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<h4>What Would You Like To Order</h4>
+	<p>We ship 10oz packages.  We can send 1 package by itself, or 2-4 in the same box.  Each box item can be a different flavors.</p>
+
+	<!--{{state.order}}-->
+	<input type="radio" name='frequency' ng-model='state.order.qty' value="1" ng-click='updateOrderVisiblity(1)'>1
+	<input type="radio" name='frequency' ng-model='state.order.qty' value="2" ng-click='updateOrderVisiblity(2)'>2
+	<input type="radio" name='frequency' ng-model='state.order.qty' value="3" ng-click='updateOrderVisiblity(3)'>3
+	<input type="radio" name='frequency' ng-model='state.order.qty' value="4" ng-click='updateOrderVisiblity(4)'>4
+
+	<table class='table'>
+		<tr>
+			<th>Item</th>
+			<th>Flavor Selection</th>
+		</tr>
+		<tr ng-show='state.order.visibility.one'>
+			<td>1</td>
+			<td>
+				<input list='flvrSelector'>
+			</td>
+		</tr>
+		<tr ng-show='state.order.visibility.two'>
+			<td>2</td>
+			<td>
+				<input list='flvrSelector'>
+			</td>
+		</tr>
+		<tr ng-show='state.order.visibility.three'>
+			<td>3</td>
+			<td>
+				<input list='flvrSelector'>
+			</td>
+		</tr>
+		<tr ng-show='state.order.visibility.four'>
+			<td>4</td>
+			<td>
+				<input list='flvrSelector'>			
+			</td>
+		</tr>
+
+	</table>
+	</div>
+</div>
+
+<!--Shiping Schedule-->
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<h4>When</h4>
+	Frequency:
+	<input type="radio" name='frequency' ng-model='state.frequency.value' ng-click='updateFrequency("yearly")' value='yearly'>Yearly
+	<input type="radio" name='frequency' ng-model='state.frequency.value' ng-click='updateFrequency("quarterly")' value='quarterly'>Quarterly
+	<input type="radio" name='frequency' ng-model='state.frequency.value' ng-click='updateFrequency("monthly")' value='monthly'>Monthly
+	<input type="radio" name='frequency' ng-model='state.frequency.value' ng-click='updateFrequency("weekly")' value='weekly'>Weekly
+	<br>
+	Shipment Schedule
+	<table class='table'>
+		<tr>
+			<th>#</th>
+			<th>Shipment</th>
+			<th>Billing Day</th>
+			<th>Shipping Day</th>
+			<th>Recipiant</th>
+			<th>Gift?</th>
+			<th>Message</th>
+		</tr>
+		<tr ng-repeat='i in userData.shippingSchedule track by $index'>
+			<td>{{i.id}}</td>
+			<td>{{i.name}}</td>
+			<td>{{i.billDay}}</td>
+			<td>{{i.shipDay}}</td>
+			
+		</tr>
+	</table>
+	</div>
+</div>
