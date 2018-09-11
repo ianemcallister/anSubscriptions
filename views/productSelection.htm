@@ -1,10 +1,17 @@
 <div>
-<div class="row">
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+<div class="row" >
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
 
 	<!--Header-->
-	<h4>Pick your products</h4>
+	<h4 ng-style="vm.state.headerStyle">
+		1. Pick Your Products 
+		<span class='glyphicon glyphicon-ok' ng-show='vm.state.sectionComplete'></span>
+	</h4>
 	
+	<div class="row">
+	<div 	class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+			ng-show='true'>
+
 	<!--Product List-->
 	<!--Adding a Product Button-->
 	<button ng-class="vm.state.addAProductBtn.classes"
@@ -46,6 +53,7 @@
 						ng-model='product.flavor'
 						placeholder='Select A Flavor'
 						class='col-xs-12 col-sm-12 col-md-12 col-lg-12'
+						ng-blur="vm.validateProducts()"
 				>
 			</td>
 			<td>
@@ -72,7 +80,8 @@
 		</tr>
 	</table>
 
-	
+	</div>	
+	</div>
 </div>
 </div>
 

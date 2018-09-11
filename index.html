@@ -363,7 +363,11 @@
 						'btn-danger': true
 					},
 					visible: false
-				}
+				},
+				headerStyle: {
+					color: "rgb(51,51,51)"
+				},
+				sectionComplete: false
 			};
 
 			self.flavors = [
@@ -444,6 +448,14 @@
 				//console.log('removing product', noOfProducts);
 			};
 
+			//VALIDATE THE PRODUCTS WHEN CHANGED
+			self.validateProducts = function() {
+				var valid = false;
+				//console.log("validateing products");
+
+				if(valid) self.state.headerStyle.color = "rgb(0,165,128)"
+			}
+
 			//start this by adding a product to the order list
 			self.orderList.push(Object.create(productObject));
 
@@ -463,7 +475,7 @@
 		//define the directive
 		var directive = {
 			restrict: "AECM",
-			template: '<div>testing</div>',
+			templateUrl: 'views/frequencySelection.htm',
 			replace: true,
 			scope: {},
 			link: linkFunc,
@@ -482,6 +494,22 @@
 			//define local variables
 			var self = this;
 
+			//define view model variables
+			self.frequencies = [
+				"month",
+				"quarter",
+				"year"
+			];
+
+			self.starts = {
+				month: ["January", "February", "March", "April", "May", "June","July","August","September","October","November","December"],
+				quarter: ["Winter", "Spring", "Summer", "Fall"],
+				year: ["2018", "2019", "2020"]
+			}
+
+			self.selectedFrequency = '';
+			self.startsIn = '';
+
 			console.log('in frequencySelectionController');
 
 		};
@@ -499,7 +527,7 @@
 		//define the directive
 		var directive = {
 			restrict: "AECM",
-			template: '<div>testing</div>',
+			templateUrl: 'views/singleAddressInput.htm',
 			replace: true,
 			scope: {},
 			link: linkFunc,
@@ -560,8 +588,8 @@
 <!--Submission-->
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<h4>Payment</h4>
-	We're not quite fancy enough to keep your credit card on file, but square is.  When you hit submit square will send you an email to enter your credit card information and keep in on file in thier system. That way your information is safe and you'll get your treats when and how you want them.
+	<h4>4. Submit</h4>
+	We're not quite fancy enough to keep your credit card on file, but square is.  When you hit submit square will send you an email to enter your credit card information and keep it on file in their system. That way your information is safe and you'll get your treats when and how you want them.
 	<br>
 	<button class="btn btn-success col-xs-6 col-sm-6 col-md-6 col-lg-6">Submit</button>
 	</div>
