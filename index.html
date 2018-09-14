@@ -4,28 +4,91 @@
 	
 	<!--CDNs-->
 	<!--Bootstrap-->
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+	<!--Old One <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />-->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 	
 	<!--Scripts-->
 	<script   src="https://code.jquery.com/jquery-3.3.1.min.js"   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="   crossorigin="anonymous"></script>
+	
 	<!--Angular-->
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.js"></script>
 
 	<!--Setting up Angular-->
 	<script>
-		var ahNuts = angular.module('ansub', []);
+		var ahNuts = angular.module('ansub', ['ui.bootstrap']);
 
 	</script>
 		
+	<!--Flavors Modal-->
+	<script>
+	angular.module('ansub').service('modalService', modalService);
+
+	/* @ngInject */
+	modalService.$inject = ['$uibModal'];
+
+	/* @ngInject */
+	function modalService($uibModal) {
+		//define local variables
+		var modalDefaults = {
+            backdrop: true,
+            keyboard: true,
+            modalFade: true,
+            templateUrl: 'partials/modal.htm'
+        };
+
+        var modalOptions = {
+            closeButtonText: 'Close',
+            actionButtonText: 'OK',
+            headerText: 'Proceed?',
+            bodyText: 'Perform this action?'
+        };
+
+        this.showModal = function (customModalDefaults, customModalOptions) {
+            if (!customModalDefaults) customModalDefaults = {};
+            customModalDefaults.backdrop = 'static';
+            return this.show(customModalDefaults, customModalOptions);
+        };
+
+        this.show = function (customModalDefaults, customModalOptions) {
+            //Create temp objects to work with since we're in a singleton service
+            var tempModalDefaults = {};
+            var tempModalOptions = {};
+
+            //Map angular-ui modal custom defaults to modal defaults defined in service
+            angular.extend(tempModalDefaults, modalDefaults, customModalDefaults);
+
+            //Map modal.html $scope custom properties to defaults defined in service
+            angular.extend(tempModalOptions, modalOptions, customModalOptions);
+
+            if (!tempModalDefaults.controller) {
+                tempModalDefaults.controller = function ($scope, $modalInstance) {
+                    $scope.modalOptions = tempModalOptions;
+                    $scope.modalOptions.ok = function (result) {
+                        $modalInstance.close(result);
+                    };
+                    $scope.modalOptions.close = function (result) {
+                        $modalInstance.dismiss('cancel');
+                    };
+                }
+            }
+
+            return $modal.open(tempModalDefaults).result;
+        };
+		
+	};	
+
+	</script>
+
 	<!--Main Controller-->
 	<script>
 	angular.module('ansub').controller('mainController', mainController);
 
-	mainController.$inject = ['$scope','$log'];
+	mainController.$inject = ['$scope','$log', 'modalService'];
 
 	/* @ngInject */
-	function mainController($scope, $log) {
+	function mainController($scope, $log, modalService) {
 		//define local variables
 		var recipiantProfile = {
 			name: {
@@ -92,14 +155,14 @@
 
 		//define flavor variables
 		$scope.flavors= [
-			'Secret Recipe Pecans',
-			'Secret Recipe Almonds',
-			'Secret Recipe Cashews',
-			'Secret Recipe Peanuts',
-			'Cinnamon Pecans',
-			'Cinnamon Almonds',
-			'Drunken Pecans',
-			'Mix-It-Up',
+			{ name: 'Secret Recipe Pecans', description: " " },
+			{ name: 'Secret Recipe Almonds', description: " " },
+			{ name: 'Secret Recipe Cashews', description: " " },
+			{ name: 'Secret Recipe Peanuts', description: " " },
+			{ name: 'Cinnamon Pecans', description: " " },
+			{ name: 'Cinnamon Almonds', description: " " },
+			{ name: 'Drunken Pecans', description: " " },
+			{ name: 'Mix-It-Up', description: " " }
 		];
 
 		$scope.orderSchedule = [
@@ -345,7 +408,19 @@
 		function productSelectionController($scope, $log) {
 			//define local variables
 			var self = this;
-			var productObject = { id: 1, flavor: '', rmvBtnVisible: false };
+			var productObject = { 
+				id: 1, 
+				flavor: '', 
+				mixflvrs: {
+					srpec: false,
+					sralm: false,
+					srcsh: false,
+					srpea: false,
+					cnpec: false,
+					cnalm: false,
+					drpec: false
+				} 
+			};
 
 			//define view model variables
 			self.state = {
@@ -369,18 +444,19 @@
 				headerStyle: {
 					color: "rgb(51,51,51)"
 				},
+				flavorsVisible: false,
 				sectionComplete: false
 			};
 
-			self.flavors = [
-				'Secret Recipe Pecans',
-				'Secret Recipe Almonds',
-				'Secret Recipe Cashews',
-				'Secret Recipe Peanuts',
-				'Cinnamon Pecans',
-				'Cinnamon Almonds',
-				'Drunken Pecans',
-				'Mix-It-Up',
+			self.flavors= [
+				{ name: 'Secret Recipe Pecans', description: "Sweet and Salty" },
+				{ name: 'Secret Recipe Almonds', description: "Sweet and Salty" },
+				{ name: 'Secret Recipe Cashews', description: "Sweet and Salty" },
+				{ name: 'Secret Recipe Peanuts', description: "Sweet and Salty" },
+				{ name: 'Cinnamon Pecans', description: "Bavarian" },
+				{ name: 'Cinnamon Almonds', description: "Bavarian" },
+				{ name: 'Drunken Pecans', description: "Savory" },
+				{ name: 'Mix-It-Up', description: "Whatever You Like" }
 			];
 
 			self.orderList = [];
@@ -397,7 +473,9 @@
 
 			//define local functions
 			function sumOrder() {
+
 				self.order.total = (self.orderList.length * self.productPrice) - self.order.discounts;
+				if(self.orderList.length == 4) self.order.total = self.order.total - self.productPrice;
 			};
 
 			//define view model functions
@@ -421,7 +499,7 @@
 				}
 
 				//calculate money
-				if(noOfProducts == 3) self.order.discounts = self.productPrice;
+				//if(noOfProducts == 3) self.order.discounts = self.productPrice;
 
 				sumOrder();
 				//console.log('adding a product');
@@ -449,6 +527,23 @@
 
 				//console.log('removing product', noOfProducts);
 			};
+
+			//REMOVE A PRODUCT BUTTON
+			self.removeAProduct = function(id) {
+				//define local variables
+				var noOfProducts = self.orderList.length;
+				var removeIndex = id - 1;
+
+				//if there are at least two products, remove one
+				if(noOfProducts > 1) self.orderList.splice(removeIndex, 1);
+
+				//make sure the id's are correct
+				for(var i = 0; i <= (self.orderList.length - 1); i++) {
+					self.orderList[i].id = i + 1
+				}
+
+				sumOrder();
+			}
 
 			//VALIDATE THE PRODUCTS WHEN CHANGED
 			self.validateProducts = function() {
@@ -556,11 +651,47 @@
 	};
 	</script>
 
+	<!--Contact Directive-->
+	<script>
+	angular.module('ansub').directive('contactInput', contactInput);
+
+	/* @ngInject */
+	function contactInput() {
+		//define the directive
+		var directive = {
+			restrict: "AECM",
+			templateUrl: 'views/contactInput.htm',
+			replace: true,
+			scope: {},
+			link: linkFunc,
+			controller: contactInputtController,
+			controllerAs: 'vm',
+			bindToController: true
+		};
+
+		/* @ngInject */
+		function linkFunc(scope, el, attr, ctrl) {}
+		
+		contactInputtController.$inject = ['$scope', '$log'];
+
+		/* @ngInject */
+		function contactInputtController($scope, $log) {
+			//define local variables
+			var self = this;
+
+			console.log('in contactInputtController');
+
+		};
+
+		return directive;		
+	};
+	</script>
+
 
 </head>
 <body>
 <div class="container" ng-controller="mainController">
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
 
 <!--Selecting the subscription type-->
 <div class="row">
@@ -587,15 +718,19 @@
 <single-address-input>
 </single-address-input>
 
+<!--Contact Submitt-->
+<contact-input>
+</contact-input>
+
 <!--Submission-->
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<h4>3. Submit</h4>
+	<h4>4. Submit</h4>
 	<p>You’re almost there!  Click the submit button and your subscription order will be set up in our system.</p>
 	<p>A secure invoice link will be emailed to you soon (from Square).  Please fill in the payment information and authorize Square to store your payment information for monthly payment.</p>
 	<p>Your order will be charged on the 27th of each month (on the 25th of February) and your subscription order will be shipped by the 3rd of each month.</p>
 	
-	<p><input type="checkbox"> I agree to the Ah-Nuts terms and conditions.</p>
+	<p class='form-check'><input type="checkbox" class='form-check-input'> I agree to the Ah-Nuts terms and conditions.</p>
 	<br>
 
 	<button class="btn btn-success col-xs-6 col-sm-6 col-md-6 col-lg-6">Submit</button>
@@ -605,19 +740,6 @@
 </div>
 
 </div>
-</div>
-
-<div class="modal-header">
-	<h3>This is a modal</h3>
-</div>
-<div class="modal-body">
-	<p>this is the body</p>
-</div>
-<div class="modal-footer">
-	 <button type="button" class="btn" 
-          data-ng-click="modalOptions.close()">Test{{modalOptions.closeButtonText}}</button>
-  <button class="btn btn-primary" 
-          data-ng-click="modalOptions.ok();">testing{{modalOptions.actionButtonText}}</button>
 </div>
 
 
