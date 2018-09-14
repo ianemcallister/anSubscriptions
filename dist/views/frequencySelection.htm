@@ -1,0 +1,54 @@
+<div>
+<div class="row" >
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+
+	<!--Header-->
+	<h4 ng-style="vm.state.headerStyle">
+		2. Pick Your Frequency 
+		<span class='glyphicon glyphicon-ok' ng-show='vm.state.sectionComplete'></span>
+	</h4>
+	
+	<div class="row">
+	<div 	class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+			ng-show='true'>
+			
+			<span class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				I'm looking for nuts every
+			</span>
+			<br>
+			<input 	list='fqncySelector' 
+					ng-model='vm.selectedFrequency'
+					class='col-xs-12 col-sm-12 col-md-12 col-lg-12'> <br>
+			<span class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				Starting in
+			</span>
+			<br>
+			<input 	list='startDateSelector'
+					ng-model='vm.startsIn'
+					class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
+	</div>
+	</div>
+
+</div>
+</div>
+
+<!--Datalists-->
+<datalist name="fqncySelector" id="fqncySelector">
+	<option ng-repeat="frequency in vm.frequencies track by $index"
+			style='font-size: 12pt'
+			ng-click=''>
+			{{frequency}}
+	</option>
+
+</datalist>
+
+<datalist name="startDateSelector" id="startDateSelector">
+	<option ng-repeat="startOption in vm.starts[vm.selectedFrequency] track by $index"
+			style='font-size: 12pt'
+			ng-click=''>
+			{{startOption}}
+	</option>
+
+</datalist>
+
+</div>

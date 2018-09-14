@@ -1,0 +1,205 @@
+<div>
+<div class="row" >
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+
+	<!--Header-->
+	<h4 ng-style="vm.state.headerStyle">
+		1. Choose Your Favorite Nuts 
+		<i class="fas fa-question-circle fa-xs" style="color:blue" ng-click='vm.state.flavorsVisible=!vm.state.flavorsVisible'></i>
+		<span class='glyphicon glyphicon-ok' ng-show='vm.state.sectionComplete'></span>
+		
+	</h4>
+	
+	<p>Choose your favorite flavors.  Select up to four different flavors.  Your 4th flavor is FREE!!!</p>
+	
+	<!--Menu Explaination-->
+	<div class="row">
+		<div 	ng-show='vm.state.flavorsVisible'
+				class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+			We offer seven different nut & recipie combinations to make our seven different flavors.
+
+			<ul>
+				<li ng-repeat='flavor in vm.flavors track by $index'>
+					<strong>{{flavor.name}}</strong> -
+					<span>{{flavor.description}}</span>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="row">
+	<div 	class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+			ng-show='true'>
+	
+	<!--Selction Table-->
+	<table class="table">
+
+		<!--Header Row-->
+		<tr>
+			<th scope='col'></th>
+			<th scope='col'>Flavor
+			</th>
+			<th scope='col'>Price</th>
+			<th scope='col'></th>
+		</tr>
+
+		<!--Products Rows-->
+		<tr ng-repeat='product in vm.orderList track by $index'>
+			<!--Product Id-->
+			<td>{{product.id}}</td>
+	
+			<!--Flavor Selction-->
+			<td>
+				
+				<input 	list='flvrSelector'
+						ng-model='product.flavor'
+						placeholder='Select A Flavor'
+						class='form-control'
+						ng-blur="vm.validateProducts()"
+				>
+				<br>
+				<div class="row">
+					<div 	ng-if='product.flavor=="Mix-It-Up"'
+							class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>
+					My Mix Needs... <br>
+						<div class="form-check">
+							<!--1-->
+							<input 	class="form-check-input" 
+									type="checkbox" 
+									ng-model='product.mixflvrs.srpec' 
+									id="item1">
+							<label class="form-check-label" for="item1">
+								Secret Recipe Pecans
+							</label>
+							<br>
+							<!--2-->
+							<input 	class="form-check-input" 
+									type="checkbox" 
+									ng-model='product.mixflvrs.sralm' 
+									id="item2">
+							<label class="form-check-label" for="item2">
+								Secret Recipe Almonds
+							</label>
+							<br>
+							<!--3-->
+							<input 	class="form-check-input" 
+									type="checkbox" 
+									ng-model='product.mixflvrs.srcsh' 
+									id="item3">
+							<label class="form-check-label" for="item3">
+								Secret Recipe Cashews
+							</label>
+							<br>
+							<!--4-->
+							<input 	class="form-check-input" 
+									type="checkbox" 
+									ng-model='product.mixflvrs.srpea' 
+									id="item4">
+							<label class="form-check-label" for="item4">
+								Secret Recipe Peanuts
+							</label>
+							<br>
+							<!--5-->
+							<input 	class="form-check-input" 
+									type="checkbox" 
+									ng-model='product.mixflvrs.cnpec' 
+									id="item5">
+							<label class="form-check-label" for="item5">
+								Cinnamon Pecans
+							</label>
+							<br>
+							<!--6-->
+							<input 	class="form-check-input" 
+									type="checkbox" 
+									ng-model='product.mixflvrs.cnalm' 
+									id="item6">
+							<label class="form-check-label" for="item6">
+								Cinnamon Almonds
+							</label>
+							<br>
+							<!--7-->
+							<input 	class="form-check-input" 
+									type="checkbox" 
+									ng-model='product.mixflvrs.drpec' 
+									id="item7">
+							<label class="form-check-label" for="item7">
+								Drunken Pecans
+							</label>
+						<!--<input type="checkbox" ng-model='product.mixflvrs.srpec' class="form-check-input">Secret Recipe Pecans <br>
+						<input type="checkbox" ng-model='product.mixflvrs.sralm' class="form-check-input">Secret Recipe Almonds <br>
+						<input type="checkbox" ng-model='product.mixflvrs.srcsh' class="form-check-input">Secret Recipe Cashews <br>
+						<input type="checkbox" ng-model='product.mixflvrs.srpea' class="form-check-input">Secret Recipe Peanuts <br>
+						<input type="checkbox" ng-model='product.mixflvrs.cnpec' class="form-check-input">Cinnamon Pecans <br>
+						<input type="checkbox" ng-model='product.mixflvrs.cnalm' class="form-check-input">Cinnamon Almonds <br>
+						<input type="checkbox" ng-model='product.mixflvrs.drpec' class="form-check-input">Drunken Pecans-->
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<span 	class='col-xs-12 col-sm-12 col-md-12 col-lg-12'
+						ng-if='product.id == (vm.orderList.length) && product.id < 4'>
+						<button class="btn btn-success btn-block"
+								ng-click='vm.addAProduct()'>
+								Add another flavor
+						</button>
+					</span>
+				</div>
+				
+			</td>
+
+			<!--Price-->
+			<td>
+				<span ng-if="product.id > 3">FREE!</span>
+				<span ng-if='product.id <= 3'>{{vm.productPrice | currency: "$": 2}}</span>
+				
+			</td>
+
+			<!--Removal button-->
+			<td>
+				<button ng-if='product.id == 1'
+						class='btn btn-secondary'>remove
+					
+				</button>
+				<button ng-if='product.id > 1'
+						class="btn btn-danger"
+						ng-click='vm.removeAProduct(product.id)'>
+					remove
+				</button>
+			</td>
+		</tr>
+
+		<!--Sum Row-->
+		<tr>
+			<td></td>
+			<td>
+				<span>Discounts:</span> <br>
+				<span>Shipping:</span> <br>
+				<strong>TOTAL:</strong>
+			</td>
+			<td>
+				<span>{{vm.order.discounts | currency: "$": 2}}</span> <br>
+				<span>{{0 | currency: "$": 2}}</span> <br>
+				<strong>
+					{{vm.order.total | currency: "$": 2}}
+				</strong>
+				
+			</td>
+		</tr>
+	</table>
+
+	</div>	
+	</div>
+</div>
+</div>
+
+<!--Datalists-->
+<datalist name="flvrSelector" id="flvrSelector">
+	<option ng-repeat="flavor in vm.flavors track by $index"
+			style='font-size: 12pt'
+			ng-click=''>
+			{{flavor.name}}
+	</option>
+
+</datalist>
+
+</div>

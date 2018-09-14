@@ -1,0 +1,45 @@
+<div>
+<div class="row" >
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+
+	<!--Header-->
+	<h4 ng-style="">
+		3. Contact Information
+		<span class='glyphicon glyphicon-ok' ng-show='vm.state.sectionComplete'></span>
+	</h4>
+
+	<form>
+		<!--Name-->
+		<div class="form-row">
+			<div class="col">
+				<div class="form-group">
+					<label for="firstNameInput">First Name</label>
+					<input type="text" class="form-control" id="firstNameInput" aria-describedby="nameHelp" placeholder="Enter first name here">
+				</div>
+			</div>
+			<div class="col">
+				<div class="form-group">
+					<label for="lastNameInput">Last Name</label>
+					<input type="text" class="form-control" id="lastNameInput" aria-describedby="nameHelp" placeholder="Enter last name here">
+				</div>
+			</div>
+		</div>
+	
+		<!--Phone-->
+		<div class="form-group">
+			<label for="phoneNumber">Phone number</label>
+			<input type="text" class="form-control" id="phoneNumber" aria-describedby="emailHelp" placeholder="Enter phone number here">
+		</div>
+
+		<!--Email-->
+		<div class="form-group">
+			<label for="emailAddress">Email address</label>
+			<input type="email" class="form-control" id="emailAddress" aria-describedby="emailHelp" placeholder="Enter email here">
+			<small id="emailHelp" class="form-text text-muted">We'll never share your email or phone with anyone else.</small>
+		</div>
+
+	</form>
+
+</div>
+</div>
+</div>

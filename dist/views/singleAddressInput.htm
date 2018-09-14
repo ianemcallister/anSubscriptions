@@ -1,0 +1,56 @@
+<div>
+<div class="row" >
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+
+	<!--Header-->
+	<h4 ng-style="vm.state.headerStyle">
+		2. Shipping 
+		<span class='glyphicon glyphicon-ok' ng-show='vm.state.sectionComplete'></span>
+	</h4>
+
+	<!--<p>Enter your Zip Code first.  Your city and state will automatically be filled in.</p>-->
+	
+	<form>
+
+		<div class="form-group">
+			<label for="street">Street</label>
+			<input type="text" class="form-control" id='street' placeholder='Enter street address here'>
+		</div>
+
+
+		<div class="form-group">
+			<label for="zipInput">Zipcode</label>
+			<input type="text" class="form-control" id='zipInput' placeholder='Enter your zipcode, your city and state will automatically be filled in.'>
+		</div>			
+		
+		<div class="form-row">
+			<div class="col">
+				<div class="form-group">
+					<label for="city">City</label>
+					<input type="text" id='city' class="form-control" placeholder='City name goes here'>
+				</div>
+			</div>
+			<div class="col">
+				<div class="form-group">
+					<label for="state">State</label>
+					<input type="text" id='state' class="form-control" placeholder='State id goes here'>
+				</div>
+			</div>
+		</div>
+
+	</form>
+
+</div>
+</div>
+
+<!--Datalists-->
+<datalist name="stateSelector" id="stateSelector">
+	<option ng-repeat="state in vm.states track by $index"
+			style='font-size: 12pt'
+			ng-click=''>
+			{{state}}
+	</option>
+
+</datalist>
+
+</div>
