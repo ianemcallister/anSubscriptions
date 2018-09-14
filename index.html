@@ -7,9 +7,11 @@
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
 	
 	<!--Scripts-->
+	<script   src="https://code.jquery.com/jquery-3.3.1.min.js"   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="   crossorigin="anonymous"></script>
 	<!--Angular-->
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
-	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.js"></script>
+
 	<!--Setting up Angular-->
 	<script>
 		var ahNuts = angular.module('ansub', []);
@@ -578,8 +580,8 @@
 </product-selection>
 
 <!--Frequency Selection-->
-<frequency-selection>
-</frequency-selection>
+<!--<frequency-selection>
+</frequency-selection>-->
 
 <!--Address Input-->
 <single-address-input>
@@ -588,15 +590,34 @@
 <!--Submission-->
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<h4>4. Submit</h4>
-	We're not quite fancy enough to keep your credit card on file, but square is.  When you hit submit square will send you an email to enter your credit card information and keep it on file in their system. That way your information is safe and you'll get your treats when and how you want them.
+	<h4>3. Submit</h4>
+	<p>You’re almost there!  Click the submit button and your subscription order will be set up in our system.</p>
+	<p>A secure invoice link will be emailed to you soon (from Square).  Please fill in the payment information and authorize Square to store your payment information for monthly payment.</p>
+	<p>Your order will be charged on the 27th of each month (on the 25th of February) and your subscription order will be shipped by the 3rd of each month.</p>
+	
+	<p><input type="checkbox"> I agree to the Ah-Nuts terms and conditions.</p>
 	<br>
+
 	<button class="btn btn-success col-xs-6 col-sm-6 col-md-6 col-lg-6">Submit</button>
+	
+	<br><br><br>
 	</div>
 </div>
 
-
 </div>
+</div>
+
+<div class="modal-header">
+	<h3>This is a modal</h3>
+</div>
+<div class="modal-body">
+	<p>this is the body</p>
+</div>
+<div class="modal-footer">
+	 <button type="button" class="btn" 
+          data-ng-click="modalOptions.close()">Test{{modalOptions.closeButtonText}}</button>
+  <button class="btn btn-primary" 
+          data-ng-click="modalOptions.ok();">testing{{modalOptions.actionButtonText}}</button>
 </div>
 
 
