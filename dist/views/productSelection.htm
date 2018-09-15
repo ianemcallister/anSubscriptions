@@ -51,12 +51,33 @@
 			<!--Flavor Selction-->
 			<td>
 				
+				<!--Select Flavor-->
+				<form class='form'>
+				<select name="flavorPicker" 
+						id="flavorPicker" 
+						ng-model='product.flavor'
+						class='custom-select'
+						ng-options="flavor.name for flavor in vm.flavors">
+					<option disabled value=''>- Please Choose -</option>
+					<!--<option value='Secret Recipe Pecans'>Secret Recipe Pecans</option>
+					<option value='Secret Recipe Almonds'>Secret Recipe Almonds</option>
+					<option value='Secret Recipe Cashews'>Secret Recipe Cashews</option>
+					<option value='Secret Recipe Peanuts'>Secret Recipe Peanuts</option>
+					<option value='Cinnamon Pecans'>Cinnamon Pecans</option>
+					<option value='Cinnamon Almonds'>Cinnamon Almonds</option>
+					<option value='Drunken Pecans'>Drunken Pecans</option>
+					<option value='Mix-It-Up'>Mix-It-Up</option>-->
+				</select>
+				</form>
+				<!--
+				Old Data list, doesn't work on some browsers
 				<input 	list='flvrSelector'
 						ng-model='product.flavor'
 						placeholder='Select A Flavor'
 						class='form-control'
 						ng-blur="vm.validateProducts()"
-				>
+				>-->
+
 				<br>
 				<div class="row">
 					<div 	ng-if='product.flavor=="Mix-It-Up"'

@@ -6,7 +6,7 @@
 //define dependenceis
 var gulp 	= require('gulp');						//build tools
 //var autoprefixer = require('gulp-autoprefixer');	//allows for customization to various browsers
-//var browserSync = require('browser-sync').create();	//allows for live updating
+var browserSync = require('browser-sync').create();	//allows for live updating
 //var jasmine = require('gulp-jasmine-phantom'); 		//unit testing facilitation
 //var concat = require('gulp-concat');				//will help shrink our public files
 //var concatCss = require('gulp-concat-css');			//concatenates CSS into a single file
@@ -28,6 +28,27 @@ gulp.task('dist', [
 	//'scripts',
 	//'copy-images'
 ]);
+
+/*
+*	DEFAULT
+*
+*	This is ...
+*/
+gulp.task('default', [], function() {
+	//gulp.watch('public/styles/**/*.css', ['styles'])
+	//	.on('change', browserSync.reload);
+	//gulp.watch('public/scripts/**/*.js', ['scripts'])
+	//	.on('change', browserSync.reload);
+	gulp.watch('public/views/**/*.htm', ['copy-html'])
+		.on('change', browserSync.reload);
+	gulp.watch('public/index.html', ['copy-html'])
+		.on('change', browserSync.reload);
+
+	browserSync.init({
+		server: 'dist'
+	});
+});
+
 
 
 /*
