@@ -43,6 +43,7 @@
 			<th scope='col'></th>
 		</tr>
 
+		{{vm.anorder}}
 		<!--Products Rows-->
 		<tr ng-repeat='product in vm.orderList track by $index'>
 			<!--Product Id-->
@@ -57,7 +58,8 @@
 						id="flavorPicker" 
 						ng-model='product.flavor'
 						class='form-control'
-						ng-options="flavor.name as flavor.name for flavor in vm.flavors">
+						ng-options="flavor.name as flavor.name for flavor in vm.flavors"
+						ng-change='vm.updateShoppingCart()'>
 					<option disabled value=''>- Please Choose -</option>
 				</select>
 				</form>
@@ -71,11 +73,11 @@
 				>-->
 				<!--Mix Flavor selection-->
 					<div 	ng-if='product.flavor=="Mix-It-Up"'>
-					<strong><u>My Mix needs {{product.mixflvrCount}} flavors</u></strong> <br>
+					<strong><u>My mix needs {{product.mixflvrCount}} flavors</u></strong> <br>
 						<ul style='list-style:none' class="list-group">
 							<li ng-repeat='flavor in product.mixflvrs track by flavor.id'
 								ng-class='product.mixflvrs[flavor.id].classes'
-								ng-click='flavor.selected=!flavor.selected; flavor.classes.active=!flavor.classes.active; product.mixflvrCount = vm.countMixFlavors(product.mixflvrs)'>
+								ng-click='flavor.selected=!flavor.selected; flavor.classes.active=!flavor.classes.active; product.mixflvrCount = vm.countMixFlavors(product.mixflvrs); vm.updateShoppingCart()'>
 								{{flavor.name}}
 							</li>
 						</ul>

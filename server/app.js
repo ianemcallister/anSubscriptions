@@ -40,6 +40,20 @@ serverApp.use('/', function(req, res, next) {
 	next();
 });
 
+
+/*
+*	POST Declarations
+*/
+serverApp.post('/subscription-application-submission', function(req, res) {
+	
+	//advise of the post body
+	console.log(req.body);
+
+	//res.sendStatus(200);
+	res.status(200);
+	res.send("<div>This is what we got</div>");
+});
+
 /*
 *	Opening Up the server
 */

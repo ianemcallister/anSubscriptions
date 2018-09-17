@@ -1,0 +1,79 @@
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<h4>4. Submit</h4>
+	<p>You’re almost there!  Click the submit button and your subscription order will be set up in our system.</p>
+	<p>A secure invoice link will be emailed to you soon (from Square).  Please fill in the payment information and authorize Square to store your payment information for monthly payment.</p>
+	<p>Your order will be charged on the 27th of each month (on the 25th of February) and your subscription order will be shipped by the 3rd of each month.</p>
+	
+	<p class='form-check'><input type="checkbox" class='form-check-input'> I agree to the Ah-Nuts <a href="" ng-click='vm.state.showtandc=!vm.state.showtandc'>terms and conditions</a>.</p>
+	<br>
+	<div ng-show='vm.state.showtandc'>
+		<h4>Autoship Terms and Conditions</h4>
+		<p>Autoship is a convenient way to ensure your Ah-Nuts! products arrive regularly and that you never run out, saving you the hassle of having to reorder each time you need to purchase more product. By signing up for Autoship Program you are abiding by the following Autoship Terms and Conditions.</p>
+		<p>Autoship Account</p>
+		<ul>
+			<li>You must have a valid email address and a Credit Card and/or Debit Card to set up and participate in Ah-Nuts! Autoship Program.</li>
+			<li>By placing an Autoship order, whether by online, placing a telephone order through a Sales Representative, placing an order at a farmers market, facsimile, by mail, or otherwise, you are bound by these Ah-Nuts! Autoship Terms and Conditions.</li>
+		</ul>
+		<p>Autoship Order Placement</p>
+		<ul>
+			<li>By placing an Autoship order, you authorize Ah-Nuts! to automatically place and ship you an order for your selected Autoship items, on a scheduled date determined by your order frequency selection on your initial Autoship order.</li>
+		</ul>
+		<p>Autoship Order Final Order Amount</p>
+		<p>Your Autoship Order's final total may vary due to changes in price, tax rates, and/or shipping costs. Your order total will include:</p>
+		<ul>
+			<li>Sales tax, if applicable, will be applied to each Autoship order.</li>
+		</ul>
+		<p>Autoship Order Payment</p>
+		<ul>
+			<li>By placing an Autoship order, you authorize Ah-Nuts! to charge the credit card you provided for subsequent Autoship orders until you cancel your Autoship order. Unless modified by you, the credit card you used to set up the initial Autoship order will be charged for subsequent orders. Subsequent orders will be charged the day the order is placed and forwarded to the warehouse for processing.</li>
+			<li>If your credit card is declined at time of Autoship order placement, your order will not be placed and you will be notified that your Autoship payment has failed and you need to update your credit card information. Once your payment information is corrected, your Autoship order will be placed. To update your credit card information, you should contact customer service at info@ah-nuts.com.</li>
+			<li>Credit Card and Debit Card payment will be the only valid payment type accepted for Autoship Order payment. Store Credit, Gift Certificates, Checks, PayPal, and Bill Me Later will not be accepted.</li>
+		</ul>
+		<p>Autoship Order Notifications</p>
+		<ul>
+			<li>A pre-order Autoship notification, Autoship order confirmation email and a shipment confirmation email will be sent after each Autoship order is processed and shipped. Once an Autoship order is scheduled, no emails will be sent before subsequent Autoship order shipments are processed.</li>
+			<li>At the time of order placement, any backordered item(s) on your Autoship order will be indicated on your order confirmation.</li>
+		</ul>
+		<p>Autoship Order Backordered Items</p>
+		<ul>
+			<li>Any backordered Autoship order item(s) will be shipped as soon as they become available.</li>
+			<li>A backordered item will not affect the Autoship order schedule for the backordered item. Subsequent Autoship orders of that item will continue to be shipped according to the schedule you specified when you set up the initial Autoship order.</li>
+		</ul>
+		<p>Cancellation of Autoship Orders</p>
+		<ul>
+			<li>Canceling subsequent Autoship orders can be done by contacting customer service at info@ah-nuts.com. You can modify or cancel your Autoship order at any time before the subsequent order is processed.</li>
+			<li>Canceling an Autoship Order will stop all future shipments of that order.</li>
+			<li>Canceling an Autoship item will stop all future shipments of that item.</li>
+			<li>To resume your Autoship Order after you have cancelled it, you will need to create a new Autoship Order.</li>
+		</ul>
+		<p>Changing of Your Autoship Order</p>
+		<p>Modifying subsequent Autoship orders is easy. Simply by contacting customer service at info@ah-nuts.com. You can perform the following modifications to your Autoship Order(s):</p>
+		<ul>
+			<li>Update payment information</li>
+			<li>Update billing / shipping addresses</li>
+			<li>Change the order frequency of an item</li>
+			<li>Remove items from you Autoship order</li>
+		</ul>
+		<p>Acceptance of Autoship Terms and Conditions</p>
+		<ul>
+			<li>By placing an Autoship order, whether online at Ah-Nuts!, by placing a telephone order through a Ah-Nuts! Sales Representative, facsimile, by mail, or otherwise, you are agreeing to be bound by these Ah-Nuts! Autoship Terms and Conditions, as well as Ah-Nuts! general Terms and Conditions.</li>
+		</ul>
+		<p>Ah-Nuts! reserves the right to update or revise these Autoship Terms and Conditions at any time. If Ah-Nuts! makes material changes to these Autoship Terms and Conditions, we will provide you notice by posting a notice on the website for 30 days. If you do not accept these Terms and Conditions or any changes proposed by Ah-Nuts!, your only remedy is to cancel your Autoship Order(s).</p>
+		<p>Ah-Nuts! reserves the right to modify or terminate this program at any time without prior notice.</p>
+		<a href="" ng-click='vm.state.showtandc=!vm.state.showtandc'>Hide Terms & Conditions</a>
+		<br><br>
+	</div>
+	
+
+	<div 	class="alert alert-danger" 
+			role="alert"
+			ng-show='this.state.errors.missingRequired'>
+	  Please complete all required fields before submitting
+	</div>
+	<button class="btn btn-success btn-block" ng-click='this.validateForm()'>Submit</button>
+	
+	<br><br><br>
+	</div>
+
+</div>
