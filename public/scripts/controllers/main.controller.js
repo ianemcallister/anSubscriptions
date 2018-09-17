@@ -4,6 +4,8 @@ angular.module('ansub').controller('mainController', mainController);
 
 	/* @ngInject */
 	function mainController($scope, $log, modalService, submissionService) {
+		//notify progress
+
 		//define local variables
 		var recipiantProfile = {
 			name: {
