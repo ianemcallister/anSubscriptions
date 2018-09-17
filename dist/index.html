@@ -400,7 +400,8 @@
 		};
 
 		/* @ngInject */
-		function linkFunc(scope, el, attr, ctrl) {}
+		function linkFunc(scope, el, attr, ctrl) {
+		}
 		
 		productSelectionController.$inject = ['$scope', '$log'];
 
@@ -410,15 +411,16 @@
 			var self = this;
 			var productObject = { 
 				id: 1, 
-				flavor: '', 
+				flavor: "", 
+				mixflvrCount: 0,
 				mixflvrs: {
-					srpec: false,
-					sralm: false,
-					srcsh: false,
-					srpea: false,
-					cnpec: false,
-					cnalm: false,
-					drpec: false
+					srpec: { id: "srpec", name: "Secret Recipe Pecans", selected:false, classes:{"list-group-item": true, "active": false} },
+					sralm: { id: "sralm", name: "Secret Recipe Almonds", selected:false, classes:{"list-group-item": true, "active": false}  },
+					srcsh: { id: "srcsh", name: "Secret Recipe Cashews", selected:false, classes:{"list-group-item": true, "active": false}  },
+					srpea: { id: "srpea", name: "Secret Recipe Peanuts", selected:false, classes:{"list-group-item": true, "active": false}  },
+					cnpec: { id: "cnpec", name: "Cinnamon Pecans", selected:false, classes:{"list-group-item": true, "active": false}  },
+					cnalm: { id: "cnalm", name: "Cinnamon Almonds", selected:false, classes:{"list-group-item": true, "active": false}  },
+					drpec: { id: "drpec", name: "Drunken Pecans", selected:false, classes:{"list-group-item": true, "active": false}  }
 				} 
 			};
 
@@ -552,6 +554,19 @@
 
 				if(valid) self.state.headerStyle.color = "rgb(0,165,128)"
 			}
+
+			//
+			self.countMixFlavors = function(flavorObject) {
+				//define local variables
+				var counter = 0;
+
+				//iterate throguh object
+				Object.keys(flavorObject).forEach(function(key) {
+					if(flavorObject[key].selected) counter++
+				});
+
+				return counter;
+			};
 
 			//start this by adding a product to the order list
 			self.orderList.push(Object.create(productObject));

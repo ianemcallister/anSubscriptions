@@ -58,8 +58,8 @@ gulp.task('default', [], function() {
 */
 gulp.task('copy-html', function() {
 	//copy the index file
-	gulp.src('index.html')
+	gulp.src('public/index.html')
 		.pipe(gulp.dest('dist'));
-	gulp.src('views/**/*.htm')
+	gulp.src('public/views/**/*.htm')
 		.pipe(gulp.dest('dist/views'));
 });
