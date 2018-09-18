@@ -9,7 +9,7 @@ angular.module('ansub').service('submissionService', submissionService);
 		var self = this;
 
 		self.submit = function(userData) {
-			console.log('submitting', userData);
+			//console.log('submitting', userData);
 			return new Promise(function(resolve, reject) {
 				//try POST
 				$http({
@@ -20,7 +20,8 @@ angular.module('ansub').service('submissionService', submissionService);
 					},
 					data: userData
 				}).then(function successCallback(response) {
-					
+						
+					console.log('got this response', response);
 					resolve(response);
 					
 				}, function errorCallback(error) {

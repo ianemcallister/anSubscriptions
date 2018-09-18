@@ -14,41 +14,15 @@
 	<!--Angular-->
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-route.min.js"></script>
 	
 	<!--Bundle-->
 	<script src='scripts/bundle.js'></script>
 
 </head>
 <body>
-	<div class="container" ng-controller="mainController">
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
-		
-		<!--Spaceing-->
-		<br><br>
-
-		<!--Product Selection-->
-		
-		<product-selection>
-		</product-selection>
-
-		<!--Frequency Selection-->
-		<!--<frequency-selection>
-		</frequency-selection>-->
-
-		<!--Address Input-->
-		<single-address-input>
-		</single-address-input>
-
-		<!--Contact Submitt-->
-		<contact-input>
-		</contact-input>
-
-		<!--Submission-->
-		<sub-terms-cond>
-		</sub-terms-cond>
-	
-		</div>
-	</div>
+	<!--This is the view-->
+	<div ng-view></div>
 
 </body>
 </html>

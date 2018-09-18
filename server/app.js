@@ -51,7 +51,7 @@ serverApp.post('/subscription-application-submission', function(req, res) {
 
 	//res.sendStatus(200);
 	res.status(200);
-	res.send("<div>This is what we got</div>");
+	res.send("thwoagin23Ed9vhn2#Nsgodh9823bsd");
 });
 
 /*

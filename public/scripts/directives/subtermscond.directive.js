@@ -18,10 +18,10 @@ angular.module('ansub').directive('subTermsCond', subTermsCond);
 		/* @ngInject */
 		function linkFunc(scope, el, attr, ctrl) {}
 		
-		subTermsCondController.$inject = ['$scope', '$log', 'stateService', 'userDataService', 'validationService'];
+		subTermsCondController.$inject = ['$scope', '$log', '$location', 'stateService', 'userDataService', 'validationService', 'submissionService'];
 
 		/* @ngInject */
-		function subTermsCondController($scope, $log, stateService, userDataService, validationService) {
+		function subTermsCondController($scope, $log, $location, stateService, userDataService, validationService, submissionService) {
 			//define local variables
 			var self = this;
 
@@ -31,6 +31,22 @@ angular.module('ansub').directive('subTermsCond', subTermsCond);
 			self.validate = validationService;
 
 			//console.log('in subTermsCondController');
+			self.submit = function() {
+				console.log('submittig the form');
+
+				//submit the form
+				submissionService.submit(self.userData)
+				.then(function success(s) {
+					var newPath = '/success/' + s.data;
+					console.log('got this path back', newPath)
+					$location.path(newPath);
+					$scope.$apply();
+
+				}).catch(function error(e) {
+
+					console.log('there was an error', e);
+				});
+			}
 
 		};
 
