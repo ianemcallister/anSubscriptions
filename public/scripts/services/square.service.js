@@ -1,10 +1,10 @@
 angular.module('ansub').service('squareService', squareService);
 		
 /* @ngInject */
-squareService.$inject = ['serverService', 'userDataService'];
+squareService.$inject = ['$rootScope', '$location', 'serverService', 'userDataService'];
 
 /* @ngInject */
-function squareService(serverService, userDataService) {
+function squareService($rootScope, $location, serverService, userDataService) {
 	//define local varaibles
 	var self = this;
 
@@ -30,8 +30,8 @@ function squareService(serverService, userDataService) {
 			console.log('got this path back', newPath);
 
 			//re-route the page
-			//$location.path(newPath);
-			//$scope.$apply();
+			$location.path(newPath);
+			$rootScope.$apply();
 
 		}).catch(function error(e) {
 			console.log('Error:',e);
@@ -149,7 +149,7 @@ function squareService(serverService, userDataService) {
 			});
 	    	self.paymentForm.build();
     	}).catch(function(error) {
-    		$log.info(error);
+    		console.log(error);
     	});
 
 	}
