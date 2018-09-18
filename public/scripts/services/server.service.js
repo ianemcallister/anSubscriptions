@@ -7,11 +7,38 @@ serverService.$inject = ['$http'];
 function serverService($http) {
 	//define local varaibles
 	var serverService = {
+		chargeCard: chargeCard,
 		get: {
 			sqrAppId: getSqrAppId
 		}
 	};
 
+	//charge a credit card
+	function chargeCard(url, data) {
+		//define local variables
+		
+		//return the promise
+		return new Promise(function(resolve, reject) {
+			
+			$http({
+				method: 'POST',
+				url: url,
+				headers: {
+						'Content-Type': 'application/json'
+				},
+				data: data
+			}).then(function successCallback(response) {
+					
+				console.log('got this response', response);
+				resolve(response.data);
+				
+			}, function errorCallback(error) {
+				reject(error);
+			});
+		});			
+	};
+
+	//getst the required code
 	function getSqrAppId() {
 		//define local variables
 		

@@ -27,7 +27,7 @@ function getServerData(path) {
 	//define local variables
 	var returnObject = {};
 
-	returnObject['id'] = process.env.SQUARE_APP_ID;
+	returnObject['id'] = process.env.SQUARE_SANDBOX_APP_ID;
 
 	return returnObject;
 }	

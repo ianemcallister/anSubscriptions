@@ -23,17 +23,23 @@ function userDataService() {
 		},
 		billingAddress: {
 			street: "",
-			cit: "",
+			city: "",
 			state: "",
 			zip: ""
 		},
 		card: {
-			card_number: "",
-			cvv: "",
-			expiration_date: "",
-			postal_code: ""
+			//card_number: "",
+			//cvv: "",
+			//expiration_date: "",
+			//postal_code: "",
+			nonce: ""
 		},
 		order: [],
+		tender: {
+			discounts: 0,
+			shipping: 0,
+			total: 0
+		},
 		agreedToTerms: false
 	};
 

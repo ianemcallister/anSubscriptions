@@ -33,13 +33,9 @@ angular.module('ansub').directive('productSelection', productSelection);
 
 			self.orderList = userDataService.order;
 
-			self.productPrice = 17;
+			self.productPrice = 1700;
 
-			self.order = {
-				discounts: 0,
-				shipping: 0,
-				total: 0
-			};
+			self.order = userDataService.tender;
 
 			var productObject = { 
 				id: 1, 
@@ -53,7 +49,9 @@ angular.module('ansub').directive('productSelection', productSelection);
 					cnpec: { id: "cnpec", name: "Cinnamon Pecans", selected:false, classes:{"list-group-item": true, "active": false}  },
 					cnalm: { id: "cnalm", name: "Cinnamon Almonds", selected:false, classes:{"list-group-item": true, "active": false}  },
 					drpec: { id: "drpec", name: "Drunken Pecans", selected:false, classes:{"list-group-item": true, "active": false}  }
-				} 
+				},
+				mixFlvrsSelected: [],
+				mix: ""
 			};
 
 			//define view model variables
@@ -169,7 +167,26 @@ angular.module('ansub').directive('productSelection', productSelection);
 			self.updateShoppingCart = function() {
 				console.log('updating shopping cart');
 				//self.userData.order = self.orderList;
-			}
+
+			};
+
+			self.buildFlavorList = function(id) {
+				//clean the list
+				self.orderList[id].mixFlvrsSelected = [];
+
+				//notify progress
+				//console.log('builidng a flavor list', id, self.orderList);
+
+				//itrate through flavors, add to list when true
+				Object.keys(self.orderList[id].mixflvrs).forEach(function(key) {
+
+					if(self.orderList[id].mixflvrs[key].selected)
+						self.orderList[id].mixFlvrsSelected.push(self.orderList[id].mixflvrs[key].name);
+				});
+
+
+
+			};
 
 			//start this by adding a product to the order list
 			self.orderList.push(Object.create(productObject));

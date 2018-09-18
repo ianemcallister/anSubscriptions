@@ -68,6 +68,14 @@ serverApp.get('/api/:path', function(req, res) {
 /*
 *	POST Declarations
 */
+serverApp.post('/api/charge_card', function(req, res) {
+	//advise of the post body
+	console.log(req.body);
+
+	res.status(200);
+	res.send({ data: 'success'});
+});
+
 serverApp.post('/subscription-application-submission', function(req, res) {
 	
 	//advise of the post body

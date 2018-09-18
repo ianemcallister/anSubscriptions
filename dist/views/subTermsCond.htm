@@ -85,7 +85,23 @@
 		<br><br>
 	</div>
 	
-	<button ng-class="vm.state.submissionBtn" ng-click='vm.submit()'>Submit</button>
+	<!--submission form-->
+	<form novalidate id="payment-form" ng-hide="isPaymentSuccess">
+		
+		<!--
+	      Whenever a nonce is generated, it's assigned as the value of this hidden
+	      input field.
+	    -->
+		<input type="hidden" id="card-nonce" name="nonce">
+
+		<!--Submission button-->
+		<button type='submit'
+				ng-class="vm.state.submissionBtn" 
+				ng-click='vm.square.submitForm()'>
+				Submit
+		</button>
+
+	 </form>
 	
 	<br><br><br>
 	</div>

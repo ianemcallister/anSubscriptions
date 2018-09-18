@@ -74,10 +74,12 @@
 				<!--Mix Flavor selection-->
 					<div 	ng-if='product.flavor=="Mix-It-Up"'>
 					<strong><u>My mix needs {{product.mixflvrCount}} flavors</u></strong> <br>
+						
 						<ul style='list-style:none' class="list-group">
 							<li ng-repeat='flavor in product.mixflvrs track by flavor.id'
 								ng-class='product.mixflvrs[flavor.id].classes'
-								ng-click='flavor.selected=!flavor.selected; flavor.classes.active=!flavor.classes.active; product.mixflvrCount = vm.countMixFlavors(product.mixflvrs); vm.updateShoppingCart()'>
+								ng-click='flavor.selected=!flavor.selected; flavor.classes.active=!flavor.classes.active; product.mixflvrCount = vm.countMixFlavors(product.mixflvrs); vm.buildFlavorList(product.id - 1)'
+								>
 								{{flavor.name}}
 							</li>
 						</ul>
@@ -99,7 +101,7 @@
 			<!--Price-->
 			<td>
 				<span ng-if="product.id > 3">FREE!</span>
-				<span ng-if='product.id <= 3'>{{vm.productPrice | currency: "$": 2}}</span>
+				<span ng-if='product.id <= 3'>{{vm.productPrice / 100 | currency: "$": 2}}</span>
 				
 			</td>
 
@@ -129,10 +131,10 @@
 			</td>
 			<td>
 				<span>free product in your 3rd shippment</span> <br>
-				<span>{{vm.order.discounts | currency: "$": 2}}</span> <br>
+				<span>{{vm.order.discounts / 100 | currency: "$": 2}}</span> <br>
 				<span>{{0 | currency: "$": 2}}</span> <br>
 				<strong>
-					{{vm.order.total | currency: "$": 2}}
+					{{vm.order.total / 100 | currency: "$": 2}}
 				</strong>
 				
 			</td>

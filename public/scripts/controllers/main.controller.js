@@ -1,12 +1,18 @@
 angular.module('ansub').controller('mainController', mainController);
 
-	mainController.$inject = ['$scope','$log', 'submissionService', 'userDataService', 'stateService'];
+	mainController.$inject = ['$scope','$log', 'submissionService', 'userDataService', 'stateService', 'squareService'];
 
 	/* @ngInject */
-	function mainController($scope, $log, submissionService, userDataService, stateService) {
+	function mainController($scope, $log, submissionService, userDataService, stateService, squareService) {
 		//notify progress
 
 		//define local variables
+		//define userdata model variable
+		$scope.userData = userDataService;
+		$scope.state = stateService;
+
+		squareService.init();
+		
 		/*var recipiantProfile = {
 			name: {
 				first: "",
@@ -86,9 +92,7 @@ angular.module('ansub').controller('mainController', mainController);
 			{ id: 1 }
 		];*/
 
-		//define userdata model variable
-		$scope.userData = userDataService;
-		$scope.state = stateService;
+		
 
 		//define state variables
 		/*$scope.state = {
