@@ -9,6 +9,9 @@ squareV2 	= require('../square/connectV2.js');
 
 //define module
 var ahnuts = {
+	api: {
+		getServerData: getServerData
+	},
 	register: {
 		subscription: {
 			//_createCustomer: rms_createCustomer,
@@ -18,6 +21,16 @@ var ahnuts = {
 		}
 	}
 };
+
+//GET SERVER DATA
+function getServerData(path) {
+	//define local variables
+	var returnObject = {};
+
+	returnObject['id'] = process.env.SQUARE_APP_ID;
+
+	return returnObject;
+}	
 
 //REGISTER MONTLY SUBSCRIPTION
 function registerMonthlySubscription(subApp) {

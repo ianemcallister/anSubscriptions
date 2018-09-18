@@ -27,6 +27,12 @@ function userDataService() {
 			state: "",
 			zip: ""
 		},
+		card: {
+			card_number: "",
+			cvv: "",
+			expiration_date: "",
+			postal_code: ""
+		},
 		order: [],
 		agreedToTerms: false
 	};

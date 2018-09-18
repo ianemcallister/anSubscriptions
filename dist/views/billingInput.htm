@@ -4,10 +4,41 @@
 
 		<!--Header-->
 		<h4 ng-style="vm.state.headerStyle">
-			4. Billing
+			5. Billing
 		</h4>
 		
 		<p>How would you like to pay for your subscription?</p>
+
+		<div class="form-group">
+			<!--Card Number-->
+			<label for="sq-card-number">Card Number</label>
+			<div 	ng-model='vm.userData.card.card_number' 
+					id="sq-card-number" 
+					name='sq-card-number'
+					class="form-control"></div>
+			
+			<!--CVV-->
+			<label for="sq-cvv">CVV</label>
+			<div 	ng-model='vm.userData.card.card_number' 
+					id="sq-cvv" 
+					name='sq-cvv'
+					class="form-control"></div>
+
+			<!--Expiration Date-->
+			<label for="sq-expiration-date">Expiration Date</label>
+			<div 	ng-model='vm.userData.card.card_number' 
+					id="sq-expiration-date" 
+					name='sq-expiration-date'
+					class="form-control"></div>
+
+			<!--Postal Code-->
+			<label for="sq-postal-code">Postal Code</label>
+			<div 	ng-model='vm.userData.card.card_number' 
+					id="sq-postal-code" 
+					name='sq-postal-code'
+					class="form-control"></div>
+
+		</div>
 
 		
 	</div>

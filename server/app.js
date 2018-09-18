@@ -45,6 +45,25 @@ serverApp.use('/', function(req, res, next) {
 	next();
 });
 
+/*
+*	GET Declarations
+*/
+serverApp.get('/api/:path', function(req, res) {
+
+	//define local varaibles
+	var path = req.path;
+
+	var returnObject = ahnuts.api.getServerData(path);
+
+	if(returnObject != undefined) {
+		res.status(200);
+		res.send(returnObject);
+	} else {
+		res.status(500);
+		res.send('There was an error');
+	}
+
+});
 
 /*
 *	POST Declarations
