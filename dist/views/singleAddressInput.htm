@@ -19,7 +19,8 @@
 					class="form-control" 
 					id='street' 
 					placeholder='Enter street address here'
-					ng-model='vm.userData.street'>
+					ng-model='vm.userData.shippingDestination.street'
+					ng-change='vm.updateBillingAddress()'>
 		</div>
 
 
@@ -29,7 +30,8 @@
 					class="form-control" 
 					id='zipInput' 
 					placeholder='Enter your zipcode'
-					ng-model='vm.userData.zip'>
+					ng-model='vm.userData.shippingDestination.zip'
+					ng-change='vm.updateBillingAddress()'>
 		</div>			
 		
 		<div class="form-row">
@@ -40,7 +42,8 @@
 							id='city' 
 							class="form-control" 
 							placeholder='City name goes here'
-							ng-model='vm.userData.city'>
+							ng-model='vm.userData.shippingDestination.city'
+							ng-change='vm.updateBillingAddress()'>
 				</div>
 			</div>
 			<div class="col">
@@ -50,7 +53,8 @@
 							id='state' 
 							class="form-control" 
 							placeholder='State id goes here'
-							ng-model='vm.userData.state'>
+							ng-model='vm.userData.shippingDestination.state'
+							ng-change='vm.updateBillingAddress()'>
 				</div>
 			</div>
 		</div>

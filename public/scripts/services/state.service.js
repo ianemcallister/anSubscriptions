@@ -7,6 +7,7 @@ stateService.$inject = ['userDataService'];
 function stateService(userDataService) {
 	//define local varaibles
 	var state = {
+		shipingSameAsBilling: true,
 		productSelection: {
 			addAProductBtn: {
 				classes: {

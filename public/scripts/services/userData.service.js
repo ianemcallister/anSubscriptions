@@ -21,6 +21,12 @@ function userDataService() {
 			state: "",
 			zip: ""
 		},
+		billingAddress: {
+			street: "",
+			cit: "",
+			state: "",
+			zip: ""
+		},
 		order: [],
 		agreedToTerms: false
 	};

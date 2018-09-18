@@ -1,10 +1,15 @@
-
+/*
+*	SERVER: APP
+*
+*	This module runns the express server
+*/
 
 console.log('runnign the server');
 
 //declare all dependencies
 var express		= require('express');
 var bodyParser 	= require('body-parser');
+var ahnuts 		= require('./ahnuts/ahnuts.js');
 
 //return the express object
 var serverApp = express();
@@ -49,9 +54,22 @@ serverApp.post('/subscription-application-submission', function(req, res) {
 	//advise of the post body
 	console.log(req.body);
 
-	//res.sendStatus(200);
-	res.status(200);
-	res.send("thwoagin23Ed9vhn2#Nsgodh9823bsd");
+	//hit the function
+	ahnuts.register.subscription.monthly(req.body)
+	.then(function succcess(s) {
+
+		//if everything executes properly...
+		res.status(200);
+		res.send(s.confirmationCode);
+
+	}).catch(function error(e) {
+
+		//if there are errors...
+		res.status(500);
+		res.send(e);
+
+	});
+
 });
 
 /*
