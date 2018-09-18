@@ -18,14 +18,19 @@ angular.module('ansub').directive('subTermsCond', subTermsCond);
 		/* @ngInject */
 		function linkFunc(scope, el, attr, ctrl) {}
 		
-		subTermsCondController.$inject = ['$scope', '$log'];
+		subTermsCondController.$inject = ['$scope', '$log', 'stateService', 'userDataService', 'validationService'];
 
 		/* @ngInject */
-		function subTermsCondController($scope, $log) {
+		function subTermsCondController($scope, $log, stateService, userDataService, validationService) {
 			//define local variables
 			var self = this;
 
-			console.log('in subTermsCondController');
+			//define view model variables
+			self.state = stateService;
+			self.userData = userDataService;
+			self.validate = validationService;
+
+			//console.log('in subTermsCondController');
 
 		};
 

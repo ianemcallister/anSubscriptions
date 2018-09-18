@@ -8,7 +8,6 @@ angular.module('ansub').directive('productSelection', productSelection);
 			templateUrl: 'views/productSelection.htm',
 			replace: true,
 			scope: {
-				userorder: "="
 			},
 			link: linkFunc,
 			controller: productSelectionController,
@@ -20,12 +19,28 @@ angular.module('ansub').directive('productSelection', productSelection);
 		function linkFunc(scope, el, attr, ctrl) {
 		}
 		
-		productSelectionController.$inject = ['$scope', '$log'];
+		productSelectionController.$inject = ['$scope', '$log', 'userDataService', 'stateService'];
 
 		/* @ngInject */
-		function productSelectionController($scope, $log) {
+		function productSelectionController($scope, $log, userDataService, stateService) {
 			//define local variables
 			var self = this;
+
+			//define view model variables
+			self.userData = userDataService;
+			self.state = stateService.productSelection;
+			self.state['infoBox'] = stateService.infoBoxes.flavorDefs;
+
+			self.orderList = userDataService.order;
+
+			self.productPrice = 17;
+
+			self.order = {
+				discounts: 0,
+				shipping: 0,
+				total: 0
+			};
+
 			var productObject = { 
 				id: 1, 
 				flavor: "", 
@@ -42,31 +57,6 @@ angular.module('ansub').directive('productSelection', productSelection);
 			};
 
 			//define view model variables
-			self.state = {
-				addAProductBtn: {
-					classes: {
-						'btn': true,
-						'btn-success': true,
-						'btn-warning': false
-					},
-					visible: true
-				},
-				removeLastProductBtn: {
-					classes: {
-						'btn': true,
-						'btn-success': false,
-						'btn-warning': false,
-						'btn-danger': true
-					},
-					visible: false
-				},
-				headerStyle: {
-					color: "rgb(51,51,51)"
-				},
-				flavorsVisible: false,
-				sectionComplete: false,
-				showtandc: false
-			};
 
 			self.flavors= [
 				{ name: 'Secret Recipe Pecans', description: "Sweet and Salty" },
@@ -79,17 +69,7 @@ angular.module('ansub').directive('productSelection', productSelection);
 				{ name: 'Mix-It-Up', description: "Whatever You Like" }
 			];
 
-			self.orderList = [];
-
-			self.productPrice = 17;
-
-			self.order = {
-				discounts: 0,
-				shipping: 0,
-				total: 0
-			}
-
-			console.log('in productSelectionController');
+			//console.log('in productSelectionController');
 
 			//define local functions
 			function sumOrder() {
@@ -187,7 +167,8 @@ angular.module('ansub').directive('productSelection', productSelection);
 			};
 
 			self.updateShoppingCart = function() {
-				self.userorder = self.orderList;
+				console.log('updating shopping cart');
+				//self.userData.order = self.orderList;
 			}
 
 			//start this by adding a product to the order list

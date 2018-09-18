@@ -18,15 +18,17 @@
 	<!--Bundle-->
 	<script src='scripts/bundle.js'></script>
 
-	<script>console.log('running this script');</script>
-
 </head>
 <body>
 	<div class="container" ng-controller="mainController">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
 		
+		<!--Spaceing-->
+		<br><br>
+
 		<!--Product Selection-->
-		<product-selection userorder='this.userData.order'>
+		
+		<product-selection>
 		</product-selection>
 
 		<!--Frequency Selection-->
@@ -34,20 +36,17 @@
 		</frequency-selection>-->
 
 		<!--Address Input-->
-		<single-address-input 	address='this.userData.shippingDestination'>
+		<single-address-input>
 		</single-address-input>
 
 		<!--Contact Submitt-->
-		<contact-input 	firstname='this.userData.name.first' 
-						lastname='this.userData.name.last' 
-						phone='this.userData.contact.phone' 
-						email='this.userData.contact.email'>
+		<contact-input>
 		</contact-input>
 
 		<!--Submission-->
 		<sub-terms-cond>
 		</sub-terms-cond>
-
+	
 		</div>
 	</div>
 

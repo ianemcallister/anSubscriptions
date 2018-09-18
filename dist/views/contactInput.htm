@@ -8,18 +8,31 @@
 		<span class='glyphicon glyphicon-ok' ng-show='vm.state.sectionComplete'></span>
 	</h4>
 
-	<form>
+	<!--Success Alert-->
+	<div class="alert alert-success" role="alert" ng-show='vm.state.sectionHeaders.contactInfo.showCompleted'>
+	  All you contact info looks good
+	</div>
+	<!--Error Alert-->
+	<div class="alert alert-danger" role="alert" ng-show='vm.state.sectionHeaders.contactInfo.showError'>
+	  Please make sure to complete all your contact information
+	</div>
+
+	
+	<form name='contactInfo'>
 		<!--Name-->
 		<div class="form-row">
 			<div class="col">
 				<div class="form-group">
 					<label for="firstNameInput">First Name</label>
 					<input 	type="text" 
-							class="form-control" 
+							class="form-control ng-valid" 
 							id="firstNameInput" 
-							aria-describedby="nameHelp" 
+							name='firstNameInput'
 							placeholder="Enter first name here"
-							ng-model='vm.firstname'>
+							ng-model='vm.userData.name.first'
+							required>
+					<div class='valid-feedback'>Looks good!</div>
+					<div class="invalid-feedback">Need at least 1 letter</div>
 				</div>
 			</div>
 			<div class="col">
@@ -28,9 +41,9 @@
 					<input 	type="text" 
 							class="form-control" 
 							id="lastNameInput" 
-							aria-describedby="nameHelp" 
 							placeholder="Enter last name here"
-							ng-model='vm.lastname'>
+							ng-model='vm.userData.name.last'
+							required>
 				</div>
 			</div>
 		</div>
@@ -40,10 +53,10 @@
 			<label for="phoneNumber">Phone number</label>
 			<input 	type="text" 
 					class="form-control" 
-					id="phoneNumber" 
-					aria-describedby="emailHelp" 
+					id="phoneNumber"  
 					placeholder="Enter phone number here"
-					ng-model='vm.phone'>
+					ng-model='vm.userData.contact.phone'
+					required>
 		</div>
 
 		<!--Email-->
@@ -52,9 +65,9 @@
 			<input 	type="email" 
 					class="form-control" 
 					id="emailAddress" 
-					aria-describedby="emailHelp" 
 					placeholder="Enter email here"
-					ng-model='vm.email'>
+					ng-model='vm.userData.contact.email'
+					required>
 			<small id="emailHelp" class="form-text text-muted">We'll never share your email or phone with anyone else.</small>
 		</div>
 

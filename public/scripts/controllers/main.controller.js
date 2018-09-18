@@ -1,13 +1,13 @@
 angular.module('ansub').controller('mainController', mainController);
 
-	mainController.$inject = ['$scope','$log', 'modalService', 'submissionService'];
+	mainController.$inject = ['$scope','$log', 'submissionService', 'userDataService', 'stateService'];
 
 	/* @ngInject */
-	function mainController($scope, $log, modalService, submissionService) {
+	function mainController($scope, $log, submissionService, userDataService, stateService) {
 		//notify progress
 
 		//define local variables
-		var recipiantProfile = {
+		/*var recipiantProfile = {
 			name: {
 				first: "",
 				last: ""
@@ -68,10 +68,10 @@ angular.module('ansub').controller('mainController', mainController);
 			};
 
 			return allWeeks;
-		};
+		};*/
 
 		//define flavor variables
-		$scope.flavors= [
+		/*$scope.flavors= [
 			{ name: 'Secret Recipe Pecans', description: " " },
 			{ name: 'Secret Recipe Almonds', description: " " },
 			{ name: 'Secret Recipe Cashews', description: " " },
@@ -84,30 +84,14 @@ angular.module('ansub').controller('mainController', mainController);
 
 		$scope.orderSchedule = [
 			{ id: 1 }
-		];
+		];*/
 
 		//define userdata model variable
-		$scope.userData = {
-			name: {
-				first: "",
-				last: ""
-			},
-			contact: {
-				email: "",
-				phone: ""
-			},
-			shippingDestination: {
-				street: "",
-				city: "",
-				state: "",
-				zip: ""
-			},
-			order: []
-			//shippingSchedule: shippingSchedules.monthly
-		};
+		$scope.userData = userDataService;
+		$scope.state = stateService;
 
 		//define state variables
-		$scope.state = {
+		/*$scope.state = {
 			tempRecipiant: {
 				name: {
 					first: "",
@@ -151,6 +135,8 @@ angular.module('ansub').controller('mainController', mainController);
 				missingRequired: false
 			}
 		}
+
+		$scope.stateTest = stateService
 
 		//local functions
 		function addToRecipiantList(relationship) {
@@ -264,22 +250,6 @@ angular.module('ansub').controller('mainController', mainController);
 		$scope.updateRecipiantValues = function() {
 			var index = $scope.state.selectedRecipiant;
 			$scope.userData.recipiantList[index] = $scope.state.tempRecipiant;
-		};
-
-		$scope.validateForm = function() {
-			//define local variables
-			//notify progress
-			console.log('validating form', $scope.userData);
-			//display error
-			$scope.state.errors.missingRequired = true;
-
-			//
-			submissionService.submit($scope.userData).then(function success(response) {
-				console.log('got this response', response)
-
-			}).catch(function error(e) {
-
-			});
-		}
+		};*/
 		
 	};

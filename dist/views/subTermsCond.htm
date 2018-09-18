@@ -1,13 +1,33 @@
 <div class="row">
+	
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	
 	<h4>4. Submit</h4>
+	<!--Success Alert-->
+	<div class="alert alert-success" role="alert" ng-show='vm.state.sectionHeaders.termsConds.showCompleted'>
+	  Thanks for agreeing to our terms & conditions
+	</div>
+	<!--Error Alert-->
+	<div class="alert alert-danger" role="alert" ng-show='vm.state.sectionHeaders.termsConds.showError'>
+	  Please agree to our terms and conditions in order to continue
+	</div>
+	
 	<p>You’re almost there!  Click the submit button and your subscription order will be set up in our system.</p>
 	<p>A secure invoice link will be emailed to you soon (from Square).  Please fill in the payment information and authorize Square to store your payment information for monthly payment.</p>
 	<p>Your order will be charged on the 27th of each month (on the 25th of February) and your subscription order will be shipped by the 3rd of each month.</p>
 	
-	<p class='form-check'><input type="checkbox" class='form-check-input'> I agree to the Ah-Nuts <a href="" ng-click='vm.state.showtandc=!vm.state.showtandc'>terms and conditions</a>.</p>
+	<p class='form-check'>
+		<input 	type="checkbox" 
+				class='form-check-input'
+				ng-model='vm.userData.agreedToTerms'
+				ng-change='vm.validate.termsAndCond(); vm.state.checkCompletness()'> 
+				I agree to the Ah-Nuts 
+				<a href="" ng-click='vm.state.infoBoxes.termsConds=!vm.state.infoBoxes.termsConds'>terms and conditions
+				</a>.
+	</p>
 	<br>
-	<div ng-show='vm.state.showtandc'>
+	
+	<div ng-show='vm.state.infoBoxes.termsConds'>
 		<h4>Autoship Terms and Conditions</h4>
 		<p>Autoship is a convenient way to ensure your Ah-Nuts! products arrive regularly and that you never run out, saving you the hassle of having to reorder each time you need to purchase more product. By signing up for Autoship Program you are abiding by the following Autoship Terms and Conditions.</p>
 		<p>Autoship Account</p>
@@ -61,17 +81,11 @@
 		</ul>
 		<p>Ah-Nuts! reserves the right to update or revise these Autoship Terms and Conditions at any time. If Ah-Nuts! makes material changes to these Autoship Terms and Conditions, we will provide you notice by posting a notice on the website for 30 days. If you do not accept these Terms and Conditions or any changes proposed by Ah-Nuts!, your only remedy is to cancel your Autoship Order(s).</p>
 		<p>Ah-Nuts! reserves the right to modify or terminate this program at any time without prior notice.</p>
-		<a href="" ng-click='vm.state.showtandc=!vm.state.showtandc'>Hide Terms & Conditions</a>
+		<a href="" ng-click='vm.state.infoBoxes.termsConds=!vm.state.infoBoxes.termsConds'>Hide Terms & Conditions</a>
 		<br><br>
 	</div>
 	
-
-	<div 	class="alert alert-danger" 
-			role="alert"
-			ng-show='this.state.errors.missingRequired'>
-	  Please complete all required fields before submitting
-	</div>
-	<button class="btn btn-success btn-block" ng-click='this.validateForm()'>Submit</button>
+	<button ng-class="vm.state.submissionBtn" >Submit</button>
 	
 	<br><br><br>
 	</div>

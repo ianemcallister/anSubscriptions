@@ -19,14 +19,17 @@ angular.module('ansub').directive('singleAddressInput', singleAddressInput);
 		/* @ngInject */
 		function linkFunc(scope, el, attr, ctrl) {}
 		
-		singleAddressInputController.$inject = ['$scope', '$log'];
+		singleAddressInputController.$inject = ['$scope', '$log', 'userDataService'];
 
 		/* @ngInject */
-		function singleAddressInputController($scope, $log) {
+		function singleAddressInputController($scope, $log, userDataService) {
 			//define local variables
 			var self = this;
 
-			console.log('in singleAddressInputController');
+			//define viewmodel values
+			self.userData = userDataService;
+			
+			//console.log('in singleAddressInputController');
 
 		};
 

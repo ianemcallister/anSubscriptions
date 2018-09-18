@@ -26,7 +26,7 @@ angular.module('ansub').directive('shipDest', shipDest);
 
 			self.zipCheck = zipcomplete;
 
-			console.log('in shipDestController');
+			//console.log('in shipDestController');
 
 
 		}

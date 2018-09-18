@@ -40,7 +40,7 @@ angular.module('ansub').directive('frequencySelection', frequencySelection);
 			self.selectedFrequency = '';
 			self.startsIn = '';
 
-			console.log('in frequencySelectionController');
+			//console.log('in frequencySelectionController');
 
 		};
 

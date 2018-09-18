@@ -5,8 +5,8 @@
 	<!--Header-->
 	<h4 ng-style="vm.state.headerStyle">
 		1. Choose Your Favorite Nuts 
-		<i class="fas fa-question-circle fa-xs" style="color:blue" ng-click='vm.state.flavorsVisible=!vm.state.flavorsVisible'></i>
-		<span class='glyphicon glyphicon-ok' ng-show='vm.state.sectionComplete'></span>
+		<i class="fas fa-question-circle fa-xs" style="color:blue" ng-click='vm.state.infoBox=!vm.state.infoBox'></i>
+		
 		
 	</h4>
 	
@@ -14,7 +14,7 @@
 	
 	<!--Menu Explaination-->
 	<div class="row">
-		<div 	ng-show='vm.state.flavorsVisible'
+		<div 	ng-show='vm.state.infoBox'
 				class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
 			We offer seven different nut & recipie combinations to make our seven different flavors.
 

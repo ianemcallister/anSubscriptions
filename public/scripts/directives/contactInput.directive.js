@@ -7,12 +7,7 @@ angular.module('ansub').directive('contactInput', contactInput);
 			restrict: "AECM",
 			templateUrl: 'views/contactInput.htm',
 			replace: true,
-			scope: {
-				firstname: "=",
-				lastname: "=",
-				phone: "=",
-				email: "="
-			},
+			scope: {},
 			link: linkFunc,
 			controller: contactInputtController,
 			controllerAs: 'vm',
@@ -22,14 +17,18 @@ angular.module('ansub').directive('contactInput', contactInput);
 		/* @ngInject */
 		function linkFunc(scope, el, attr, ctrl) {}
 		
-		contactInputtController.$inject = ['$scope', '$log'];
+		contactInputtController.$inject = ['$scope', '$log', 'userDataService', 'stateService'];
 
 		/* @ngInject */
-		function contactInputtController($scope, $log) {
+		function contactInputtController($scope, $log, userDataService, stateService) {
 			//define local variables
 			var self = this;
 
-			console.log('in contactInputtController');
+			//define viewmodel values
+			self.userData = userDataService;
+			self.state = stateService;
+
+			//console.log('in contactInputtController');
 
 		};
 
