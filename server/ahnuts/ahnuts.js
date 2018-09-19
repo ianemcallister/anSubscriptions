@@ -89,13 +89,17 @@ function _chargeOrder(subApp) {
 
 		//update customer records customer records 
 		_savePaymentMethod(subApp)
-		.then(function success(s) {
+		.then(function success(customerProfile) {
 
 			//notify progress
 			console.log('4. charging order');
 
-			//then save payment method
-			resolve(s);
+			squareV2.customers.chargeTransaction(customerProfile)
+			.then(function success(s) {
+				resolve(s);
+			}).catch(function error(e) {
+
+			});
 
 		}).catch(function error(e) {
 			reject(e);
@@ -121,8 +125,15 @@ function _savePaymentMethod(subApp) {
 
 			squareV2.customers.createCustomerCard(customerId, subApp)
 			.then(function success(cardResponse) {
-				console.log('got this response', cardResponse);
-				resolve(customerId);
+				//notify progress
+				//console.log('got this response', cardResponse);
+
+				subApp.card['sqrId'] = cardResponse.card.id;
+				subApp['customerId'] = customerId;
+
+				//return results
+				resolve(subApp);
+
 			}).catch(function error(e) {
 				reject(e);
 			});

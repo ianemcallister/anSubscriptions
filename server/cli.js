@@ -5,7 +5,7 @@ var ahnuts 		= require('./ahnuts/ahnuts.js');
 var squareV2 	= require('./square/connectV2.js');
 var stdio		= require('./stdio/stdio.js');
 
-squareV2.customers.createCustomerCard('C5BBXCBC2S1M53P5SD2ZBJQQ5G', 
+squareV2.transactions.charge( 
 	{ name: { first: 'Ian', last: 'McAllister' },
   contact:
    { email: 'ianmcallistersubscriptions@gmail.com',
@@ -20,9 +20,10 @@ squareV2.customers.createCustomerCard('C5BBXCBC2S1M53P5SD2ZBJQQ5G',
      city: 'Beaverton',
      state: 'OR',
      zip: '97005' },
-  card: { nonce: 'CBASEGtg8TrFHUIYOzb5nSTd-Z8' },
+  card: { nonce: 'CBASEGtg8TrFHUIYOzb5nSTd-Z8', sqrId: 'icard-U05C5Cnr01NyMJ3Q4GB' },
+  customerId: "C5BBXCBC2S1M53P5SD2ZBJQQ5G",
   order: [ { flavor: 'Secret Recipe Pecans' } ],
-  tender: { discounts: 0, shipping: 0, total: 1700 },
+  tender: { discounts: 0, shipping: 0, total: 100 },
   agreedToTerms: true })
 .then(function success(s) {
 	console.log('success', s);

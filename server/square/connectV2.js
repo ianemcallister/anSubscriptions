@@ -8,9 +8,11 @@
 var SquareConnect 	= require('square-connect');
 var defaultClient 	= SquareConnect.ApiClient.instance;
 var stdio			= require('../stdio/stdio.js');
+var uuidv1 			= require('uuid/v1');
 
 // Configure OAuth2 access token for authorization: oauth2
 var _oauth2 		= defaultClient.authentications['oauth2'];
+//_oauth2.accessToken = process.env.SQUARE_SANDBOX_APP_TOKEN
 _oauth2.accessToken = process.env.SQUARE_APP_TOKEN;
 
 //define module
@@ -264,12 +266,49 @@ function searchCustomers() {
 };
 
 //
-function chargeTransaction() {
+function chargeTransaction(customerProfile) {
 	//notify progress
 	console.log('charging transaction');
 
+	var apiInstance = new SquareConnect.TransactionsApi();
+
+	var locationId = "S4P16GQRK21CF"; // String | The ID of the location to associate the created transaction with.
+
+	var body = new SquareConnect.ChargeRequest(); // ChargeRequest | An object containing the fields to POST for the request.  See the corresponding object definition for field details.
+
+	body['idempotency_key'] = uuidv1();
+	body['amount_money'] = {};
+	body['amount_money']['amount'] = customerProfile.tender.total;
+	body['amount_money']['currency'] = 'USD';
+	body['customer_card_id'] = customerProfile.card.sqrId;
+	//body['reference_id'] = '';
+	//body['note'] = '';
+	body['customer_id'] = customerProfile.customerId;
+	body['billing_address'] = {};
+	body['billing_address']['address_line_1'] = customerProfile.shippingDestination.street;
+	body['billing_address']['locality'] = customerProfile.shippingDestination.city;
+	body['billing_address']['postal_code'] = customerProfile.shippingDestination.zip;
+	body['billing_address']['administrative_district_level_1'] = customerProfile.shippingDestination.state;
+	body['shipping_address'] = {};
+	body['shipping_address']['address_line_1'] = customerProfile.shippingDestination.street;
+	body['shipping_address']['locality'] = customerProfile.shippingDestination.city;
+	body['shipping_address']['postal_code'] = customerProfile.shippingDestination.zip;
+	body['shipping_address']['administrative_district_level_1'] = customerProfile.shippingDestination.state;
+	body['buyer_email_address'] = customerProfile.contact.email;
+	//body['order_id'] = '';
+
+	//return async work
 	return new Promise(function(resolve, reject) {
-		resolve(1);
+		
+		console.log('body', body);
+
+		//hit the api
+		apiInstance.charge(locationId, body).then(function(data) {
+			console.log('API called successfully. Returned data: ' + data);
+		}, function(error) {
+			console.error(error);
+		});
+
 	});
 };
 
