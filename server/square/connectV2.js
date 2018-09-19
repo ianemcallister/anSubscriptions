@@ -151,14 +151,16 @@ function createCustomer(customerProfile) {
 	return new Promise(function(resolve, reject) {
 
 		apiInstance.createCustomer(body).then(function(data) {
-		  console.log('API called successfully. Returned data: ');
-		  stdio.write.json(data, './json/createCustomer.json');
+		  //console.log('API called successfully. Returned data: ');
+		  //stdio.write.json(data, './json/createCustomer.json');
 
 		  //updateCustomer(data.customer.id, customerProfile);
 
-		  console.log(data)
+		  //console.log(data)
+		  resolve(data);
 		}, function(error) {
-		  console.error(error);
+		  //console.error(error)
+		  reject(error);
 		});
 
 	});
@@ -174,26 +176,70 @@ function updateCustomer(customerId, customerProfile) {
 
 	var body = new SquareConnect.UpdateCustomerRequest(); // UpdateCustomerRequest | An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 
+	body['phone_number'] = customerProfile.contact.phone;
 	body['given_name'] = customerProfile.name.first;
-	body['familyName'] = customerProfile.name.last;
-	body['emailAddress'] = customerProfile.contact.email;
-	body['phoneNumber'] = customerProfile.contact.phone;
+	body['family_name'] = customerProfile.name.last;
+	body['email_address'] = customerProfile.contact.email;
+	body['address'] = {};
+	body['address']['address_line_1'] = customerProfile.shippingDestination.street;
+	body['address']['locality'] = customerProfile.shippingDestination.city;
+	body['address']['postal_code'] = customerProfile.shippingDestination.zip;
+	body['address']['administrative_district_level_1'] = customerProfile.shippingDestination.state;
 
-	apiInstance.updateCustomer(customerId, body).then(function(data) {
-	  console.log('API called successfully. Returned data: ');
-	  console.log(data);
-	}, function(error) {
-	  console.error(error);
+	return new Promise(function(resolve, reject) {
+
+		//hit the api
+		apiInstance.updateCustomer(customerId, body).then(function(data) {
+		  //console.log('API called successfully. Returned data: ');
+		  //console.log(data);
+		  resolve(data);
+		}, function(error) {
+		  //console.error(error);
+		  reject(error);
+		});
+
 	});
+
 };
 
 //
-function createCustomerCard() {
+function createCustomerCard(customerId, customerProfile) {
 	//notify progress
 	console.log('creating customer card');
 
+	var apiInstance = new SquareConnect.CustomersApi();
+
+	//var customerId = "customerId_example"; // String | The ID of the customer to link the card on file to.
+
+	var body = new SquareConnect.CreateCustomerCardRequest(); // CreateCustomerCardRequest | An object containing the fields to POST for the request.  See the corresponding object definition for field details.
+	
+	//define the request
+	body['card_nonce'] = customerProfile.card.nonce;
+	body['billing_address'] = {};
+	body['billing_address']['address_line_1'] = customerProfile.shippingDestination.street;
+	body['billing_address']['locality'] = customerProfile.shippingDestination.city;
+	body['billing_address']['postal_code'] = customerProfile.shippingDestination.zip;
+	body['billing_address']['administrative_district_level_1'] = customerProfile.shippingDestination.state;
+	body['cardholder_name'] = customerProfile.name.first + " " + customerProfile.name.last;
+
+	//return async work
 	return new Promise(function(resolve, reject) {
-		resolve(1);
+
+		console.log('adding card', body);
+
+		//hit the api
+		apiInstance.createCustomerCard(customerId, body).then(function(data) {
+			console.log('got this', data);
+
+			resolve(data)
+		}, function(error) {
+			console.log('error', error);
+
+			reject(error)
+		});	
+
+		//resolve(customerId);		
+
 	});
 };
 

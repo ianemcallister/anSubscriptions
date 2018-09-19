@@ -72,8 +72,21 @@ serverApp.post('/api/charge_card', function(req, res) {
 	//advise of the post body
 	console.log(req.body);
 
-	res.status(200);
-	res.send({ data: 'success'});
+	//hit the function
+	ahnuts.register.subscription.monthly(req.body)
+	.then(function succcess(s) {
+
+		//if everything executes properly...
+		res.status(200);
+		res.send({ data: s.confirmationCode});
+
+	}).catch(function error(e) {
+
+		//if there are errors...
+		res.status(500);
+		res.send(e);
+
+	});
 });
 
 serverApp.post('/subscription-application-submission', function(req, res) {
