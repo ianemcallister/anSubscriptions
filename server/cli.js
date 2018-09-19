@@ -4,8 +4,22 @@
 var ahnuts 		= require('./ahnuts/ahnuts.js');
 var squareV2 	= require('./square/connectV2.js');
 var stdio		= require('./stdio/stdio.js');
+var mail		= require('./mailcenter/mailcenter.js');
 
-squareV2.transactions.charge( 
+mail.send({
+	from: 'info@ah-nuts.com',
+	to: 'iemcallister@gmail.com',
+	subject: "testing",
+	text: "this is a test",
+	html: "<strong>THIS IS A TEST</strong>"
+})
+.then(function success(s) {
+	console.log('success', s);
+}).catch(function error(e) {
+	console.log('error', e);
+});
+
+/*squareV2.transactions.charge( 
 	{ name: { first: 'Ian', last: 'McAllister' },
   contact:
    { email: 'ianmcallistersubscriptions@gmail.com',
@@ -29,7 +43,7 @@ squareV2.transactions.charge(
 	console.log('success', s);
 }).catch(function error(e) {
 	console.log('error', e);
-});
+});*/
 
 /*ahnuts.register.subscription.monthly({ name: { first: 'Clarke', last: 'McAllister' },
   contact: { email: '', phone: '5419682988' },

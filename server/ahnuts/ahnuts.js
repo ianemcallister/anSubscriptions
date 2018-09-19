@@ -288,7 +288,7 @@ function registerMonthlySubscription(subApp) {
 			
 			// 3. return confirming code
 			//notify progress
-			console.log('7. returingin confirmation code');
+			console.log('7. returning confirmation code');
 
 			resolve(s);
 

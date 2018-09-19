@@ -24,6 +24,7 @@
     "googleapis": "^27.0.0",
     "gulp": "^3.9.1",
     "install": "^0.12.1",
+    "nodemailer": "^4.6.8",
     "npm": "^6.4.1",
     "path": "^0.12.7",
     "square-connect": "^2.20180712.2",
