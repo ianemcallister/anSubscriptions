@@ -41,15 +41,20 @@ function registerMonthlySubscription(subApp) {
 
 		//1. create a new customer in square
 		squareV2.customers.createCustomer(subApp)
+		.then(function success(s) {
+			resolve(s);
+		}).catch(function error(e) {
+			reject(e);
+		});
 		//2. save customer card on file
-		.then(squareV2.customers.createCustomerCard)
-		.catch(function(e) { reject(e); })
+		//.then(squareV2.customers.createCustomerCard)
+		//.catch(function(e) { reject(e); })
 		//3. charge current order to customer
-		.then(squareV2.transactions.charge)
-		.catch(function(e) { reject(e); })
+		//.then(squareV2.transactions.charge)
+		//.catch(function(e) { reject(e); })
 		//4. record subscription in database
-		.then(function(s) { resolve('now done'); })
-		.catch(function(e) { reject(e); })
+		//.then(function(s) { resolve('now done'); })
+		//.catch(function(e) { reject(e); })
 		//5. confirmation email to customer
 		//6. notification email to ah-nuts
 		//7. confirmation code to client browser
