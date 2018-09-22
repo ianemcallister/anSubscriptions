@@ -7,6 +7,7 @@
 //define dependcies
 var squareV2 			= require('../square/connectV2.js');
 var voucherifyClient 	= require('voucherify');
+var mail				= require('../mailcenter/mailcenter.js');
 
 //define module
 var ahnuts = {
@@ -83,12 +84,22 @@ function _recordOrder(subApp) {
 
 		//save payment method
 		_chargeOrder(subApp)
-		.then(function success(s) {
+		.then(function success(chargeReceipt) {
 			//notify progress
 			console.log('5. recording order');
+			console.log('subApp', subApp);
+			console.log('chargeReceipt', chargeReceipt.transaction);
+
+			//add values to Application
+			subApp.card.last4 = chargeReceipt.transaction.tenders[0].card_details.card.last_4;
+			subApp.card.type = chargeReceipt.transaction.tenders[0].card_details.card.card_brand;
+			subApp.orderNo = chargeReceipt.transaction.id;
+			subApp.orderDate = chargeReceipt.transaction.created_at;
+
+			console.log('subApp', subApp);
 
 			//then charge the order to the customer
-			resolve(s);
+			resolve(subApp);
 
 		}).catch(function error(e) {
 			reject(e);
@@ -112,11 +123,17 @@ function _chargeOrder(subApp) {
 			//notify progress
 			console.log('4. charging order');
 
-			squareV2.customers.chargeTransaction(customerProfile)
-			.then(function success(s) {
-				resolve(s);
-			}).catch(function error(e) {
+			//temporarily changing amount	TODO: TAKE THIS OUT WHEN LIVE
+			customerProfile.tender.total = 100;
 
+			console.log('customer profile', customerProfile.tender);
+
+			//CHARGE THE CARD
+			squareV2.transactions.charge(customerProfile)
+			.then(function success(chargeReceipt) {
+				resolve(chargeReceipt);
+			}).catch(function error(e) {
+				reject(e);
 			});
 
 		}).catch(function error(e) {
@@ -298,17 +315,19 @@ function registerMonthlySubscription(subApp) {
 
 		//1. record the order
 		_recordOrder(subApp)
-		.then(function success(s) {
+		.then(function success(updatedApp) {
 
 			//2. send confirming emails
 			//notify progress
 			console.log('6. sending confirmation emails');
+
+			mail.confirmationEmail(updatedApp)
 			
 			// 3. return confirming code
 			//notify progress
 			console.log('7. returning confirmation code');
 
-			resolve(s);
+			resolve({ confirmationCode: updatedApp.orderNo });
 
 		}).catch(function error(e) {
 			reject(e);

@@ -91,7 +91,7 @@ function squareService($rootScope, $location, serverService, userDataService) {
 			          self.card_errors = [];
 			          // Delete this line and uncomment the lines below when you're ready
 			          // to start submitting nonces to your server.
-			          alert('Nonce received: ' + nonce);
+			          //alert('Nonce received: ' + nonce);
 
 			          _chargeCardWithNonce(nonce);
 

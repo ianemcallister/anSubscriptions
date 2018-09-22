@@ -304,9 +304,11 @@ function chargeTransaction(customerProfile) {
 
 		//hit the api
 		apiInstance.charge(locationId, body).then(function(data) {
-			console.log('API called successfully. Returned data: ' + data);
+			console.log('API called successfully. Returned data: ', data);
+			resolve(data);
 		}, function(error) {
 			console.error(error);
+			reject(error);
 		});
 
 	});

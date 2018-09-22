@@ -35,8 +35,8 @@ mail.confirmationEmail(
       //expiration_date: "",
       //postal_code: "",
       nonce: "",
-      last4: "8668",  //comes from square charge transaction tenders[0].card_details.card.card_brand
-      type: "visa"    //comes from square charge transaction tenders[0].card_details.card.last_4
+      last4: "8668",  //comes from square charge transaction tenders[0].card_details.card.last_4
+      type: "visa"    //comes from square charge transaction tenders[0].card_details.card.card_brand
     },
     orderNo: "81-02834-259902", //comes from square charge transaction id 
     orderDate: "2016-03-10T22:57:56Z",       //comes from square charge transaction created_at
