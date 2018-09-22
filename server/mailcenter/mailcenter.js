@@ -5,7 +5,10 @@
 */
 
 //define dependencies
-var nodemailer = require('nodemailer');
+var nodemailer 		= require('nodemailer');
+var handlebars 		= require('handlebars');
+//var handlebarsIntl	= require('handlebars-intl');
+var stdio			= require('../stdio/stdio.js');
 
 //define module
 var mailCenter = {
@@ -31,15 +34,15 @@ var mailCenter = {
 			pass: process.env.AH_NUTS_MAIL_PASSWORD
 		}
 	}),
-	send: send
+	send: send, 
+	confirmationEmail: confirmationEmail
 };
 
 //send
 function send(options) {
 	//notify progress
-	console.log('sending mail', mailCenter.transporter);
-
-
+	console.log('sending mail');
+	//console.log(mailCenter.transporter);
 
 	//return async work
 	return new Promise(function(resolve, reject) {
@@ -59,6 +62,47 @@ function send(options) {
 	});
 
 };
+
+//
+function confirmationEmail(orderData) {
+	//define local variables
+
+	//load the template
+	var rawTemplate = stdio.read.string('./templates/confirmationEmail.htm');
+
+	var emailTemplate = handlebars.compile(rawTemplate);
+
+	//register helpers
+	handlebars.registerHelper('formatPrice', function(items, options) {
+		var returnString = "$";
+
+		var dollarValue = parseFloat(items / 100).toFixed(2);
+		console.log('items', dollarValue);
+
+		returnString = returnString + dollarValue ;
+
+		return returnString;
+	});
+
+	var htmlEmail = emailTemplate(orderData);
+
+	var logoPath = __dirname + "/Ah-nuts_logo.png";
+
+	console.log('path', logoPath);
+	send({
+		from: 'info@ah-nuts.com',
+		to: orderData.contact.email,
+		cc: "online@ah-nuts.com",
+		subject: "Your Ah-Nuts Subscription Order Has Been Placed",
+		//text: "this is a test",
+		html: htmlEmail,
+		attachments: [{
+		     filename: 'Ah-nuts_logo.png',
+		     path: logoPath,
+		     cid: 'logo'
+		}]
+	});
+}
 
 
 //export module

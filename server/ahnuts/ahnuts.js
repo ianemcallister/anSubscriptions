@@ -21,7 +21,7 @@ var ahnuts = {
 		_confCode: _confCode
 	},
 	api: {
-		getServerData: getServerData
+		getServerData: getServerData,
 		promoCodes: {
 			check: checkCode,
 			write: writeCode

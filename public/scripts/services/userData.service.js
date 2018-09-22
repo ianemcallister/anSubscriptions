@@ -34,6 +34,8 @@ function userDataService() {
 			//postal_code: "",
 			nonce: ""
 		},
+		orderNo: "",
+		orderDate: "",
 		order: [],
 		tender: {
 			discounts: 0,

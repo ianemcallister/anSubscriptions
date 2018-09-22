@@ -7,6 +7,46 @@ var stdio		= require('./stdio/stdio.js');
 var mail		= require('./mailcenter/mailcenter.js');
 
 
+mail.confirmationEmail(
+  {
+    name: {
+      first: "Ian",
+      last: "McAllister"
+    },
+    contact: {
+      email: "iemcallister@gmail.com",
+      phone: ""
+    },
+    shippingDestination: {
+      street: "20022 SW 71st Ave",
+      city: "Tualatin",
+      state: "OR",
+      zip: "97062"
+    },
+    billingAddress: {
+      street: "20022 SW 71st Ave",
+      city: "Tualatin",
+      state: "OR",
+      zip: "97062"
+    },
+    card: {
+      //card_number: "",
+      //cvv: "",
+      //expiration_date: "",
+      //postal_code: "",
+      nonce: "",
+      last4: "8668"
+    },
+    orderNo: "81-02834-259902",
+    orderDate: "9/22/18",
+    order: [],
+    tender: {
+      discounts: 0,
+      shipping: 0,
+      total: 1700
+    },
+    agreedToTerms: false
+});
 
 /*mail.send({
 	from: 'info@ah-nuts.com',
