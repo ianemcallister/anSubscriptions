@@ -6,7 +6,9 @@ var squareV2 	= require('./square/connectV2.js');
 var stdio		= require('./stdio/stdio.js');
 var mail		= require('./mailcenter/mailcenter.js');
 
-mail.send({
+
+
+/*mail.send({
 	from: 'info@ah-nuts.com',
 	to: 'iemcallister@gmail.com',
 	subject: "testing",
@@ -17,7 +19,7 @@ mail.send({
 	console.log('success', s);
 }).catch(function error(e) {
 	console.log('error', e);
-});
+});*/
 
 /*squareV2.transactions.charge( 
 	{ name: { first: 'Ian', last: 'McAllister' },

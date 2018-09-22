@@ -28,7 +28,8 @@
     "npm": "^6.4.1",
     "path": "^0.12.7",
     "square-connect": "^2.20180712.2",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.2",
+    "voucherify": "^2.16.0"
   },
   "devDependencies": {
     "gulp-autoprefixer": "^6.0.0",

@@ -5,7 +5,8 @@
 */
 
 //define dependcies
-squareV2 	= require('../square/connectV2.js');
+var squareV2 			= require('../square/connectV2.js');
+var voucherifyClient 	= require('voucherify');
 
 //define module
 var ahnuts = {
@@ -21,6 +22,10 @@ var ahnuts = {
 	},
 	api: {
 		getServerData: getServerData
+		promoCodes: {
+			check: checkCode,
+			write: writeCode
+		}
 	},
 	register: {
 		subscription: {
@@ -31,6 +36,19 @@ var ahnuts = {
 		}
 	}
 };
+
+/*var client = voucherifyClient({
+    applicationId: 'YOUR-APPLICATION-ID',
+    clientSecretKey: 'YOUR-CLIENT-SECRET-KEY'
+})*/
+
+//check a promo code
+function checkCode() {
+
+};
+
+//writes to to the promo code file
+function writeCode() {};
 
 //RECORD ORDER
 /*function _recordOrder(subApp) {

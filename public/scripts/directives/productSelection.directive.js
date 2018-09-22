@@ -57,7 +57,7 @@ angular.module('ansub').directive('productSelection', productSelection);
 			//define view model variables
 
 			self.flavors= [
-				{ name: 'Secret Recipe Pecans', description: "Sweet and Salty" },
+				{ name: 'Secret Recipe Pecans', description: "<p>Sweet Pecans roasted and glazed in our world famous secret recipe glaze - the perfect combination of sweet vanilla with a hint of saltiness. Mmmmm! </p><p>Great as a stand alone snack or chop them up and use them as a topping for ice cream, yogurt, salads and more!</p>" },
 				{ name: 'Secret Recipe Almonds', description: "Sweet and Salty" },
 				{ name: 'Secret Recipe Cashews', description: "Sweet and Salty" },
 				{ name: 'Secret Recipe Peanuts', description: "Sweet and Salty" },
