@@ -8,6 +8,7 @@
 var nodemailer 		= require('nodemailer');
 var handlebars 		= require('handlebars');
 //var handlebarsIntl	= require('handlebars-intl');
+var moment 			= require('moment-timezone');
 var stdio			= require('../stdio/stdio.js');
 
 //define module
@@ -93,7 +94,14 @@ function confirmationEmail(orderData) {
 
 
 		return returnString + "</ul>";
-	})
+	});
+
+	handlebars.registerHelper('dateHelper', function(items, options) {
+		
+		var theDate = moment(items)
+
+		return theDate.format("dddd, MMMM Do YYYY");
+	});
 
 	var htmlEmail = emailTemplate(orderData);
 
