@@ -40,7 +40,14 @@ mail.confirmationEmail(
     },
     orderNo: "81-02834-259902", //comes from square charge transaction id 
     orderDate: "2016-03-10T22:57:56Z",       //comes from square charge transaction created_at
-    order: [{ flavor: "Secret Recipe Pecans" }],
+    order: [{ 
+      flavor: "Mix It Up",
+      mixFlvrsSelected: ["Seceret Recipe Pecans", "Drunken Pecans"],
+      mixflvrCount: 2
+    },
+    {
+      flavor: "Secret Recipe Pecans"
+    }],
     tender: {
       discounts: 0,
       shipping: 0,
