@@ -84,6 +84,17 @@ function confirmationEmail(orderData) {
 		return returnString;
 	});
 
+	handlebars.registerHelper('productList', function(items, options) {
+		var returnString = "<ul>";
+
+		for(var i=0, l=items.length; i<l; i++) {
+			returnString = returnString + "<li>" + options.fn(items[i]) + "</li>";
+		}
+
+
+		return returnString + "</ul>";
+	})
+
 	var htmlEmail = emailTemplate(orderData);
 
 	var logoPath = __dirname + "/Ah-nuts_logo.png";

@@ -32,7 +32,9 @@ function userDataService() {
 			//cvv: "",
 			//expiration_date: "",
 			//postal_code: "",
-			nonce: ""
+			nonce: "",
+			last4: "",
+			type: ""
 		},
 		orderNo: "",
 		orderDate: "",

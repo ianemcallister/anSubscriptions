@@ -35,11 +35,12 @@ mail.confirmationEmail(
       //expiration_date: "",
       //postal_code: "",
       nonce: "",
-      last4: "8668"
+      last4: "8668",
+      type: "visa"
     },
     orderNo: "81-02834-259902",
     orderDate: "9/22/18",
-    order: [],
+    order: [{ flavor: "Secret Recipe Pecans" }],
     tender: {
       discounts: 0,
       shipping: 0,
