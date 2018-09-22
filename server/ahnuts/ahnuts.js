@@ -124,7 +124,7 @@ function _chargeOrder(subApp) {
 			console.log('4. charging order');
 
 			//temporarily changing amount	TODO: TAKE THIS OUT WHEN LIVE
-			//customerProfile.tender.total = 100;
+			customerProfile.tender.total = 100;
 
 			console.log('customer profile', customerProfile.tender);
 
