@@ -52,16 +52,18 @@ angular.module('ansub').directive('productSelection', productSelection);
 
 			var productObject = { 
 				id: 1, 
+				sqrId: "",
+				sqVarId: "",
 				flavor: "", 
 				mixflvrCount: 0,
 				mixflvrs: {
-					srpec: { id: "srpec", name: "Secret Recipe Pecans", selected:false, classes:{"list-group-item": true, "active": false} },
-					sralm: { id: "sralm", name: "Secret Recipe Almonds", selected:false, classes:{"list-group-item": true, "active": false}  },
-					srcsh: { id: "srcsh", name: "Secret Recipe Cashews", selected:false, classes:{"list-group-item": true, "active": false}  },
-					srpea: { id: "srpea", name: "Secret Recipe Peanuts", selected:false, classes:{"list-group-item": true, "active": false}  },
-					cnpec: { id: "cnpec", name: "Cinnamon Pecans", selected:false, classes:{"list-group-item": true, "active": false}  },
-					cnalm: { id: "cnalm", name: "Cinnamon Almonds", selected:false, classes:{"list-group-item": true, "active": false}  },
-					drpec: { id: "drpec", name: "Drunken Pecans", selected:false, classes:{"list-group-item": true, "active": false}  }
+					srpec: { id: "srpec", name: "SR Pecans", selected:false, classes:{"list-group-item": true, "active": false} },
+					sralm: { id: "sralm", name: "SR Almonds", selected:false, classes:{"list-group-item": true, "active": false}  },
+					srcsh: { id: "srcsh", name: "SR Cashews", selected:false, classes:{"list-group-item": true, "active": false}  },
+					srpea: { id: "srpea", name: "SR Peanuts", selected:false, classes:{"list-group-item": true, "active": false}  },
+					cnpec: { id: "cnpec", name: "Cin Pecans", selected:false, classes:{"list-group-item": true, "active": false}  },
+					cnalm: { id: "cnalm", name: "Cin Almonds", selected:false, classes:{"list-group-item": true, "active": false}  },
+					drpec: { id: "drpec", name: "Drunk Pecans", selected:false, classes:{"list-group-item": true, "active": false}  }
 				},
 				mixFlvrsSelected: [],
 				mix: ""
@@ -167,8 +169,26 @@ angular.module('ansub').directive('productSelection', productSelection);
 			};
 
 			self.updateShoppingCart = function() {
-				console.log('updating shopping cart');
+				//console.log('updating shopping cart');
 				//self.userData.order = self.orderList;
+				//iterate over products
+				self.orderList.forEach(function(product) {
+
+					//iterate over all flavors
+					self.flavors.forEach(function(flavor) {
+						//only if the product is a match
+						if(flavor.name == product.flavor) {
+							product.sqrId = flavor.id;
+
+							if(product.id < 4) product.sqVarId = flavor.variations[0].id
+							else product.sqVarId = flavor.variations[1].id
+						}
+
+					})
+				})
+
+
+				console.log(self.orderList);
 
 			};
 

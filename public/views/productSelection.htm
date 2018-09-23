@@ -19,43 +19,13 @@
 			
 			<p>We offer seven different nut & recipie combinations to make our seven different flavors.</p>
 
+			<!--iterate over the flavors list-->
 			<ul>
 				<li ng-repeat='flavor in vm.flavors track by $index'>
 					<strong>{{flavor.name}}</strong> <br>
 					<p>{{flavor.description}}</p>
 				</li>
 			</ul>
-			<!--<strong>Secret Recipe Pecans</strong> <br>
-			<p>Sweet Pecans roasted and glazed in our world famous secret recipe glaze - the perfect combination of sweet vanilla with a hint of saltiness. Mmmmm!</p>
-			<p>Great as a stand alone snack or chop them up and use them as a topping for ice cream, yogurt, salads and more!</p> <br>
-
-			<strong>Drunken Pecans</strong> <br>
-			<p>Did Someone say Whiskey???</p>
-			<p>A different take on our famous Secret Recipe Pecans - we swap out the Vanilla with Whiskey! Still sweet, still salty - but with a hint of a taste of whiskey!</p>
-			<p>Great as a stand alone snack or chop them up and use them as a topping for ice cream. These go great with Blue Cheese, Feta or Gorgonzola in a salad. Chop these up and sprinkle them on Pancakes, Waffles or French Toast!</p> <br> 
-
-			<strong>Cinnamon Pecans</strong> <br>
-			<p>Sweet Pecans roasted and glazed in a sweet Cinnamon and Vanilla glaze.</p>
-			<p>Great as a stand alone snack or chop them up and use them as a topping for Ice Cream, Yogurt or your favorite Salad.</p> <br>
-
-			<strong>Secret Recipe Cashews</strong> <br>
-			<p>Delicious large Cashews roasted and glazed in our world famous secret recipe glaze - the perfect combination of sweet Vanilla with a hint of Saltiness. Mmmmm!</p>
-			<p>Great as a stand alone snack or chop them up and use them as a topping for ice cream, yogurt, salads and more!</p> <br>
-
-			<strong>Secret Recipe Almonds</strong> <br>
-			<p>These crunchy morsels are roasted and glazed in our world famous secret recipe glaze - the perfect combination of sweet vanilla with a hint of saltiness. Mmmmm!</p>
-			<p>Great as a stand alone snack or chop them up and use them as a topping for ice cream, yogurt, salads and more!</p> <br>
-
-			<strong>Cinnamon Almonds</strong> <br>
-			<p>The original Bavarian Cinnamon Almond. Sweet - with the perfect hints of Vanilla and Cinnamon. These crunchy bits will take you straight to the Old World!</p>
-			<p>Great as a stand alone snack or chop them up and use them as a topping for ice cream, yogurt, salads and more!</p> <br>
-
-			<strong>Secret Recipe Peanuts</strong> <br>
-			<p></p>
-			<p></p> <br> <br>
-
-			<strong>Mix It Up!</strong> <br>
-			<p>Your FAVORITES all in one bag! You select the nuts for your own customized mix!</p> <br>-->
 
 			<a href="" ng-click='vm.state.infoBox=!vm.state.infoBox'>Hide Flavor Discriptions</a> <br> <br>
 
@@ -78,7 +48,6 @@
 			<th scope='col'></th>
 		</tr>
 
-		{{vm.anorder}}
 		<!--Products Rows-->
 		<tr ng-repeat='product in vm.orderList track by $index'>
 			<!--Product Id-->
@@ -110,10 +79,11 @@
 					<div 	ng-if='product.flavor=="Mix-It-Up (10.4oz)"'>
 					<strong><u>My mix needs {{product.mixflvrCount}} flavors</u></strong> <br>
 						
-						<ul style='list-style:none' class="list-group">
+						<ul style='list-style:none; text-align:center;' class="list-group">
 							<li ng-repeat='flavor in product.mixflvrs track by flavor.id'
 								ng-class='product.mixflvrs[flavor.id].classes'
 								ng-click='flavor.selected=!flavor.selected; flavor.classes.active=!flavor.classes.active; product.mixflvrCount = vm.countMixFlavors(product.mixflvrs); vm.buildFlavorList(product.id - 1)'
+								
 								>
 								{{flavor.name}}
 							</li>
@@ -121,7 +91,7 @@
 
 					</div>
 				</div>
-				<div class="row">
+				<div class="row" style="">
 					<span 	class='col-xs-12 col-sm-12 col-md-12 col-lg-12'
 						ng-if='product.id == (vm.orderList.length) && product.id < 4'>
 						<button class="btn btn-success btn-block"
