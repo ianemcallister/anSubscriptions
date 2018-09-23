@@ -31,7 +31,9 @@ var v2 = {
 		updateCustomer: updateCustomer
 	},
 	locations: {},
-	orders: {},
+	orders: {
+
+	},
 	reporting: {},
 	transactions: {
 		charge: chargeTransaction
@@ -90,7 +92,7 @@ function listCustomers(cursor) {
 
 	return new Promise(function(resolve, reject) {
 
-		//it the API
+		//hit the API
 		apiInstance.listCustomers(opts).then(function(data) {
 			//notify progress
 			console.log('API called successfully. Cursor', cursor, ' Returned data: ', data.cursor);
@@ -121,6 +123,7 @@ function listCustomers(cursor) {
 
 		}, function(error) {
 		  console.error(error);
+		  reject(error);
 		});
 
 	});

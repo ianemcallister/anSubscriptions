@@ -6,6 +6,7 @@
 
 //define dependcies
 var squareV2 			= require('../square/connectV2.js');
+var squareV1  			= require('../square/connectV1.js');
 var voucherifyClient 	= require('voucherify');
 var mail				= require('../mailcenter/mailcenter.js');
 
@@ -23,6 +24,7 @@ var ahnuts = {
 	},
 	api: {
 		getServerData: getServerData,
+		getProductList: getProductList,
 		promoCodes: {
 			check: checkCode,
 			write: writeCode
@@ -296,15 +298,22 @@ function _orderConfEmails() {
 function _confCode() {};
 
 //GET SERVER DATA
-function getServerData(path) {
-	//define local variables
-	var returnObject = {};
+function getServerData() {
+	return new Promise(function(resolve, reject) {
+		resolve({id: process.env.SQUARE_APP_ID});
+	});
+};
 
-	returnObject['id'] = process.env.SQUARE_APP_ID;
-	//returnObject['id'] = process.env.SQUARE_SANDBOX_APP_ID;
-
-	return returnObject;
-}	
+function getProductList() {
+	return new Promise(function(resolve, reject) {
+		squareV1.items.list()
+		.then(function success(s) {
+			resolve(s);
+		}).catch(function error(e) {
+			reject(e);
+		});
+	});
+}
 
 //REGISTER MONTLY SUBSCRIPTION
 function registerMonthlySubscription(subApp) {

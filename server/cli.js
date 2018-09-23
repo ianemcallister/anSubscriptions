@@ -3,11 +3,20 @@
 //squareV2 	= require('./square/connectV2.js');
 var ahnuts 		= require('./ahnuts/ahnuts.js');
 var squareV2 	= require('./square/connectV2.js');
+var squareV1  = require('./square/connectV1.js');
 var stdio		= require('./stdio/stdio.js');
 var mail		= require('./mailcenter/mailcenter.js');
 
 
-mail.confirmationEmail(
+squareV1.items.list()
+.then(function success(s) {
+  console.log('got this list', s);
+  stdio.write.json(s, './json/productList.json');
+}).catch(function error(e) {
+  console.log('error', e);
+});
+
+/*mail.confirmationEmail(
   {
     name: {
       first: "Ian",
@@ -54,7 +63,7 @@ mail.confirmationEmail(
       total: 1700
     },
     agreedToTerms: false
-});
+});*/
 
 /*mail.send({
 	from: 'info@ah-nuts.com',

@@ -19,10 +19,10 @@ angular.module('ansub').directive('productSelection', productSelection);
 		function linkFunc(scope, el, attr, ctrl) {
 		}
 		
-		productSelectionController.$inject = ['$scope', '$log', 'userDataService', 'stateService'];
+		productSelectionController.$inject = ['$scope', '$log', 'userDataService', 'stateService', 'squareService'];
 
 		/* @ngInject */
-		function productSelectionController($scope, $log, userDataService, stateService) {
+		function productSelectionController($scope, $log, userDataService, stateService, squareService) {
 			//define local variables
 			var self = this;
 
@@ -31,11 +31,24 @@ angular.module('ansub').directive('productSelection', productSelection);
 			self.state = stateService.productSelection;
 			self.state['infoBox'] = stateService.infoBoxes.flavorDefs;
 
+			// donload resources
+			squareService.download.productList()
+			.then(function success(s){
+				//console.log('got this product list', s);
+				self.flavors = s;
+				$scope.$apply();
+			}).catch(function error(e) {
+				console.log('product list error, ', e);
+			});
+
+
+
 			self.orderList = userDataService.order;
 
-			self.productPrice = 1700;
+			self.productPrice = 1699;
 
 			self.order = userDataService.tender;
+
 
 			var productObject = { 
 				id: 1, 
@@ -55,17 +68,6 @@ angular.module('ansub').directive('productSelection', productSelection);
 			};
 
 			//define view model variables
-
-			self.flavors= [
-				{ name: 'Secret Recipe Pecans', description: "<p>Sweet Pecans roasted and glazed in our world famous secret recipe glaze - the perfect combination of sweet vanilla with a hint of saltiness. Mmmmm! </p><p>Great as a stand alone snack or chop them up and use them as a topping for ice cream, yogurt, salads and more!</p>" },
-				{ name: 'Secret Recipe Almonds', description: "Sweet and Salty" },
-				{ name: 'Secret Recipe Cashews', description: "Sweet and Salty" },
-				{ name: 'Secret Recipe Peanuts', description: "Sweet and Salty" },
-				{ name: 'Cinnamon Pecans', description: "Bavarian" },
-				{ name: 'Cinnamon Almonds', description: "Bavarian" },
-				{ name: 'Drunken Pecans', description: "Savory" },
-				{ name: 'Mix-It-Up', description: "Whatever You Like" }
-			];
 
 			//console.log('in productSelectionController');
 

@@ -19,7 +19,13 @@
 			
 			<p>We offer seven different nut & recipie combinations to make our seven different flavors.</p>
 
-			<strong>Secret Recipe Pecans</strong> <br>
+			<ul>
+				<li ng-repeat='flavor in vm.flavors track by $index'>
+					<strong>{{flavor.name}}</strong> <br>
+					<p>{{flavor.description}}</p>
+				</li>
+			</ul>
+			<!--<strong>Secret Recipe Pecans</strong> <br>
 			<p>Sweet Pecans roasted and glazed in our world famous secret recipe glaze - the perfect combination of sweet vanilla with a hint of saltiness. Mmmmm!</p>
 			<p>Great as a stand alone snack or chop them up and use them as a topping for ice cream, yogurt, salads and more!</p> <br>
 
@@ -49,7 +55,7 @@
 			<p></p> <br> <br>
 
 			<strong>Mix It Up!</strong> <br>
-			<p>Your FAVORITES all in one bag! You select the nuts for your own customized mix!</p> <br>
+			<p>Your FAVORITES all in one bag! You select the nuts for your own customized mix!</p> <br>-->
 
 			<a href="" ng-click='vm.state.infoBox=!vm.state.infoBox'>Hide Flavor Discriptions</a> <br> <br>
 
@@ -101,7 +107,7 @@
 						ng-blur="vm.validateProducts()"
 				>-->
 				<!--Mix Flavor selection-->
-					<div 	ng-if='product.flavor=="Mix-It-Up"'>
+					<div 	ng-if='product.flavor=="Mix-It-Up (10.4oz)"'>
 					<strong><u>My mix needs {{product.mixflvrCount}} flavors</u></strong> <br>
 						
 						<ul style='list-style:none' class="list-group">

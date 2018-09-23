@@ -9,7 +9,8 @@ function serverService($http) {
 	var serverService = {
 		chargeCard: chargeCard,
 		get: {
-			sqrAppId: getSqrAppId
+			sqrAppId: getSqrAppId,
+			sqrPrdctList: getSqrPrdctList
 		}
 	};
 
@@ -60,6 +61,25 @@ function serverService($http) {
 				reject(error);
 			});
 		});	
+	};
+
+	function getSqrPrdctList() {
+
+		//return async work
+		return new Promise(function(resolve, reject) {
+
+			$http({
+				method: 'GET',
+				url: '/api/productList'
+			}).then(function successCallback(response) {
+					
+				console.log('got this response', response);
+				resolve(response.data);
+				
+			}, function errorCallback(error) {
+				reject(error);
+			});
+		});
 	};
 
 	return serverService;

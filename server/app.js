@@ -51,17 +51,25 @@ serverApp.use('/', function(req, res, next) {
 serverApp.get('/api/:path', function(req, res) {
 
 	//define local varaibles
-	var path = req.path;
+	var rawPath = req.path;
+	var path = rawPath.split('/')[2];
 
-	var returnObject = ahnuts.api.getServerData(path);
-
-	if(returnObject != undefined) {
-		res.status(200);
-		res.send(returnObject);
-	} else {
-		res.status(500);
-		res.send('There was an error');
+	var methods = {
+		squareId: ahnuts.api.getServerData(),
+		productList: ahnuts.api.getProductList()
 	}
+
+	//console.log(path, methods[path]);
+
+	//access the promises
+	methods[path]
+	.then(function success(s) {
+		res.status(200);
+		res.send(s);
+	}).catch(function error(e) {
+		res.status(500);
+		res.send({alert: 'Error', message: e});
+	});
 
 });
 

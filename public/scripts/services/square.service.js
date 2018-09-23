@@ -11,6 +11,9 @@ function squareService($rootScope, $location, serverService, userDataService) {
 	var squareService = {
 		_chargeCardWithNonce: _chargeCardWithNonce,
 		submitForm: submitForm,
+		download: {
+			productList: downloadProductList
+		},
 		init: init
 	};
 
@@ -42,6 +45,21 @@ function squareService($rootScope, $location, serverService, userDataService) {
 	function submitForm() {
 		console.log('submitting form');
 		self.paymentForm.requestCardNonce();
+	};
+
+	function downloadProductList() {
+		//define local variables
+		return new Promise(function(resolve, reject) {
+			//it the server 
+			serverService.get.sqrPrdctList()
+			.then(function success(s) {
+				resolve(s);
+			}).catch(function error(e) {
+				reject(e);
+			});
+
+		});
+
 	};
 
 	function init() {
