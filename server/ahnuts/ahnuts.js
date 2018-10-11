@@ -32,6 +32,12 @@ var ahnuts = {
 	},
 	register: {
 		subscription: {
+			findCustomer: rms_findCustomer,
+			updateCustomer: rms_updateCustomer,
+			savePayment: rms_savePayment,
+			buildOrder: rms_buildOrder,
+			chargeOrder: rms_chargeOrder,
+			notifyOrder: rms_notifyOrder,
 			//_createCustomer: rms_createCustomer,
 			//_saveCustomerCard: rms_saveCustomerCard,
 			//_chargeCurrentOrder: rms_chargeCurrentOrder,
@@ -88,7 +94,7 @@ function _recordOrder(subApp) {
 		_chargeOrder(subApp)
 		.then(function success(chargeReceipt) {
 			//notify progress
-			console.log('5. recording order');
+			console.log('6. recording order');
 			console.log('subApp', subApp);
 			console.log('chargeReceipt', chargeReceipt.transaction);
 
@@ -119,11 +125,11 @@ function _chargeOrder(subApp) {
 	return new Promise(function(resolve, reject) {
 
 		//update customer records customer records 
-		_savePaymentMethod(subApp)
+		_buildOrder(subApp)
 		.then(function success(customerProfile) {
 
 			//notify progress
-			console.log('4. charging order');
+			console.log('5. charging order');
 
 			//temporarily changing amount	TODO: TAKE THIS OUT WHEN LIVE
 			//customerProfile.tender.total = 100;
@@ -137,6 +143,36 @@ function _chargeOrder(subApp) {
 			}).catch(function error(e) {
 				reject(e);
 			});
+
+		}).catch(function error(e) {
+			reject(e);
+		});
+		
+
+	});
+
+};
+
+
+//TODO: COME BACK TO THIS HERE, I'VE BROKEN THE CODE AND I NEED TO ADD THE ORDER ELEMENT BEFORE GOING FURTHER!!!!!!
+function _buildOrder(subApp) {
+	//define local variables
+
+	return new Promise(function(resolve, reject) {
+
+		//update customer records customer records 
+		_savePaymentMethod(subApp)
+		.then(function success(customerProfile) {
+
+			console.log('4. Saving order');
+
+			//temporarily changing amount	TODO: TAKE THIS OUT WHEN LIVE
+			//customerProfile.tender.total = 100;
+
+			console.log('customer profile', customerProfile.tender);
+
+			//build the order
+
 
 		}).catch(function error(e) {
 			reject(e);
@@ -315,35 +351,206 @@ function getProductList() {
 	});
 }
 
-//REGISTER MONTLY SUBSCRIPTION
-function registerMonthlySubscription(subApp) {
+function rms_findCustomer(subApp) {
 	//define local variables
-
-	//When a new application comes in it must
+	var phoneHash = {};
+	var emailHash = {};
+	var found = {
+		phone: "",
+		email: ""
+	};
+	var customerPhone = subApp.contact.phone;
+	var customerEmail = subApp.contact.email;
+	var customerId = undefined;
+	
+	//pass back async work
 	return new Promise(function(resolve, reject) {
+		
+		//download customer list
+		squareV2.customers.listCustomers()
+		.then(function success(customerList) {
 
-		//1. record the order
-		_recordOrder(subApp)
-		.then(function success(updatedApp) {
+			//iterate through the list
+			customerList.forEach(function(customer) {
 
-			//2. send confirming emails
-			//notify progress
-			console.log('6. sending confirmation emails');
+				//add good phone numbers to phoneHash
+				if(customer.phone_number != "" || customer.phone_number != undefined)
+					phoneHash[customer.phone_number] = customer.id;
 
-			mail.confirmationEmail(updatedApp)
+				//add good emails to emailHash
+				if(customer.email_address != "" || customer.email_address != undefined)
+					phoneHash[customer.email_address] = customer.id;
+			});
+
+			//check for customers phone
+			found.phone = phoneHash[customerPhone];
+
+			//check for customers email
+			found.email = emailHash[customerEmail];
+
+			//if customer id exists with email save it
+			if(found.email != undefined)
+				customerId = found.email;
+
+			//if customer id exists with phone save it, overwriting email
+			if(found.phone != undefined)
+				customerId = found.phone;
 			
-			// 3. return confirming code
-			//notify progress
-			console.log('7. returning confirmation code');
-
-			resolve({ confirmationCode: updatedApp.orderNo });
+			resolve(customerId);
 
 		}).catch(function error(e) {
 			reject(e);
 		});
 
 	});
+};
 
+// REGISTER MONTHLY SUBSCRIBER: UPDATE CUSTOMER 
+function rms_updateCustomer(subApp) {
+	//notify progress
+	console.log('rms_updateCustomer');
+
+	//pass back the async work
+	return new Promise(function(resolve, reject) {
+		
+		//notify customer id
+		console.log('customerId:', subApp.customerId);
+
+		//create a new record
+		if(subApp.customerId == undefined) {
+
+			squareV2.customers.createCustomer(subApp)
+			.then(function success(customerRecord) {
+				console.log('new customer record', customerRecord);
+				resolve(subApp);
+			}).catch(function error(e) {
+				reject(e);
+			});
+
+		//or update an old one
+		} else {
+
+			squareV2.customers.updateCustomer(subApp.customerId, subApp)
+			.then(function success(customerRecord) {
+				console.log('updated customer record', customerRecord);
+				resolve(subApp);
+			}).catch(function error(e) {
+				reject(e);
+			});
+
+		}
+
+		//resolve the data back
+		resolve(subApp);
+	});
+};
+
+// REGISTER MONTHLY SUBSCRIBER: SAVE PAYMENT
+function rms_savePayment(subApp) {
+	//notify progress
+	console.log('rms_savePayment');
+
+	//return async work
+	return new Promise(function(resolve, reject) {
+		
+		squareV2.customers.createCustomerCard(subApp.customerId, subApp)
+		.then(function success(cardResponse) {
+			//notify progress
+			//console.log('got this response', cardResponse);
+
+			subApp.card['sqrId'] = cardResponse.card.id;
+			subApp['customerId'] = customerId;
+
+			//return results
+			resolve(subApp);
+
+		}).catch(function error(e) {
+			reject(e);
+		});
+
+
+
+		//resolve current object status
+		resolve(subApp);
+	});
+};
+
+// REGISTER MONTHLY SUBSCRIBER: BUILD ORDER
+function rms_buildOrder(subApp) {
+	//notify progress
+	console.log('rms_buildOrder');
+	
+	//return async work
+	return new Promise(function(resolve, reject) {
+		
+		//TODO: ADD THE ORDER BUIDLING FUNCTION HERE
+
+		//resolve promise
+		resolve(subApp);
+	});
+};
+
+// REGISTER MONTHLY SUBSCRIBER: CHARGE ORDER
+function rms_chargeOrder(subApp) {
+	//notify progress
+	console.log('rms_chargeOrder');
+	
+	//return async work here
+	return new Promise(function(resolve, reject) {
+		
+		//temporarily changing amount	TODO: TAKE THIS OUT WHEN LIVE
+		subApp.tender.total = 100;
+
+
+		squareV2.transactions.charge(subApp)
+		.then(function success(chargeReceipt) {
+			
+			//add values to Application
+			subApp.card.last4 = chargeReceipt.transaction.tenders[0].card_details.card.last_4;
+			subApp.card.type = chargeReceipt.transaction.tenders[0].card_details.card.card_brand;
+			subApp.orderNo = chargeReceipt.transaction.id;
+			subApp.orderDate = chargeReceipt.transaction.created_at;
+
+			//return updated application object
+			resolve(subApp);
+		}).catch(function error(e) {
+			reject(e);
+		});
+
+		//resolve updated object
+		resolve(subApp);
+	});
+};
+
+// REGISTER MONTHLY SUBSCRIBER: NOTIFY ORDER
+function rms_notifyOrder(subApp) {
+	//notify progress
+	console.log('rms_notifyOrder');
+	
+	return new Promise(function(resolve, reject) {
+		
+		//Send the confirmation email
+		mail.confirmationEmail(subApp)
+
+		//assign the confirmation code
+		subApp['confirmationCode'] = subApp.orderNo;
+
+		//resolve when completed
+		resolve(subApp);
+	});
+};
+
+//REGISTER MONTLY SUBSCRIPTION
+function registerMonthlySubscription(subApp) {
+
+	//step through the subscription stages
+	//return rms_buildOrder(subApp)
+	return rms_updateCustomer(subApp)
+	.then(function success(s) { return rms_savePayment(s) }).catch(function error(e) { return e; })
+	.then(function success(s) { return rms_buildOrder(s) }).catch(function error(e) { return e; })
+	.then(function success(s) { return rms_chargeOrder(s) }).catch(function error(e) { return e; })
+	.then(function success(s) { return rms_notifyOrder(s) }).catch(function error(e) { return e; })
+		
 };
 
 //export module

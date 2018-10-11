@@ -4,17 +4,76 @@
 var ahnuts 		= require('./ahnuts/ahnuts.js');
 var squareV2 	= require('./square/connectV2.js');
 var squareV1  = require('./square/connectV1.js');
-var stdio		= require('./stdio/stdio.js');
-var mail		= require('./mailcenter/mailcenter.js');
+var stdio     = require('./stdio/stdio.js');
+var mail		  = require('./mailcenter/mailcenter.js');
 
 
-squareV1.items.list()
+/*ahnuts.register.subscription.findCustomer({contact: { email: "iemcallister@gmail.com", phone: "5033831718" }})
+.then(function(result) {
+  console.log(result);
+}).catch(function(error) { console.log('e', error); });*/
+
+/*
+ahnuts.register.subscription.monthly({
+    name: {
+      first: "Ian",
+      last: "McAllister"
+    },
+    contact: {
+      email: "iemcallister@gmail.com",
+      phone: "5033831718"
+    },
+    customerId: "QTSSWAK0G95D30BHMJ5MHK3ZVC",
+    shippingDestination: {
+      street: "20022 SW 71st Ave",
+      city: "Tualatin",
+      state: "OR",
+      zip: "97062"
+    },
+    billingAddress: {
+      street: "20022 SW 71st Ave",
+      city: "Tualatin",
+      state: "OR",
+      zip: "97062"
+    },
+    card: {
+      //card_number: "",
+      //cvv: "",
+      //expiration_date: "",
+      //postal_code: "",
+      nonce: "",
+      last4: "8668",  //comes from square charge transaction tenders[0].card_details.card.last_4
+      type: "visa"    //comes from square charge transaction tenders[0].card_details.card.card_brand
+    },
+    orderNo: "81-02834-259902", //comes from square charge transaction id 
+    orderDate: "2016-03-10T22:57:56Z",       //comes from square charge transaction created_at
+    order: [{ 
+      flavor: "Mix It Up",
+      mixFlvrsSelected: ["Seceret Recipe Pecans", "Drunken Pecans"],
+      mixflvrCount: 2
+    },
+    {
+      flavor: "Secret Recipe Pecans"
+    }],
+    tender: {
+      discounts: 0,
+      shipping: 0,
+      total: 1700
+    },
+    agreedToTerms: false
+}).then(function success(s) {
+  console.log('got this back', s);
+}).catch(function error(e) {
+  console.log('error', e);
+});
+
+/*squareV1.items.list()
 .then(function success(s) {
   console.log('got this list', s);
   stdio.write.json(s, './json/productList.json');
 }).catch(function error(e) {
   console.log('error', e);
-});
+});*/
 
 /*mail.confirmationEmail(
   {

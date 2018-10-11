@@ -32,12 +32,38 @@ var v2 = {
 	},
 	locations: {},
 	orders: {
-
+		createOrder: createOrder
 	},
 	reporting: {},
 	transactions: {
 		charge: chargeTransaction
 	}
+};
+
+function createOrder(subApp) {
+	//define local variables
+
+	return new Promise(function(resolve, reject) {
+
+		var apiInstance = new SquareConnect.OrdersApi();
+
+		var locationId = "SJFCY96E7N0RW"; // String | The ID of the business location to associate the order with.
+
+		var body = new SquareConnect.CreateOrderRequest(); // CreateOrderRequest | An object containing the fields to POST for the request.  See the corresponding object definition for field details.
+
+		//NEED TO ADD LINE ITEMS
+		//body['lineItems'] = 
+
+		apiInstance.createOrder(locationId, body).then(function(data) {
+		  console.log('API called successfully. Returned data: ', data);
+		  resolve(data);
+		}, function(error) {
+		  console.error(error);
+		  reject(error);
+		});
+
+	});
+
 };
 
 function deleteCustomer(id) {
@@ -275,7 +301,7 @@ function chargeTransaction(customerProfile) {
 
 	var apiInstance = new SquareConnect.TransactionsApi();
 
-	var locationId = "S4P16GQRK21CF"; // String | The ID of the location to associate the created transaction with.
+	var locationId = "SJFCY96E7N0RW"; // String | The ID of the location to associate the created transaction with.
 
 	var body = new SquareConnect.ChargeRequest(); // ChargeRequest | An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 
