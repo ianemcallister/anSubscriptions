@@ -32,9 +32,14 @@
 							name='firstNameInput'
 							placeholder="Enter first name here"
 							ng-model='vm.userData.name.first'
-							required>
-					<div class='valid-feedback'>Looks good!</div>
-					<div class="invalid-feedback">Need at least 1 letter</div>
+							ng-class='vm.state.contactInput.first.input'
+							ng-blur='vm.validate("first", vm.userData.name.first)'>
+					<div class="valid-feedback">
+				    	Looks good!
+				    </div>
+				    <div class="invalid-feedback">
+				    	Please provide a valid first name. At Least 1 letter.
+				    </div>
 				</div>
 			</div>
 			<div class="col">
@@ -45,7 +50,14 @@
 							id="lastNameInput" 
 							placeholder="Enter last name here"
 							ng-model='vm.userData.name.last'
-							required>
+							ng-class='vm.state.contactInput.last.input'
+							ng-blur='vm.validate("last", vm.userData.name.last)'>
+					<div class="valid-feedback">
+				    	Looks good!
+				    </div>
+				    <div class="invalid-feedback">
+				    	Please provide a valid last name. At Least 1 letter.
+				    </div>
 				</div>
 			</div>
 		</div>
@@ -58,7 +70,14 @@
 					id="phoneNumber"  
 					placeholder="Enter phone number here"
 					ng-model='vm.userData.contact.phone'
-					required>
+					ng-class='vm.state.contactInput.phone.input'
+					ng-blur='vm.validate("phone", vm.userData.contact.phone)'>
+			<div class="valid-feedback">
+		    	Looks good!
+		    </div>
+		    <div class="invalid-feedback">
+		    	Please provide a valid phone number. e.g. 555-555-5555
+		    </div>
 		</div>
 
 		<!--Email-->
@@ -69,8 +88,15 @@
 					id="emailAddress" 
 					placeholder="Enter email here"
 					ng-model='vm.userData.contact.email'
-					required>
+					ng-class='vm.state.contactInput.email.input'
+					ng-blur='vm.validate("email", vm.userData.contact.email)'>
 			<small id="emailHelp" class="form-text text-muted">We'll never share your email or phone with anyone else.</small>
+			<div class="valid-feedback">
+		    	Looks good!
+		    </div>
+		    <div class="invalid-feedback">
+		    	Please provide a valid email address. e.g. someone@gmail.com
+		    </div>
 		</div>
 
 	</form>

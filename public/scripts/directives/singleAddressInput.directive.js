@@ -47,7 +47,7 @@ angular.module('ansub').directive('singleAddressInput', singleAddressInput);
 				//self.state.singleAddressInput[field].field['was-validated'] = true;
 				//self.state.singleAddressInput[field].field["needs-validation"] = false;
 
-				console.log(field, "is valid?:", isValid);
+				//console.log(field, "is valid?:", isValid);
 				//console.log(self.state.singleAddressInput[field]);
 			};
 			

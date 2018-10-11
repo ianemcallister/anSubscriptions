@@ -62,12 +62,13 @@
 							placeholder='City name goes here'
 							ng-model='vm.userData.shippingDestination.city'
 							ng-change='vm.updateBillingAddress()'
-							required>
+							ng-class='vm.state.singleAddressInput.city.input'
+							ng-blur='vm.validate("city", vm.userData.shippingDestination.city)'>
 					<div class="valid-feedback">
 				    	Looks good!
 				    </div>
 				    <div class="invalid-feedback">
-				    	Please privde a valid city name
+				    	Please provide a valid city name
 				    </div>
 				</div>
 			</div>
@@ -80,12 +81,13 @@
 							placeholder='State id goes here'
 							ng-model='vm.userData.shippingDestination.state'
 							ng-change='vm.updateBillingAddress()'
-							required>
+							ng-class='vm.state.singleAddressInput.state.input'
+							ng-blur='vm.validate("state", vm.userData.shippingDestination.state)'>
 					<div class="valid-feedback">
 				    	Looks good!
 				    </div>
 				    <div class="invalid-feedback">
-				    	Please privde a valid state
+				    	Please provide a valid state abbreviation. e.g. OR, CA, HI
 				    </div>
 				</div>
 			</div>

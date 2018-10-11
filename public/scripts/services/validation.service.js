@@ -8,21 +8,26 @@ function validationService(stateService, userDataService) {
 	//define local varaibles
 	var validation = {
 		physicalAddresses: {
-			street: isValidStreet,
-			zip: isValidZip
+			street: isValidString,
+			zip: isValidZip,
+			city: isValidCity,
+			state: isValidState
+		},
+		contact: {
+			first: isValidString,
+			last: isValidString,
+			phone: isValidPhone,
+			email: isvalidEmail
 		},
 		termsAndCond: termsAndCond
 	};
 
-	function isValidStreet(aString) {
+	function isValidString(aString) {
 		var isValid = false;
 
-		console.log('street length', aString.length);
-
-		if (aString.length > 3) isValid = true;
+		if (aString.length > 0) isValid = true;
 
 		return isValid;
-		//return /^\d+\s[A-z]+\s[A-z]+/.test(aString)
 	};
 
 	function isValidZip(aString) {
@@ -37,6 +42,21 @@ function validationService(stateService, userDataService) {
 		return /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(aString);
 	};
 
+	function isValidCity(aString) {
+		return /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/.test(aString);
+	};
+
+	function isValidState(aString) {
+		return /^((A[LKZR])|(C[AOT])|(D[EC])|(FL)|(GA)|(HI)|(I[DLNA])|(K[SY])|(LA)|(M[EDAINSOT])|(N[EVHJMYCD])|(O[HKR])|(PA)|(RI)|(S[CD])|(T[NX])|(UT)|(V[TA])|(W[AVIY]))$/.test(aString)
+	};
+
+	function isValidPhone(aString) {
+		return /^[2-9]\d{2}-\d{3}-\d{4}$/.test(aString);
+	};
+
+	function isvalidEmail(aString) {
+		return /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(aString)
+	};
 
 	function termsAndCond() {
 		console.log('validating terms and conditions');

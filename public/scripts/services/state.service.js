@@ -84,6 +84,48 @@ function stateService(userDataService) {
 			"btn-success": false,
 			"btn-secondary": true
 		},
+		contactInput: {
+			first: {
+				field: {
+					"was-validated": false,
+					"needs-validation": true
+				},
+				input: {
+					"is-valid": false,
+					"is-invalid": false
+				}
+			},
+			last: {
+				field: {
+					"was-validated": false,
+					"needs-validation": true
+				},
+				input: {
+					"is-valid": false,
+					"is-invalid": false
+				}
+			},
+			phone: {
+				field: {
+					"was-validated": false,
+					"needs-validation": true
+				},
+				input: {
+					"is-valid": false,
+					"is-invalid": false
+				}
+			},
+			email: {
+				field: {
+					"was-validated": false,
+					"needs-validation": true
+				},
+				input: {
+					"is-valid": false,
+					"is-invalid": false
+				}
+			},
+		},
 		singleAddressInput: {
 			street: {
 				field: {
