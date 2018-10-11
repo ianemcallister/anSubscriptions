@@ -7,8 +7,36 @@ validationService.$inject = ['stateService', 'userDataService'];
 function validationService(stateService, userDataService) {
 	//define local varaibles
 	var validation = {
+		physicalAddresses: {
+			street: isValidStreet,
+			zip: isValidZip
+		},
 		termsAndCond: termsAndCond
 	};
+
+	function isValidStreet(aString) {
+		var isValid = false;
+
+		console.log('street length', aString.length);
+
+		if (aString.length > 3) isValid = true;
+
+		return isValid;
+		//return /^\d+\s[A-z]+\s[A-z]+/.test(aString)
+	};
+
+	function isValidZip(aString) {
+		//define local variables
+		//var errorMessage = "";
+
+		//var isValid = /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(aString);
+
+		//if(!isValid) errorMessage+= "That doesn't look like a valid zipcode, please try again";
+
+		//return {valid: isValid, message: errorMessage};
+		return /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(aString);
+	};
+
 
 	function termsAndCond() {
 		console.log('validating terms and conditions');

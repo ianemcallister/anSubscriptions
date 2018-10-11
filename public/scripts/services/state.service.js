@@ -83,6 +83,48 @@ function stateService(userDataService) {
 			"btn-block": true,
 			"btn-success": false,
 			"btn-secondary": true
+		},
+		singleAddressInput: {
+			street: {
+				field: {
+					"was-validated": false,
+					"needs-validation": true
+				},
+				input: {
+					"is-valid": false,
+					"is-invalid": false
+				}
+			},
+			zip: {
+				field: {
+					"was-validated": false,
+					"needs-validation": true
+				},
+				input: {
+					"is-valid": false,
+					"is-invalid": false
+				}
+			},
+			city: {
+				field: {
+					"was-validated": false,
+					"needs-validation": true
+				},
+				input: {
+					"is-valid": false,
+					"is-invalid": false
+				}
+			},
+			state: {
+				field: {
+					"was-validated": false,
+					"needs-validation": true
+				},
+				input: {
+					"is-valid": false,
+					"is-invalid": false
+				}
+			}
 		}
 	};
 

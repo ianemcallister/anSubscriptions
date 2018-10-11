@@ -11,27 +11,45 @@
 	<p>Where would you like your monthly nuts to go?</p>
 	<!--<p>Enter your Zip Code first.  Your city and state will automatically be filled in.</p>-->
 	
-	<form>
+	<form class=''>
 
-		<div class="form-group">
+		<div class="form-group" ng-class='vm.state.singleAddressInput.street.field'>
 			<label for="street">Street</label>
 			<input 	type="text" 
 					class="form-control" 
 					id='street' 
 					placeholder='Enter street address here'
 					ng-model='vm.userData.shippingDestination.street'
-					ng-change='vm.updateBillingAddress()'>
+					ng-change='vm.updateBillingAddress()'
+					ng-blur='vm.validate("street", vm.userData.shippingDestination.street)'
+					ng-class='vm.state.singleAddressInput.street.input'
+					>
+			<div class="valid-feedback">
+		    	Looks good!
+		    </div>
+		    <div class="invalid-feedback">
+		    	Please provide a valid street address
+		    </div>
 		</div>
 
 
-		<div class="form-group">
+		<div class="form-group" ng-class='vm.state.singleAddressInput.zip.field'>
 			<label for="zipInput">Zipcode</label>
 			<input 	type="text" 
 					class="form-control" 
 					id='zipInput' 
 					placeholder='Enter your zipcode'
 					ng-model='vm.userData.shippingDestination.zip'
-					ng-change='vm.updateBillingAddress()'>
+					ng-change='vm.updateBillingAddress()'
+					ng-class='vm.state.singleAddressInput.zip.input'
+					ng-blur='vm.validate("zip", vm.userData.shippingDestination.zip)'
+					>
+			<div class="valid-feedback">
+		    	Looks good!
+		    </div>
+		    <div class="invalid-feedback">
+		    	Please provide a valid zipcode
+		    </div>
 		</div>			
 		
 		<div class="form-row">
@@ -43,7 +61,14 @@
 							class="form-control" 
 							placeholder='City name goes here'
 							ng-model='vm.userData.shippingDestination.city'
-							ng-change='vm.updateBillingAddress()'>
+							ng-change='vm.updateBillingAddress()'
+							required>
+					<div class="valid-feedback">
+				    	Looks good!
+				    </div>
+				    <div class="invalid-feedback">
+				    	Please privde a valid city name
+				    </div>
 				</div>
 			</div>
 			<div class="col">
@@ -54,7 +79,14 @@
 							class="form-control" 
 							placeholder='State id goes here'
 							ng-model='vm.userData.shippingDestination.state'
-							ng-change='vm.updateBillingAddress()'>
+							ng-change='vm.updateBillingAddress()'
+							required>
+					<div class="valid-feedback">
+				    	Looks good!
+				    </div>
+				    <div class="invalid-feedback">
+				    	Please privde a valid state
+				    </div>
 				</div>
 			</div>
 		</div>
