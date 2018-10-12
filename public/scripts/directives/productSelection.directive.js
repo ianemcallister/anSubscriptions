@@ -188,7 +188,7 @@ angular.module('ansub').directive('productSelection', productSelection);
 				})
 
 
-				console.log(self.orderList);
+				//console.log(self.orderList);
 
 			};
 
@@ -215,7 +215,7 @@ angular.module('ansub').directive('productSelection', productSelection);
 				//
 				serverService.get.checkPromoCode(code)
 				.then(function success(isValid) {
-					console.log('this code is good?', isValid, self.state);
+					//console.log('this code is good?', isValid, self.state);
 
 					if(isValid) {
 						self.state.promoCode.input['was-validated'] = true
@@ -229,7 +229,7 @@ angular.module('ansub').directive('productSelection', productSelection);
 						self.state.promoCode.input['is-invalid'] = true;
 					};
 
-					console.log(self.state);
+					//console.log(self.state);
 					$scope.$apply();
 
 				}).catch(function error(e) {

@@ -36,7 +36,8 @@ var mailCenter = {
 		}
 	}),
 	send: send, 
-	confirmationEmail: confirmationEmail
+	confirmationEmail: confirmationEmail,
+	orderNotificationEmail: orderNotificationEmail
 };
 
 //send
@@ -121,7 +122,27 @@ function confirmationEmail(orderData) {
 		     cid: 'logo'
 		}]
 	});
-}
+};
+
+/*
+*	ORDER NOTIFICATION EMAIL
+*
+*	This email is used to make sure that even if something goes wrong with the 
+*	processing, I have enough information to complete the order later if need be 
+*	(contact information basically).
+*/
+function orderNotificationEmail(orderData) {
+	//define local variables
+
+	var emailText = JSON.stringify(orderData, null, '\t');
+
+	send({
+		from: 'info@ah-nuts.com',
+		to: 'info@ah-nuts.com',
+		subject: "Subscription Order Notification",
+		text: emailText
+	});
+};
 
 
 //export module

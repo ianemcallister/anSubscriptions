@@ -34,7 +34,8 @@ function userDataService() {
 			//postal_code: "",
 			nonce: "",
 			last4: "",
-			type: ""
+			type: "",
+			errors: []
 		},
 		promoCode: "",
 		orderNo: "",

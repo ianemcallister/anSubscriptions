@@ -98,6 +98,20 @@
 	    -->
 		<input type="hidden" id="card-nonce" name="nonce">
 
+		<div class='alert alert-danger' ng-show='vm.state.ccProcessing.errors.thereWereErrors'>
+			Hmm? Looks like there were some errors, please go back and check the following:
+			<ul>
+				<li ng-repeat='error in vm.state.ccProcessing.errors.list track by $index'>
+					{{error.message}}
+				</li>
+			</ul>
+		</div>
+
+		<div class='alert alert-success' ng-show="vm.state.ccProcessing.success.cardDataGood">
+			All looks good, please give us a moment, the squirls are attending to your order in the back room
+		</div>
+
+
 		<!--Submission button-->
 		<button type='submit'
 				ng-class="vm.state.submissionBtn" 

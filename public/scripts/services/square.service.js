@@ -1,10 +1,10 @@
 angular.module('ansub').service('squareService', squareService);
 		
 /* @ngInject */
-squareService.$inject = ['$rootScope', '$location', 'serverService', 'userDataService'];
+squareService.$inject = ['$rootScope', '$location', 'serverService', 'userDataService', 'errorHandlingService', 'stateService'];
 
 /* @ngInject */
-function squareService($rootScope, $location, serverService, userDataService) {
+function squareService($rootScope, $location, serverService, userDataService, errorHandlingService, stateService) {
 	//define local varaibles
 	var self = this;
 
@@ -43,7 +43,13 @@ function squareService($rootScope, $location, serverService, userDataService) {
 
 	//submits the form for us
 	function submitForm() {
+		//notify progress
 		console.log('submitting form');
+
+		//clear error handling
+		errorHandlingService.clearErrors();
+
+		//submit the form
 		self.paymentForm.requestCardNonce();
 	};
 
@@ -99,9 +105,11 @@ function squareService($rootScope, $location, serverService, userDataService) {
 			      // nonce, even if the request failed because of an error.
 			      cardNonceResponseReceived: function(errors, nonce, cardData) {
 			        if (errors) {
-			          console.log("Encountered errors:", errors);
-			          self.card_errors = errors;
-	            	  self.isProcessing = false;
+			          
+			          errorHandlingService.card.processingErrors(errors)
+			          //console.log("Encountered errors:", errors);
+			          //userDataService.card.errors = errors;
+	            	  //self.isProcessing = false;
 	            	  //$scope.$apply(); // required since this is not an angular function
 
 			        // No errors occurred. Extract the card nonce.
@@ -110,6 +118,10 @@ function squareService($rootScope, $location, serverService, userDataService) {
 			          // Delete this line and uncomment the lines below when you're ready
 			          // to start submitting nonces to your server.
 			          //alert('Nonce received: ' + nonce);
+
+			          //notify CC Success, and waiting time
+			          stateService.ccProcessing.success.cardDataGood = true;
+			          stateService.ccProcessing.errors.thereWereErrors = false;
 
 			          _chargeCardWithNonce(nonce);
 

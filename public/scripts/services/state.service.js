@@ -177,6 +177,19 @@ function stateService(userDataService) {
 					"is-invalid": false
 				}
 			}
+		},
+		ccProcessing: {
+			errors: {
+				thereWereErrors: false,
+				cardNoNotValid: false,
+				cardCVVNotValid: false,
+				cardDateNotValid: false,
+				cardZipNotValid: false,
+				list: []
+			},
+			success: {
+				cardDataGood: false
+			}
 		}
 	};
 
