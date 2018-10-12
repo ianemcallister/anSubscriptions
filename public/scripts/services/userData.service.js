@@ -36,6 +36,7 @@ function userDataService() {
 			last4: "",
 			type: ""
 		},
+		promoCode: "",
 		orderNo: "",
 		orderDate: "",
 		order: [],

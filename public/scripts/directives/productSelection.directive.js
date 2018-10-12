@@ -19,10 +19,10 @@ angular.module('ansub').directive('productSelection', productSelection);
 		function linkFunc(scope, el, attr, ctrl) {
 		}
 		
-		productSelectionController.$inject = ['$scope', '$log', 'userDataService', 'stateService', 'squareService'];
+		productSelectionController.$inject = ['$scope', '$log', 'userDataService', 'stateService', 'squareService', 'serverService'];
 
 		/* @ngInject */
-		function productSelectionController($scope, $log, userDataService, stateService, squareService) {
+		function productSelectionController($scope, $log, userDataService, stateService, squareService, serverService) {
 			//define local variables
 			var self = this;
 
@@ -208,6 +208,33 @@ angular.module('ansub').directive('productSelection', productSelection);
 
 
 
+			};
+
+			//check Promo Code
+			self.checkPromoCode = function(code) {
+				//
+				serverService.get.checkPromoCode(code)
+				.then(function success(isValid) {
+					console.log('this code is good?', isValid, self.state);
+
+					if(isValid) {
+						self.state.promoCode.input['was-validated'] = true
+						self.state.promoCode.input['needs-validation'] = false
+						self.state.promoCode.input['is-valid'] = true;
+						self.state.promoCode.input['is-invalid'] = false;
+					} else {
+						self.state.promoCode.input['was-validated'] = true
+						self.state.promoCode.input['needs-validation'] = false
+						self.state.promoCode.input['is-valid'] = false;
+						self.state.promoCode.input['is-invalid'] = true;
+					};
+
+					console.log(self.state);
+					$scope.$apply();
+
+				}).catch(function error(e) {
+					console.log('Error', e);
+				});
 			};
 
 			//start this by adding a product to the order list

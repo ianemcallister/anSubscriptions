@@ -125,28 +125,41 @@
 			</td>
 		</tr>
 
-		<!--Promo code row
+		<!--Promo code row-->
 		<tr>
 			<td></td>
-			<td>
-				<span>Promotional Code:<input class='block' type="text"></span> <br>
-				<div ng-hide='true'>
-				<strong>Free Sack!</strong> <br>
-				<span>Awesome, your code entitles you to a free extra sack of nuts on your 3rd shippment.  We'll contact you by email prior to your 3rd shipment to confirm.</span> <br>
-				</div>
-
-				<div ng-hide='true'>
-					<strong>Darn!</strong> <br>
-					<span>We don't recognize that promo code. Sorry!</span>
-				</div>
+			<td class='form-group'>
+				
+				Promotional Code:
+				<input 	class='block form-control' 
+						type="text"
+						ng-model='vm.userData.promoCode'
+						ng-class='vm.state.promoCode.input'
+						ng-blur='vm.checkPromoCode(vm.userData.promoCode)'>
+				<br>
+				<div class="valid-feedback">
+			    	<strong>Free Sack!</strong> <br>
+					<span>
+						Awesome, your code entitles you to a free extra sack of nuts on your 3rd shippment.  We'll contact you by email prior to your 3rd shipment to confirm.
+					</span>
+			    </div>
+			    <div class="invalid-feedback">
+			    	<strong>Darn!</strong> <br>
+					<span>
+						We don't recognize that promo code. Sorry!
+					</span>
+			    </div>
 
 			</td>
 
-			<td>
-				<button class="btn btn-success">Check</button>
-			</td>
+			<!--<td>
+				<button class="btn btn-success"
+						ng-click='vm.checkPromoCode(vm.userData.promoCode)'>
+					Check
+				</button>
+			</td>-->
 			<td></td>
-		</tr>-->
+		</tr>
 		<!--Sum Row-->
 		<tr>
 			<td></td>

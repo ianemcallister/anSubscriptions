@@ -10,7 +10,8 @@ function serverService($http) {
 		chargeCard: chargeCard,
 		get: {
 			sqrAppId: getSqrAppId,
-			sqrPrdctList: getSqrPrdctList
+			sqrPrdctList: getSqrPrdctList,
+			checkPromoCode: checkPromoCode
 		}
 	};
 
@@ -80,6 +81,27 @@ function serverService($http) {
 				reject(error);
 			});
 		});
+	};
+
+	function checkPromoCode(code) {
+
+		//return async work
+		return new Promise(function(resolve, reject) {
+
+			$http({
+				method: "GET",
+				url: '/api/check_promoCode?code=' + code
+			}).then(function successCallback(response) {
+					
+				console.log('got this response', response);
+				resolve(response.data);
+				
+			}, function errorCallback(error) {
+				reject(error);
+			});
+
+		});
+
 	};
 
 	return serverService;

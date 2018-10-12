@@ -9,6 +9,7 @@ var squareV2 			= require('../square/connectV2.js');
 var squareV1  			= require('../square/connectV1.js');
 var voucherifyClient 	= require('voucherify');
 var mail				= require('../mailcenter/mailcenter.js');
+var fetchUrl 			= require("fetch").fetchUrl;
 
 //define module
 var ahnuts = {
@@ -23,6 +24,8 @@ var ahnuts = {
 		_confCode: _confCode
 	},
 	api: {
+		getPromCodes: getPromCodes,
+		checkPromoCode: checkPromoCode,
 		getServerData: getServerData,
 		getProductList: getProductList,
 		promoCodes: {
@@ -301,6 +304,43 @@ function _confCode() {};
 function getServerData() {
 	return new Promise(function(resolve, reject) {
 		resolve({id: process.env.SQUARE_APP_ID});
+	});
+};
+
+function getPromCodes() {
+	return new Promise(function(resolve, reject) {
+		fetchUrl("https://docs.google.com/spreadsheets/d/e/2PACX-1vTqLnSgUFvXBNEptrabQQC1kqSUnv3gRRjqWKNBPH4zRibRW0ZejMw-sgF2EzwwkGEIR6qbNYM92-Ye/pub?gid=0&single=true&output=csv", function(error, meta, body){
+    
+		    if(error) reject(error);
+
+		    resolve(body.toString()); 
+		});
+	});
+};	
+
+function checkPromoCode(newCode) {
+	//define local variables
+	var isValid = false;
+
+	return new Promise(function(resolve, reject) {
+		fetchUrl("https://docs.google.com/spreadsheets/d/e/2PACX-1vTqLnSgUFvXBNEptrabQQC1kqSUnv3gRRjqWKNBPH4zRibRW0ZejMw-sgF2EzwwkGEIR6qbNYM92-Ye/pub?gid=0&single=true&output=csv", function(error, meta, body){
+    
+		    if(error) reject(error)
+		    else {
+
+		    	var data = body.toString().split('\r\n');
+
+		    	//iterate over all the codes
+		    	data.forEach(function(aCode) {
+		    		//console.log(newCode, aCode, newCode == aCode)
+		    		if(newCode == aCode) isValid = true;
+		    	});
+
+		    	resolve(isValid);
+		    }
+
+		     
+		});
 	});
 };
 

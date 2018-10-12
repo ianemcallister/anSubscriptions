@@ -7,14 +7,21 @@ var squareV1  = require('./square/connectV1.js');
 var stdio		= require('./stdio/stdio.js');
 var mail		= require('./mailcenter/mailcenter.js');
 
+//console.log('in the cli');
 
-squareV1.items.list()
+//gets the promo codes
+//ahnuts.api.getPromCodes().then(function success(s) { console.log(s); }).catch(function error(e) { console.log('error', e); })
+/*ahnuts.api.checkPromoCode('JPN0010').then(function success(s) { 
+  console.log(s);
+}).catch(function error(e) { console.log('error', e); })*/
+
+/*squareV1.items.list()
 .then(function success(s) {
   console.log('got this list', s);
   stdio.write.json(s, './json/productList.json');
 }).catch(function error(e) {
   console.log('error', e);
-});
+});*/
 
 /*mail.confirmationEmail(
   {

@@ -53,10 +53,14 @@ serverApp.get('/api/:path', function(req, res) {
 	//define local varaibles
 	var rawPath = req.path;
 	var path = rawPath.split('/')[2];
+	var params = req.query;
+
+	//console.log(params);
 
 	var methods = {
 		squareId: ahnuts.api.getServerData(),
-		productList: ahnuts.api.getProductList()
+		productList: ahnuts.api.getProductList(),
+		check_promoCode: ahnuts.api.checkPromoCode(params.code)
 	}
 
 	//console.log(path, methods[path]);

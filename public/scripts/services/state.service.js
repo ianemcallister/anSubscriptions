@@ -28,6 +28,16 @@ function stateService(userDataService) {
 			},
 			headerStyle: {
 				color: "rgb(51,51,51)"
+			},
+			promoCode: {
+				field: {
+					"was-validated": false,
+					"needs-validation": true
+				},
+				input: {
+					"is-valid": false,
+					"is-invalid": false
+				}
 			}
 		},
 		contactInfo: {
