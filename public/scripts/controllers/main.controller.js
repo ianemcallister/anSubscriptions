@@ -11,7 +11,13 @@ angular.module('ansub').controller('mainController', mainController);
 		$scope.userData = userDataService;
 		$scope.state = stateService;
 
-		squareService.init();
+		$scope.$on('$viewContentLoaded', function() {
+		    //call it here
+		    console.log('$viewContentLoaded');
+		    squareService.init();
+		});
+
+		
 		
 		/*var recipiantProfile = {
 			name: {

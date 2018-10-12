@@ -30,6 +30,11 @@ angular.module('ansub').directive('billingInput', billingInput);
 
 			//console.log('in contactInputtController');
 
+			//when the view has loaded, then init the square fields
+			$scope.$on('$viewContentLoaded', function() {
+			    //call it here
+			    console.log('$viewContentLoaded');
+			});
 		};
 
 		return directive;		
