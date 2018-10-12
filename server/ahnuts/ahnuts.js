@@ -363,31 +363,30 @@ function registerMonthlySubscription(subApp) {
 	return new Promise(function(resolve, reject) {
 
 		//always notify me when an order has been placed, that way I can help handle it if something goes wrong
-
 		mail.orderNotificationEmail(subApp);
 
 		//USED TO TEST ORDER CONFIRMATION EMAIL
 		//resolve({ confirmationCode: "000-000-000-0000" });
 
 		//1. record the order
-		//_recordOrder(subApp)
-		//.then(function success(updatedApp) {
+		_recordOrder(subApp)
+		.then(function success(updatedApp) {
 
 			//2. send confirming emails
 			//notify progress
-		//	console.log('6. sending confirmation emails');
+			console.log('6. sending confirmation emails');
 
-		//	mail.confirmationEmail(updatedApp)
+			mail.confirmationEmail(updatedApp)
 			
 			// 3. return confirming code
 			//notify progress
-		//	console.log('7. returning confirmation code');
+			console.log('7. returning confirmation code');
 
-		//	resolve({ confirmationCode: updatedApp.orderNo });
+			resolve({ confirmationCode: updatedApp.orderNo });
 
-		//}).catch(function error(e) {
-		//	reject(e);
-		//});
+		}).catch(function error(e) {
+			reject(e);
+		});
 
 	});
 
