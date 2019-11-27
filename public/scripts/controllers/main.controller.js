@@ -13,7 +13,8 @@ angular.module('ansub').controller('mainController', mainController);
 
 		$scope.$on('$viewContentLoaded', function() {
 		    //call it here
-		    console.log('$viewContentLoaded');
+			console.log('$viewContentLoaded');
+			console.log(JSON.parse(process.env.PROMO_CODES));
 		    squareService.init();
 		});
 
