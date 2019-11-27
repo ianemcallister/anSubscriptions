@@ -135,6 +135,9 @@ serverApp.listen(port,function() {
 	if(process.env.IS_PROUDCTION == 'true') {
 		console.log('is production');
 		console.log('got these codes:', JSON.parse(process.env.PROMO_CODES));
-	} else console.log('is development');
+	} else {
+		console.log('is development');
+		console.log('got these codes:', JSON.parse(process.env.PROMO_CODES));
+	}
 });
 
