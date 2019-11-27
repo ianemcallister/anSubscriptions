@@ -14,7 +14,6 @@ ahNuts.controller('mainController', mainController);
 		$scope.$on('$viewContentLoaded', function() {
 		    //call it here
 			console.log('$viewContentLoaded');
-			console.log('got these codes:', JSON.parse(process.env.PROMO_CODES));
 		    squareService.init();
 		});
 
