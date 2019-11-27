@@ -3,8 +3,7 @@
 *
 *	This module sets up all the required angular routes for this web app.
 */
-angular
-    .module('ansub')
+ahNuts
     .config(config);
 
 /* @ngInject */

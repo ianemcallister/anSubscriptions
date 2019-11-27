@@ -3,97 +3,131 @@
 *	This is the gulp file that facilitates the developement enviornment.
 */
 
-//define dependenceis
-var gulp 	= require('gulp');						//build tools
-var autoprefixer = require('gulp-autoprefixer');	//allows for customization to various browsers
-var browserSync = require('browser-sync').create();	//allows for live updating
-//var jasmine = require('gulp-jasmine-phantom'); 		//unit testing facilitation
-var concat = require('gulp-concat');				//will help shrink our public files
-var concatCss = require('gulp-concat-css');			//concatenates CSS into a single file
-var uglify = require('gulp-uglify');				//minifies public javascript
-var sourcemaps = require('gulp-sourcemaps');		//helps place files that are minified
-var ngAnnotate = require('gulp-ng-annotate');		//helps with angular scrips
+/*eslint-env node, jasmine, phantomjs, es6, angular/di: [2,"array"] */
 
+var gulp 			= require('gulp');
+var less 			= require('gulp-less');
+var babel 			= require('gulp-babel');
+var concat 			= require('gulp-concat');
+//var coffee 			= require("gulp-coffee");
+var order 			= require("gulp-order");
+var print			= require('gulp-print').default;
+var uglify 			= require('gulp-uglify');
+var rename 			= require('gulp-rename');
+var cleanCSS 		= require('gulp-clean-css');
+var del 			= require('del');
+var browserSync 	= require('browser-sync');
+var server 			= browserSync.create();
 
+//	OLD ELEMENTS
+//var eslint 			= require('gulp-eslint'); 
+//var jasmine 		= require('gulp-jasmine-phantom'); 
+//var sourcemaps 		= require('gulp-sourcemaps');
+var ngAnnotate 		= require('gulp-ng-annotate');
+//var sass 			= require('gulp-sass');
+//var autoprefixer 	= require('gulp-autoprefixer');
 
+var paths = {
+	styles: {
+		src: './public/styles/**/*.scss',
+		dest: './dist/css'
+	},
+	scripts: {
+		src: './public/scripts/**/*.js',
+		dest: './dist/scripts'
+	},
+	index: {
+		src: './public/index.html',
+		dest: './dist'
+	},
+	html: {
+		src: './public/views/**/*.htm',
+		dest: './dist/views'
+	}
+};
 
 /*
-*	DIST
-*
-*	This defines a single task to run the primary gulp functions.
-*/
-gulp.task('dist', [
-	'copy-html',
-	'styles',
-	'scripts'//,
-	//'copy-images'
-]);
+ * Define our tasks using plain functions
+ */
+function clean() {
+	return del([ 'assets' ]);
+};
 
-/*
-*	DEFAULT
-*
-*	This is ...
-*/
-gulp.task('default', [], function() {
-	gulp.watch('public/styles/**/*.css', ['styles'])
-		.on('change', browserSync.reload);
-	gulp.watch('public/scripts/**/*.js', ['scripts'])
-		.on('change', browserSync.reload);
-	gulp.watch('public/views/**/*.htm', ['copy-html'])
-		.on('change', browserSync.reload);
-	gulp.watch('public/index.html', ['copy-html'])
-		.on('change', browserSync.reload);
+function styles() {
+	return gulp.src(paths.styles.src)
+	  .pipe(less())
+	  .pipe(cleanCSS())
+	  // pass in options to the stream
+	  .pipe(rename({
+		basename: 'main',
+		suffix: '.min'
+	  }))
+	  .pipe(gulp.dest(paths.styles.dest));
+};
 
-	browserSync.init({
-		server: 'dist'
+function scripts() {
+	return gulp.src(paths.scripts.src, { sourcemaps: true })
+	  .pipe(order([
+		'public/scripts/webapp.js',
+		'public/scripts/controllers/*.js',
+		'public/scripts/directives/*.js',
+		'public/scripts/services/*.js',
+		'public/scripts/routes/*.js'
+	  ], { base: './' }))
+	  .pipe(print(filepath => `built: ${filepath}`))
+	  .pipe(babel())
+	  .pipe(ngAnnotate())
+	  .pipe(uglify())
+	  .pipe(concat('bundle.min.js'))
+	  .pipe(gulp.dest(paths.scripts.dest));
+};
+
+function index() {
+	return gulp.src(paths.index.src)
+		.pipe(gulp.dest(paths.index.dest));
+};
+
+function html() {
+	return gulp.src(paths.html.src)
+		.pipe(gulp.dest(paths.html.dest));
+};
+
+function watch() {
+	gulp.watch(paths.index.src, gulp.series(index, reload));	
+	gulp.watch(paths.html.src, gulp.series(html, reload));
+	gulp.watch(paths.scripts.src, gulp.series(scripts, reload));
+	gulp.watch(paths.styles.src, gulp.series(styles, reload));
+};
+
+function reload(done) {
+	server.reload();
+	done();
+};
+
+function serve(done) {
+	server.init({
+	  server: {
+		baseDir: './dist'
+	  }
 	});
-});
-
-
-
-/*
-*	COPY-HTML
-*
-*	This defines how html files are copied into the distribution file.
-*/
-gulp.task('copy-html', function() {
-	//copy the index file
-	gulp.src('public/index.html')
-		.pipe(gulp.dest('dist'));
-	gulp.src('public/views/**/*.htm')
-		.pipe(gulp.dest('dist/views'));
-});
+	done();
+};
 
 /*
-*	STYLES
-*
-*	This defines how style files (CSS, maybe SASS later) are copied into the distribution file.
-*/
-gulp.task('styles', function() {
-	gulp.src('public/styles/**/*.css')
-		.pipe(autoprefixer({
-			browsers: ['last 2 versions']
-		}))
-		.pipe(gulp.dest('dist/styles'))
-		.pipe(browserSync.stream());
-});
-
+ * Specify if tasks run in series or parallel using `gulp.series` and `gulp.parallel`
+ */
+var build 	= gulp.parallel(styles, scripts, index, html);
+var dev 	= gulp.series(styles, scripts, serve, watch);
 /*
-*	SCRIPTS
-*
-*	This defines how all script files are copied into the distribution file.
-*/
-gulp.task('scripts', function() {
-	gulp.src([
-		'public/**/*.js'
-	])
-	.pipe(sourcemaps.init())
-	.pipe(concat('bundle.js'))
-	.pipe(ngAnnotate())
-	.pipe(uglify())
-	.pipe(sourcemaps.write())
-	.pipe(gulp.dest('dist/scripts'));
-});
-
-
-
+ * You can use CommonJS `exports` module notation to declare tasks
+ */
+exports.clean = clean;
+exports.styles = styles;
+exports.scripts = scripts;
+exports.watch = watch;
+exports.build = build;
+exports.dev = dev;
+/*
+ * Define default task that can be called by just running `gulp` from cli
+ */
+exports.default = build;

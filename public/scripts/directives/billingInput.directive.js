@@ -1,4 +1,4 @@
-angular.module('ansub').directive('billingInput', billingInput);
+ahNuts.directive('billingInput', billingInput);
 
 	/* @ngInject */
 	function billingInput() {

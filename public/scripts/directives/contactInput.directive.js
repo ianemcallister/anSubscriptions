@@ -1,4 +1,4 @@
-angular.module('ansub').directive('contactInput', contactInput);
+ahNuts.directive('contactInput', contactInput);
 
 	/* @ngInject */
 	function contactInput() {

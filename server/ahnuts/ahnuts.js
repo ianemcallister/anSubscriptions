@@ -7,7 +7,7 @@
 //define dependcies
 var squareV2 			= require('../square/connectV2.js');
 var squareV1  			= require('../square/connectV1.js');
-var voucherifyClient 	= require('voucherify');
+//var voucherifyClient 	= require('voucherify');
 var mail				= require('../mailcenter/mailcenter.js');
 var fetchUrl 			= require("fetch").fetchUrl;
 

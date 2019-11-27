@@ -1,4 +1,4 @@
-angular.module('ansub').service('errorHandlingService', errorHandlingService);
+ahNuts.service('errorHandlingService', errorHandlingService);
 		
 /* @ngInject */
 errorHandlingService.$inject = ['$rootScope', 'stateService'];

@@ -1,4 +1,4 @@
-angular.module('ansub').controller('mainController', mainController);
+ahNuts.controller('mainController', mainController);
 
 	mainController.$inject = ['$scope','$log', '$location', 'submissionService', 'userDataService', 'stateService', 'squareService'];
 
@@ -13,8 +13,7 @@ angular.module('ansub').controller('mainController', mainController);
 
 		$scope.$on('$viewContentLoaded', function() {
 		    //call it here
-			console.log('$viewContentLoaded');
-			console.log('found this promo code', JSON.parse(process.env.PROMO_CODES));
+			console.log('$viewContentLoaded, testing testing');
 		    squareService.init();
 		});
 
