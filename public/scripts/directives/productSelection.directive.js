@@ -31,6 +31,9 @@ angular.module('ansub').directive('productSelection', productSelection);
 			self.state = stateService.productSelection;
 			self.state['infoBox'] = stateService.infoBoxes.flavorDefs;
 
+			//	NOTIFY PROGRESS
+			console.log('self.userData.promoCode', self.userData.promoCode);
+
 			// donload resources
 			squareService.download.productList()
 			.then(function success(s){
@@ -69,15 +72,29 @@ angular.module('ansub').directive('productSelection', productSelection);
 				mix: ""
 			};
 
+			//start this by adding a product to the order list
+			self.orderList.push(Object.create(productObject));
+			sumOrder();
+
 			//define view model variables
 
 			//console.log('in productSelectionController');
 
 			//define local functions
 			function sumOrder() {
+				
+				if(self.orderList.length == 4) {
+					self.order.subTotal 	= self.productPrice * 3 * self.order.multiplier;
+					self.order.discounts	= self.order.subTotal * self.order.discountRate;
+					self.order.total 		= self.order.subTotal - self.order.discounts;
+				} else {
+					self.order.subTotal = self.productPrice * self.orderList.length * self.order.multiplier;
+					self.order.discounts	= self.order.subTotal * self.order.discountRate;
+					self.order.total 	= self.order.subTotal - self.order.discounts;
+				};
 
-				self.order.total = (self.orderList.length * self.productPrice) - self.order.discounts;
-				if(self.orderList.length == 4) self.order.total = self.order.total - self.productPrice;
+				//	NOTIFY PROGRESS
+				console.log('summing order', self.order);
 			};
 
 			//define view model functions
@@ -212,8 +229,10 @@ angular.module('ansub').directive('productSelection', productSelection);
 
 			//check Promo Code
 			self.checkPromoCode = function(code) {
-				//
-				serverService.get.checkPromoCode(code)
+				//	NOTIFY PROGRESS
+				console.log('checking promo code');
+
+				serverService.checkPromoCode(code)
 				.then(function success(isValid) {
 					//console.log('this code is good?', isValid, self.state);
 
@@ -222,14 +241,26 @@ angular.module('ansub').directive('productSelection', productSelection);
 						self.state.promoCode.input['needs-validation'] = false
 						self.state.promoCode.input['is-valid'] = true;
 						self.state.promoCode.input['is-invalid'] = false;
+						self.userData.promoCode = code;
+						self.userData.tender.promoActive = true;
+						self.userData.tender.multiplier = 3;
+						self.userData.tender.discountRate = 0.3;
 					} else {
 						self.state.promoCode.input['was-validated'] = true
 						self.state.promoCode.input['needs-validation'] = false
 						self.state.promoCode.input['is-valid'] = false;
 						self.state.promoCode.input['is-invalid'] = true;
+						self.userData.promoCode = "";
+						self.userData.tender.promoActive = false;
+						self.userData.tender.multiplier = 1;
+						self.userData.tender.discountRate = 0;
+						self.userData.tender.subTotal = 0;
 					};
 
-					//console.log(self.state);
+					//sum the order
+					sumOrder();
+
+					//console.log(self.userData);
 					$scope.$apply();
 
 				}).catch(function error(e) {
@@ -237,10 +268,6 @@ angular.module('ansub').directive('productSelection', productSelection);
 				});
 			};
 
-			//start this by adding a product to the order list
-			self.orderList.push(Object.create(productObject));
-
-			sumOrder();
 		};
 
 		return directive;		

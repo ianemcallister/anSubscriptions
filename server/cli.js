@@ -7,6 +7,15 @@ var squareV1  = require('./square/connectV1.js');
 var stdio		= require('./stdio/stdio.js');
 var mail		= require('./mailcenter/mailcenter.js');
 
+console.log(process.env.PROMO_CODES);
+
+ahnuts.api.checkPromoCode("IAN2020")
+.then(function success(s) {
+  console.log('got this', s);
+}).catch(function error(e) {
+  console.log('error', e);
+});
+
 //console.log('in the cli');
 
 //gets the promo codes

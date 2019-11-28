@@ -138,9 +138,9 @@
 						ng-blur='vm.checkPromoCode(vm.userData.promoCode)'>
 				<br>
 				<div class="valid-feedback">
-			    	<strong>Free Sack!</strong> <br>
+			    	<strong>30% OFF 3-Months!</strong> <br>
 					<span>
-						Awesome, your code entitles you to a free extra sack of nuts on your 3rd shippment.  We'll contact you by email prior to your 3rd shipment to confirm.
+						Awesome, your code entitles you to 30% off of a 3 month pre-order, nice work!
 					</span>
 			    </div>
 			    <div class="invalid-feedback">
@@ -164,12 +164,14 @@
 		<tr>
 			<td></td>
 			<td>
+				<span>Sub Total:</span> <br>
 				<span>Discounts:</span> <br>
 				<span>Shipping:</span> <br>
 				<strong>TOTAL:</strong>
 			</td>
 			<td>
-				<span>{{vm.order.discounts / 100 | currency: "$": 2}}</span> <br>
+				<span>{{vm.order.subTotal / 100 | currency: "$": 2}}</span> <br>
+				<span style="color:red">-{{vm.order.discounts / 100 | currency: "$": 2}}</span> <br>
 				<span>{{0 | currency: "$": 2}}</span> <br>
 				<strong>
 					{{vm.order.total / 100 | currency: "$": 2}}

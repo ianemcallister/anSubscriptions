@@ -8,10 +8,10 @@ function serverService($http) {
 	//define local varaibles
 	var serverService = {
 		chargeCard: chargeCard,
+		checkPromoCode: checkPromoCode,
 		get: {
 			sqrAppId: getSqrAppId,
 			sqrPrdctList: getSqrPrdctList,
-			checkPromoCode: checkPromoCode
 		}
 	};
 
@@ -53,6 +53,30 @@ function serverService($http) {
 			$http({
 				method: 'GET',
 				url: '/api/squareId'
+			}).then(function successCallback(response) {
+					
+				console.log('got this response', response);
+				resolve(response.data);
+				
+			}, function errorCallback(error) {
+				reject(error);
+			});
+		});	
+	};
+
+	//getst the required code
+	function getPromoCodes() {
+		//define local variables
+		
+		//log progress
+		//$log.info('sending from sqr');
+		
+		//return the promise
+		return new Promise(function(resolve, reject) {
+			
+			$http({
+				method: 'GET',
+				url: '/api/promoCodes'
 			}).then(function successCallback(response) {
 					
 				console.log('got this response', response);

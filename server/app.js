@@ -58,6 +58,7 @@ serverApp.get('/api/:path', function(req, res) {
 	//console.log(params);
 
 	var methods = {
+		promoCodes: ahnuts.api.getPromoCodes(),
 		squareId: ahnuts.api.getServerData(),
 		productList: ahnuts.api.getProductList(),
 		check_promoCode: ahnuts.api.checkPromoCode(params.code)
@@ -134,10 +135,10 @@ serverApp.listen(port,function() {
 	//identify the environment
 	if(process.env.IS_PROUDCTION == 'true') {
 		console.log('is production');
-		console.log('got these codes:', JSON.parse(process.env.PROMO_CODES));
+		//console.log('got these codes:', JSON.parse(process.env.PROMO_CODES));
 	} else {
 		console.log('is development');
-		console.log('got these codes:', JSON.parse(process.env.PROMO_CODES));
+		//console.log(JSON.parse(process.env.PROMO_CODES));
 	}
 });
 

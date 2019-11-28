@@ -42,6 +42,10 @@ function userDataService() {
 		orderDate: "",
 		order: [],
 		tender: {
+			promoActive: false,
+			multiplier: 1,
+			discountRate: 0,
+			subTotal: 0,
 			discounts: 0,
 			shipping: 0,
 			total: 0

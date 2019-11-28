@@ -24,7 +24,7 @@ var ahnuts = {
 		_confCode: _confCode
 	},
 	api: {
-		getPromCodes: getPromCodes,
+		getPromoCodes: getPromoCodes,
 		checkPromoCode: checkPromoCode,
 		getServerData: getServerData,
 		getProductList: getProductList,
@@ -307,40 +307,25 @@ function getServerData() {
 	});
 };
 
-function getPromCodes() {
+function getPromoCodes() {
 	return new Promise(function(resolve, reject) {
-		fetchUrl("https://docs.google.com/spreadsheets/d/e/2PACX-1vTqLnSgUFvXBNEptrabQQC1kqSUnv3gRRjqWKNBPH4zRibRW0ZejMw-sgF2EzwwkGEIR6qbNYM92-Ye/pub?gid=0&single=true&output=csv", function(error, meta, body){
-    
-		    if(error) reject(error);
-
-		    resolve(body.toString()); 
-		});
+		resolve(process.env.PROMO_CODES);
 	});
 };	
 
 function checkPromoCode(newCode) {
 	//define local variables
 	var isValid = false;
+	var allCodes = JSON.parse(process.env.PROMO_CODES);
 
 	return new Promise(function(resolve, reject) {
-		fetchUrl("https://docs.google.com/spreadsheets/d/e/2PACX-1vTqLnSgUFvXBNEptrabQQC1kqSUnv3gRRjqWKNBPH4zRibRW0ZejMw-sgF2EzwwkGEIR6qbNYM92-Ye/pub?gid=0&single=true&output=csv", function(error, meta, body){
-    
-		    if(error) reject(error)
-		    else {
+		
+		//	IF VALID THROW THE FLAG
+		if(allCodes[newCode]) isValid = true;
 
-		    	var data = body.toString().split('\r\n');
+		// SEND BACK THE RESULT
+		resolve(isValid);
 
-		    	//iterate over all the codes
-		    	data.forEach(function(aCode) {
-		    		//console.log(newCode, aCode, newCode == aCode)
-		    		if(newCode == aCode) isValid = true;
-		    	});
-
-		    	resolve(isValid);
-		    }
-
-		     
-		});
 	});
 };
 
