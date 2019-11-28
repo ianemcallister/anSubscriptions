@@ -32,7 +32,7 @@ ahnuts.api.checkPromoCode("IAN2020")
   console.log('error', e);
 });*/
 
-/*mail.confirmationEmail(
+mail.confirmationEmail(
   {
     name: {
       first: "Ian",
@@ -79,7 +79,7 @@ ahnuts.api.checkPromoCode("IAN2020")
       total: 1700
     },
     agreedToTerms: false
-});*/
+});
 
 /*mail.send({
 	from: 'info@ah-nuts.com',
