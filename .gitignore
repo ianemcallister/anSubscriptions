@@ -62,3 +62,6 @@ typings/
 
 #jsonfiles
 server/json
+
+# config files
+codes.json

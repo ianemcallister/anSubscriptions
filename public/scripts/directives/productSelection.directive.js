@@ -84,13 +84,13 @@ angular.module('ansub').directive('productSelection', productSelection);
 			function sumOrder() {
 				
 				if(self.orderList.length == 4) {
-					self.order.subTotal 	= self.productPrice * 3 * self.order.multiplier;
-					self.order.discounts	= self.order.subTotal * self.order.discountRate;
-					self.order.total 		= self.order.subTotal - self.order.discounts;
+					self.order.subTotal 	= Math.round(self.productPrice * 3 * self.order.multiplier);
+					self.order.discounts	= Math.round(self.order.subTotal * self.order.discountRate);
+					self.order.total 		= Math.round(self.order.subTotal - self.order.discounts);
 				} else {
-					self.order.subTotal = self.productPrice * self.orderList.length * self.order.multiplier;
-					self.order.discounts	= self.order.subTotal * self.order.discountRate;
-					self.order.total 	= self.order.subTotal - self.order.discounts;
+					self.order.subTotal 	= Math.round(self.productPrice * self.orderList.length * self.order.multiplier);
+					self.order.discounts	= Math.round(self.order.subTotal * self.order.discountRate);
+					self.order.total 		= Math.round(self.order.subTotal - self.order.discounts);
 				};
 
 				//	NOTIFY PROGRESS
