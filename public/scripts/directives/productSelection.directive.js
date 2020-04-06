@@ -60,13 +60,14 @@ angular.module('ansub').directive('productSelection', productSelection);
 				flavor: "", 
 				mixflvrCount: 0,
 				mixflvrs: {
-					srpec: { id: "srpec", name: "SR Pecans", selected:false, classes:{"list-group-item": true, "active": false} },
-					sralm: { id: "sralm", name: "SR Almonds", selected:false, classes:{"list-group-item": true, "active": false}  },
-					srcsh: { id: "srcsh", name: "SR Cashews", selected:false, classes:{"list-group-item": true, "active": false}  },
-					srpea: { id: "srpea", name: "SR Peanuts", selected:false, classes:{"list-group-item": true, "active": false}  },
-					cnpec: { id: "cnpec", name: "Cin Pecans", selected:false, classes:{"list-group-item": true, "active": false}  },
-					cnalm: { id: "cnalm", name: "Cin Almonds", selected:false, classes:{"list-group-item": true, "active": false}  },
-					drpec: { id: "drpec", name: "Drunk Pecans", selected:false, classes:{"list-group-item": true, "active": false}  }
+					swpec: { id: "swpec", name: "Sweet & Salty Pecans", selected:false, classes:{"list-group-item": true, "active": false} },
+					drpec: { id: "drpec", name: "Drunk Pecans", selected:false, classes:{"list-group-item": true, "active": false} },
+					swalm: { id: "swalm", name: "Sweet & Salty Almonds", selected:false, classes:{"list-group-item": true, "active": false}  },
+					dralm: { id: "dralm", name: "Drunk Almonds", selected:false, classes:{"list-group-item": true, "active": false}  },
+					swhzl: { id: "swhzl", name: "Sweet & Salty Hazelnuts", selected:false, classes:{"list-group-item": true, "active": false}  },
+					drhzl: { id: "drhzl", name: "Drunk Hazelnuts", selected:false, classes:{"list-group-item": true, "active": false}  },
+					swcsh: { id: "swcsh", name: "Sweet & Salty Cashews", selected:false, classes:{"list-group-item": true, "active": false}  },
+					swpea: { id: "swpea", name: "Sweet & Salty Peanuts", selected:false, classes:{"list-group-item": true, "active": false}  }
 				},
 				mixFlvrsSelected: [],
 				mix: ""
