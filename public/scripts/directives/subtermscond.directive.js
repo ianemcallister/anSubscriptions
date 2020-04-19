@@ -32,23 +32,22 @@ angular.module('ansub').directive('subTermsCond', subTermsCond);
 			self.validate = validationService;
 			self.square = squareService;
 
-			//console.log('in subTermsCondController');
-			/*self.submit = function() {
-				console.log('submittig the form');
+			console.log('got this state', self.state);
 
-				//submit the form
-				submissionService.submit(self.userData)
+			/*	SUBMIT FORM
+			*	
+			*	This function submits the form so that the erros can be handeled properly
+			*/
+			self.submitForm = function() {
+
+				//	SUBMIT THE FORM USING THE SQUARE SERVICE
+				self.square.submitForm()
 				.then(function success(s) {
-					var newPath = '/success/' + s.data;
-					console.log('got this path back', newPath)
-					$location.path(newPath);
-					$scope.$apply();
-
-				}).catch(function error(e) {
-
-					console.log('there was an error', e);
+					console.log('everything submitted properly');
+				}).cach(function error(e) {
+					console.log('there was an error with the submission', e);
 				});
-			}*/
+			};
 
 		};
 

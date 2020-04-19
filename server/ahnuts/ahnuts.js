@@ -250,6 +250,9 @@ function _checkCustomerHashes(subApp) {
 	//return async work
 	return new Promise(function(resolve, reject) {
 
+		//SORT-CIRCUITING THE PROCESS SO THAT WE DON'T WASTE TIME, THIS CAN BE CHANGED LATER
+		resolve(customerId);
+
 		//download customer list
 		squareV2.customers.listCustomers()
 		.then(function success(customerList) {
@@ -280,7 +283,8 @@ function _checkCustomerHashes(subApp) {
 			if(found.phone != undefined)
 				customerId = found.phone;
 			
-			resolve(customerId);
+			//	TODO: UNCOMENT THIS LATER IF I WANT TO GO THROUGH THIS PROCESS AGAIN
+			//resolve(customerId);
 
 		}).catch(function error(e) {
 			reject(e);

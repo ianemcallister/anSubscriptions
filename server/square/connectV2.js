@@ -95,7 +95,7 @@ function listCustomers(cursor) {
 		//hit the API
 		apiInstance.listCustomers(opts).then(function(data) {
 			//notify progress
-			console.log('API called successfully. Cursor', cursor, ' Returned data: ', data.cursor);
+			//console.log('API called successfully. Cursor', cursor, ' Returned data: ', data.cursor);
 		 	
 		 	//check for a cursor
 		 	if(data.cursor != undefined) {

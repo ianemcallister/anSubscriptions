@@ -117,6 +117,9 @@ serverApp.post('/subscription-application-submission', function(req, res) {
 
 	}).catch(function error(e) {
 
+		//notify progress
+		console.log('got this error to send back', e);
+
 		//if there are errors...
 		res.status(500);
 		res.send(e);
